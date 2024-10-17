@@ -1,13 +1,7 @@
 package Util;
 
-import Entity.Administrator;
-import Entity.Doctor;
-import Entity.Patient;
-import Entity.Pharmacist;
-import Repository.AdministratorRepository;
-import Repository.DoctorRepository;
-import Repository.PatientRepository;
-import Repository.PharmacistRepository;
+import Entity.*;
+import Repository.*;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -31,7 +25,7 @@ public class DataInitialiser {
                 String contactInformation = patientCsv[6];
 
                 Patient patient = new Patient(hospitalId,password,name,gender,dateOfBirth,bloodType,contactInformation);
-                PatientRepository.add(patient);  
+                UserRepository.add(patient);  
             }     
         } catch (IOException e) {
             e.printStackTrace();
@@ -55,15 +49,15 @@ public class DataInitialiser {
 
                 if (role.equals("Doctor")) {
                     Doctor doctor = new Doctor(hospitalId,password,name,gender,role,age);
-                    DoctorRepository.add(doctor);
+                    UserRepository.add(doctor);
                 }
                 else if (role.equals("Pharmacist")) {
                     Pharmacist pharmacist = new Pharmacist(hospitalId,password,name,gender,role,age);
-                    PharmacistRepository.add(pharmacist);
+                    UserRepository.add(pharmacist);
                 }
                 else if (role.equals("Administrator")) {
                     Administrator administrator = new Administrator(hospitalId,password,name,gender,role,age);
-                    AdministratorRepository.add(administrator);
+                    UserRepository.add(administrator);
                 }
                 else {
                     throw new IllegalArgumentException("Invalid role: " + role);
