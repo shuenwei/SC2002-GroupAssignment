@@ -25,12 +25,34 @@ public class LoginUI {
             }
             else {
                 if (AuthController.checkDefaultPassword(currentUser) == true) {
-                    System.out.println("Your account is using a default password. You are required to change your password. ");
-                    System.out.print("Enter New Password: ");
-                    String newPassword = scanner.nextLine();
-                    AuthController.changePassword(currentUser, newPassword);
+                    changeDefaultPassword(currentUser);             
                 }
-                System.out.println("Hello, " + currentUser.getName());
+                
+                if (currentUser instanceof Patient) {
+                    PatientUI patientUi = new PatientUI((Patient) currentUser);
+                    patientUi.displayMenu();
+                }
+            }
+        }
+    }
+
+    private static void changeDefaultPassword(User currentUser) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Your account is using a default password. You are required to change your password. ");
+        while (true) {
+            System.out.print("Enter new password: ");
+            String newPassword = scanner.nextLine();
+            System.out.print("Re-enter new password to confirm: ");
+            String reenterNewPassword = scanner.nextLine();
+
+            if (newPassword.equals(reenterNewPassword)) {
+                AuthController.changeDefaultPassword(currentUser, newPassword);
+                System.out.println("Password changed successfully.");
+                break;
+            }
+            else {
+                System.out.println("Your new passwords do not match.");
             }
         }
     }
