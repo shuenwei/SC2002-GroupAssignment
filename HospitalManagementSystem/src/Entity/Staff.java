@@ -1,6 +1,6 @@
 package Entity;
 
-public class Staff extends User {
+public abstract class Staff extends User {
 
 	private String role;
 	private int age;

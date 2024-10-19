@@ -6,6 +6,7 @@ import Controller.AuthController;
 import Entity.*;
 
 public class LoginUI {
+
     public static void loginMenu() {
         Scanner scanner = new Scanner(System.in);
         User currentUser = null;
@@ -27,11 +28,7 @@ public class LoginUI {
                 if (AuthController.checkDefaultPassword(currentUser) == true) {
                     changeDefaultPassword(currentUser);             
                 }
-                
-                if (currentUser instanceof Patient) {
-                    PatientUI patientUi = new PatientUI((Patient) currentUser);
-                    patientUi.displayMenu();
-                }
+                currentUser.displayMenu(currentUser);
             }
         }
     }
@@ -48,7 +45,8 @@ public class LoginUI {
 
             if (newPassword.equals(reenterNewPassword)) {
                 AuthController.changeDefaultPassword(currentUser, newPassword);
-                System.out.println("Password changed successfully.");
+                System.out.println("Password changed successfully. Please re-login to access the system.");
+                loginMenu();
                 break;
             }
             else {
