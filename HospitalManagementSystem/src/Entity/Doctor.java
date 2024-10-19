@@ -11,7 +11,7 @@ public class Doctor extends Staff {
     private ArrayList<Appointment> appointments;
     private Availability[] schedule = new Availability[7];
 
-    public Doctor(String hospitalId,String password, String name, String gender,String role, int age) {
+    public Doctor(String hospitalId,String password, String name, String gender,Enums.Role role, int age) {
         super(hospitalId,password,name,gender,role,age);
         appointments = new ArrayList<Appointment>();
     }

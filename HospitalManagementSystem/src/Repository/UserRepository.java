@@ -17,6 +17,13 @@ public class UserRepository {
         return users.get(hospitalId);
     }
 
+    public static void remove(String hospitalId){
+        if(users.get(hospitalId) != null){
+            users.remove(hospitalId);
+        }
+    } 
+
+
     public static List<Doctor> getAllDoctors() {
         List<Doctor> doctors = new ArrayList<>();
             for (User user : users.values()) {
