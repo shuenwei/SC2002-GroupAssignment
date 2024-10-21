@@ -1,9 +1,9 @@
 package Entity;
 
+import Enums.AppointmentStatus;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-import Enums.AppointmentStatus;
 
 public class Appointment {
     private Doctor doctor;
@@ -74,5 +74,18 @@ public class Appointment {
     public void setAppointmentOutcomeRecord(AppointmentOutcomeRecord appointmentOutcomeRecord) {
         this.appointmentOutcomeRecord = appointmentOutcomeRecord;
     }
+
+    public String toString() {
+        
+        return  "\t Doctor = " + doctor.getName() +
+                "\n\t Patient = " + patient.getName() + 
+                "\n\t Date = " + this.getDate() +
+                "\n\t Time = " + this.getTime() +
+                "\n\t Status = " + this.getStatus() +
+                "\n";
+
+    }
+
+    
 
 }

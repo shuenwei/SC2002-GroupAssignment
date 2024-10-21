@@ -1,19 +1,19 @@
 package Entity;
 
+import UI.DoctorUI;
 import java.time.DayOfWeek;
 import java.util.ArrayList;
-import java.util.List;
-
-import UI.DoctorUI;
 
 public class Doctor extends Staff {
 
     private ArrayList<Appointment> appointments;
+    private ArrayList<Appointment> pending;
     private Availability[] schedule = new Availability[7];
 
     public Doctor(String hospitalId,String password, String name, String gender,Enums.Role role, int age) {
         super(hospitalId,password,name,gender,role,age);
-        appointments = new ArrayList<Appointment>();
+        appointments = new ArrayList<Appointment>(); //
+        pending = new ArrayList<Appointment>(); //
     }
 
     public void displayMenu(User currentUser) {
@@ -39,6 +39,10 @@ public class Doctor extends Staff {
         return appointments;
     }
 
+    public ArrayList<Appointment> getAllPendingDoctorAppointments(){
+        return pending;
+    }//
+
     public void setAppointments(ArrayList<Appointment> appointments) {
         this.appointments = appointments;
     }
@@ -46,4 +50,16 @@ public class Doctor extends Staff {
     public void addAppointment(Appointment appointment) {
         appointments.add(appointment);
     }
+
+    public void removeAppointment(Appointment appointment){
+        appointments.remove(appointment);
+    }//
+
+    public void addPendingAppointment(Appointment appointment){
+        pending.add(appointment);
+    }//
+
+    public void removePendingAppointment(Appointment appointment){
+        pending.remove(appointment);
+    }//
 }

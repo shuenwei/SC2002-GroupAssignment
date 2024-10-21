@@ -8,6 +8,7 @@ import Entity.*;
 
 public class UserRepository {
     private static HashMap<String, User> users = new HashMap<String, User>();
+    private static List<Appointment> allAppointments;
 
     public static void add(User user) {
         users.put(user.getHospitalId(),user);
@@ -32,5 +33,25 @@ public class UserRepository {
                 }
             }
         return doctors;
+    }
+
+    public static List<Staff> getAllStaff() {
+        List<Staff> staffs = new ArrayList<>();
+            for (User user : users.values()) {
+                if (user instanceof Staff) {
+                    staffs.add((Staff) user);
+                }
+            }
+        return staffs;
+    }
+
+    public static List<Patient> getAllPatient() {
+        List<Patient> patients = new ArrayList<>();
+            for (User user : users.values()) {
+                if (user instanceof Patient) {
+                    patients.add((Patient) user);
+                }
+            }
+        return patients;
     }
 }
