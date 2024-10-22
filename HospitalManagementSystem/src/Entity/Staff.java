@@ -1,21 +1,21 @@
 package Entity;
 
-public class Staff extends User {
+public abstract class Staff extends User {
 
-	private String role;
+	private Enums.Role role;
 	private int age;
 
-	public Staff(String hospitalId,String password, String name, String gender,String role, int age) {
+	public Staff(String hospitalId,String password, String name, String gender,Enums.Role role, int age) {
 		super(hospitalId,password,name,gender);
 		this.age = age;
 		this.role = role;
 	}
 
-	public String getRole() {
+	public Enums.Role getRole() {
 		return role;
 	}
 
-	public void setRole(String role) {
+	public void setRole(Enums.Role role) {
 		this.role = role;
 	}
 

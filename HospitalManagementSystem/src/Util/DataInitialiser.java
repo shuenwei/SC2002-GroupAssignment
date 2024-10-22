@@ -2,7 +2,6 @@ package Util;
 
 import Entity.*;
 import Repository.*;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -48,15 +47,15 @@ public class DataInitialiser {
                 int age = Integer.valueOf(staffCsv[5]);
 
                 if (role.equals("Doctor")) {
-                    Doctor doctor = new Doctor(hospitalId,password,name,gender,role,age);
+                    Doctor doctor = new Doctor(hospitalId,password,name,gender,Enums.Role.DOCTOR,age);
                     UserRepository.add(doctor);
                 }
                 else if (role.equals("Pharmacist")) {
-                    Pharmacist pharmacist = new Pharmacist(hospitalId,password,name,gender,role,age);
+                    Pharmacist pharmacist = new Pharmacist(hospitalId,password,name,gender,Enums.Role.PHARMACIST,age);
                     UserRepository.add(pharmacist);
                 }
                 else if (role.equals("Administrator")) {
-                    Administrator administrator = new Administrator(hospitalId,password,name,gender,role,age);
+                    Administrator administrator = new Administrator(hospitalId,password,name,gender,Enums.Role.ADMINISTRATOR,age);
                     UserRepository.add(administrator);
                 }
                 else {

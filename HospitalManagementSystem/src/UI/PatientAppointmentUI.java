@@ -1,0 +1,371 @@
+package UI;
+
+import Entity.Appointment;
+import Entity.Availability;
+import Entity.Doctor;
+import Entity.Patient;
+import Enums.AppointmentStatus;
+import Repository.UserRepository;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
+import java.util.InputMismatchException;
+import java.util.List;
+import java.util.Scanner;
+
+public class PatientAppointmentUI {
+
+    private Patient patient;
+    private Scanner scanner;
+    private DateTimeFormatter formatter;
+
+    public PatientAppointmentUI(Patient patient) {
+        this.patient = patient;
+        scanner = new Scanner(System.in);
+        formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+    }
+
+    public void viewSlots() {
+        
+        Doctor selectedDoctor = selectDoctor();
+
+        if (selectedDoctor == null) {
+            return;
+        }
+
+        System.out.println();
+        AvailabilityUI availabilityUI = new AvailabilityUI(selectedDoctor);
+        availabilityUI.viewSchedule();
+        System.out.println();
+
+        LocalDate selectedDate = null;
+        Availability availability = null;
+        int option = 1;
+
+        while (option == 1) {
+            selectedDate = selectDate();
+
+            availability = selectedDoctor.getAvailability(selectedDate.getDayOfWeek());
+            if (availability == null) {
+                System.out.println("Doctor is not available on this day. Would you like to search for another date?");
+                System.out.println("(1) Yes");
+                System.out.println("(2) No");
+                try {
+                    option = scanner.nextInt();
+                    scanner.nextLine();
+                    if (option == 2) {
+                        return;
+                    }
+                    else if (option != 1) {
+                        System.out.println("Invalid selection. Please enter a number between 1 and 2");
+                    }
+                } catch (InputMismatchException e) {
+                    System.out.println("Invalid input. Please enter '1' or '2'.");
+                    scanner.next();
+                }
+            }
+            else {
+                break;
+            }
+        }
+
+        LocalTime startTime = availability.getStartTime();
+        LocalTime endTime = availability.getEndTime();
+        ArrayList<LocalTime> availableSlots = new ArrayList<>();
+        ArrayList<Appointment> existingAppointments = selectedDoctor.getAppointments();
+        displaySlots(selectedDate ,startTime, endTime,existingAppointments,availableSlots);
+    }
+
+    public void scheduleAppointment(Patient patient) {
+        Doctor selectedDoctor = selectDoctor();
+        
+        if (selectedDoctor == null) {
+            return;
+        }
+
+        AvailabilityUI availabilityUI = new AvailabilityUI(selectedDoctor);
+        availabilityUI.viewSchedule();
+
+        LocalDate selectedDate = null;
+        Availability availability = null;
+        int option = 1;
+
+        while (option == 1) {
+            selectedDate = selectDate();
+
+            availability = selectedDoctor.getAvailability(selectedDate.getDayOfWeek());
+            if (availability == null) {
+                System.out.println("Doctor is not available on this day. Would you like to search for another date?");
+                System.out.println("(1) Yes");
+                System.out.println("(2) No");
+                try {
+                    option = scanner.nextInt();
+                    scanner.nextLine();
+                    if (option == 2) {
+                        return;
+                    }
+                    else if (option != 1) {
+                        System.out.println("Invalid selection. Please enter a number between 1 and 2");
+                    }
+                } catch (InputMismatchException e) {
+                    System.out.println("Invalid input. Please enter '1' or '2'.");
+                    scanner.next();
+                }
+            }
+            else {
+                break;
+            }
+        }
+
+        LocalTime startTime = availability.getStartTime();
+        LocalTime endTime = availability.getEndTime();
+        ArrayList<LocalTime> availableSlots = new ArrayList<>();
+        ArrayList<Appointment> existingAppointments = selectedDoctor.getAppointments();
+
+        displaySlots(selectedDate ,startTime, endTime,existingAppointments,availableSlots);
+
+        int slotChoice = -1;
+        boolean validInput = false;
+
+        while (!validInput) {
+            System.out.print("Please select a time slot by entering the corresponding number: ");
+            try {
+                slotChoice = scanner.nextInt();
+                scanner.nextLine();
+                if (slotChoice >= 1 && slotChoice <= availableSlots.size()) {
+                    validInput = true;
+                } else {
+                    System.out.println("Invalid selection. Please enter a number between 1 and " + availableSlots.size() + ".");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a number.");
+                scanner.nextLine();
+            }
+        }
+
+        // Schedule the Appointment
+        LocalTime selectedTime = availableSlots.get(slotChoice - 1);
+        Appointment appointment = new Appointment(selectedDoctor, this.patient, selectedDate, selectedTime, AppointmentStatus.PENDING, null);
+        selectedDoctor.addPendingAppointment(appointment);// selectedDoctor.addAppointment(appointment);
+        patient.addPendingPatientAppointment(appointment);// patient.addPatientAppointment(appointment);
+
+        System.out.println("Appointment scheduled with Dr. " + selectedDoctor.getName() + " on " + selectedDate.format(formatter) + " at " + selectedTime);
+    }
+
+//
+    public void rescheduleAppointment(Patient patient){
+        
+        ArrayList<Appointment> appointments = patient.getAllAppointments();
+
+        if (appointments.isEmpty()) {
+            System.out.println("You have no appointments to reschedule.");
+            return;
+        }
+
+        displayAppointments(this.patient);
+
+        System.out.println("Enter the appointment number you wish to reschedule:");
+        int index = scanner.nextInt();
+        if (index < 1 || index > appointments.size()) {
+            System.out.println("Invalid selection.");
+            return;
+        }
+
+        int count = 1;
+        for(Appointment a : appointments){
+
+            if(count == index){
+                List <Doctor> doctors = UserRepository.getAllDoctors();
+                patient.removePatientAppointment(a);
+                for(Doctor d : doctors){
+                    if(d.getAppointments().contains(a)){
+                        d.removeAppointment(a);    //change updating object instead
+                    }
+                }
+                System.out.println();
+                System.out.println("Appointment " + index + " has been removed successfully.");
+                scheduleAppointment(patient);
+                System.out.println(); 
+                break;
+            }
+            else{
+                count++;
+            }
+        }
+
+    }
+//  
+
+    public static List<Appointment> getAllAppointmentsByPatient(Patient patient){
+        List<Appointment> filteredAppointments = new ArrayList<>();
+        String patientName = patient.getName();
+
+        for(Appointment a : patient.getAllAppointments()){
+            if(a.getPatient().getName().equals(patientName)){
+                filteredAppointments.add(a);
+            }
+        }
+
+        return filteredAppointments;
+    }
+//
+    public static List<Appointment> getAllPending(Patient patient){
+        List<Appointment> filteredPending = new ArrayList<>();
+        String patientName = patient.getName();
+
+        for(Appointment a : patient.getAllPendingAppointments()){
+            if(a.getPatient().getName().equals(patientName)){
+                filteredPending.add(a);
+            }
+        }
+
+        return filteredPending;
+    }
+//
+    public void displayAppointments(Patient patient){
+
+        List<Appointment> appointments = getAllAppointmentsByPatient(patient);
+
+        if (appointments.isEmpty()) {
+            System.out.println("No appointments.");
+        } 
+        else {
+            System.out.println(patient.getName() + " has the following appointments:");
+            System.out.println(); 
+            int count = 1;
+            for (Appointment a : appointments) {
+                
+                System.out.println(count + ". " + a);
+                count++;
+            }
+        }
+    
+        System.out.println(); 
+    }
+//  
+
+public void cancelAppointment(Patient patient){
+        
+    ArrayList<Appointment> appointments = patient.getAllAppointments();
+
+    if (appointments.isEmpty()) {
+        System.out.println("You have no appointments to cancel.");
+        return;
+    }
+
+    displayAppointments(this.patient);
+
+    System.out.println("Enter the appointment number you wish to cancel:");
+    int index = scanner.nextInt();
+    if (index < 1 || index > appointments.size()) {
+        System.out.println("Invalid selection.");
+        return;
+    }
+
+    int count = 1;
+    for(Appointment a : appointments){
+
+        if(count == index){
+            List <Doctor> doctors = UserRepository.getAllDoctors();
+            patient.removePatientAppointment(a);
+            for(Doctor d : doctors){
+                if(d.getAppointments().contains(a)){
+                    d.removeAppointment(a);
+                }
+            }
+            System.out.println();
+            System.out.println("Appointment " + index + " has been removed successfully.");
+            System.out.println();
+            break;
+            }
+        else{
+            count++;
+            }
+        }
+
+    } // change status to cancelled
+
+//
+    public void displaySlots(LocalDate selectedDate ,LocalTime startTime, LocalTime endTime,ArrayList<Appointment> existingAppointments,ArrayList<LocalTime> availableSlots) {
+        while (startTime.isBefore(endTime)) {
+
+            int slotOccupied = 0;
+
+            for (int i = 0; i < existingAppointments.size(); i++) {
+                Appointment appointment = existingAppointments.get(i);
+                if (appointment.getDate().equals(selectedDate) && appointment.getTime().equals(startTime) && (appointment.getStatus().equals(Enums.AppointmentStatus.CONFIRMED) || appointment.getStatus().equals(Enums.AppointmentStatus.PENDING) || appointment.getStatus().equals(Enums.AppointmentStatus.COMPLETED))) {
+                    slotOccupied++;
+                    break;
+                }
+            }
+
+            if (slotOccupied == 0) {
+                availableSlots.add(startTime);
+            }
+
+            startTime = startTime.plusMinutes(30);
+        }
+
+        if (availableSlots.isEmpty()) {
+            System.out.println("No available time slots for this day.");
+        }
+        else {
+            System.out.println("Available Time Slots:");
+            for (int i = 0; i < availableSlots.size(); i++) {
+                System.out.println("(" + (i + 1) + ") " + availableSlots.get(i));
+            }
+        }
+    }
+
+    public Doctor selectDoctor() {
+    
+        List<Doctor> doctors = UserRepository.getAllDoctors();
+
+        if (doctors.isEmpty()) {
+            System.out.println("No doctors are available.");
+            return null;
+        }
+
+        System.out.println("Available Doctors:");
+        for (int i = 0; i < doctors.size(); i++) {
+            System.out.println("("  +  (i + 1) + ") Dr. " + doctors.get(i).getName());
+        }
+
+        while (true) {
+            try {
+                System.out.print("Please select a doctor by entering the corresponding number: ");
+                int choice = scanner.nextInt();
+                scanner.nextLine();
+                if (choice < 1 || choice > doctors.size()) {
+                    System.out.println("Invalid selection. No doctors found for that input.");
+                }
+                else {
+                    return doctors.get(choice - 1);
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a number.");
+                scanner.nextLine();
+            }
+        }
+    }
+
+    public LocalDate selectDate() {
+        LocalDate appointmentDate = null;
+
+        while (true) {
+            System.out.print("Enter appointment date (dd-mm-yyyy): ");
+            String input = scanner.nextLine();
+
+            try {
+                appointmentDate = LocalDate.parse(input, formatter);
+                return appointmentDate;
+            } catch (DateTimeParseException e) {
+                System.out.println("Invalid date format. Please enter in 'dd-mm-yyyy' format.");
+                scanner.nextLine();
+            }
+        }
+    }
+
+}

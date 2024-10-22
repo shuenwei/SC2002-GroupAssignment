@@ -1,6 +1,6 @@
 package Entity;
 
-public class User {
+public abstract class User {
 
 	private String hospitalId;
 	private String password = "password";
@@ -13,7 +13,9 @@ public class User {
 		this.name = name;
 		this.gender = gender;
     }
-
+	
+	public abstract void displayMenu(User user);
+	
 	public String getHospitalId() {
 		return this.hospitalId;
 	}
