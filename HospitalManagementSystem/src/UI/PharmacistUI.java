@@ -1,22 +1,29 @@
 package UI;
 
 import Controller.PharmacistController;
-import Entity.Pharmacist;
+import Entity.Appointment;
 import Entity.Inventory;
-import java.util.Scanner;
+import Entity.Pharmacist;
+import Enums.AppointmentStatus;
+import View.PendingMedicineView;
+import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.Scanner;
 
 public class PharmacistUI {
     private Pharmacist pharmacist;
     private PharmacistController pharmacistController;
+    private PendingMedicineView viewPending;
     Scanner sc = new Scanner(System.in);
 
     public PharmacistUI(Pharmacist pharmacist) {
         this.pharmacist = pharmacist;
         this.pharmacistController= new PharmacistController(pharmacist);
+        viewPending = new PendingMedicineView();
     }
     
     public void displayMenu() {
+        ArrayList<Appointment> appt = pharmacistController.getAllAppointmentsByStatus(AppointmentStatus.MEDICINE_PENDING);
         int option = -1;
 
         do {
@@ -32,10 +39,17 @@ public class PharmacistUI {
                 
                 option = sc.nextInt();
                 switch (option) {
-                    case 1:
-                            break;
+                    case 1: 
+                        viewPending.display(appt);
+                        break;
                     case 2: 
-                            break;
+                        viewPending.display(appt);
+                        System.out.println("Select which appointment to update prescription: ");
+                        int choice = sc.nextInt();
+                        sc.nextLine();
+                        Appointment a = appt.get(choice - 1);
+                        pharmacistController.updatePrescription(a);
+                        break;
                     case 3:
                         Inventory.viewInventory();
                         break;
@@ -44,8 +58,7 @@ public class PharmacistUI {
                         break;
                     case 5:
                         System.out.println("You are now logged out.");
-                        LoginUI.loginMenu();
-                        break;
+                        return;
                     default:
                         System.out.println("Invalid option. Please try again.");
                         break;
@@ -56,7 +69,7 @@ public class PharmacistUI {
             }
         } while (option != 5);
     }
-
+    
     public void submitReplenishmentRequest() {
         String requestMedicine;
 

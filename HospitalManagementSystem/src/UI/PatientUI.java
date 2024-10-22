@@ -2,18 +2,12 @@ package UI;
 
 import Entity.Appointment;
 import Entity.Patient;
-import Interface.IListDisplayableView;
 import Interface.IDisplayableView;
-
-import java.util.InputMismatchException;
-import java.util.Scanner;
-
-
-import Entity.Patient;
-import UI.PatientAppointmentUI;
-import UI.PatientMedicalRecordUI;
+import Interface.IListDisplayableView;
 import View.AppointmentListView;
 import View.AppointmentView;
+import java.util.InputMismatchException;
+import java.util.Scanner;
 
 public class PatientUI {
 
@@ -78,8 +72,7 @@ public class PatientUI {
                         break;
                     case 9:
                         System.out.println("You are now logged out.");
-                        LoginUI.loginMenu();
-                        break;
+                        return;
                     default:
                         System.out.println("Invalid option. Please try again.");
                         break;

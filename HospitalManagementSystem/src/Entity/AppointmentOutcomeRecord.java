@@ -39,7 +39,7 @@ public class AppointmentOutcomeRecord {
     public String getConsultationNotes(){
         return ConsultationNotes;
     }
-    
+
     public ArrayList<PrescribedMedication> getPrescribedMedications(){
         return prescribedMedications;
     }
@@ -47,5 +47,6 @@ public class AppointmentOutcomeRecord {
     public void addPrescribedMedication(PrescribedMedication prescribedMedication){
         prescribedMedications.add(prescribedMedication);
     }
+
 
 }

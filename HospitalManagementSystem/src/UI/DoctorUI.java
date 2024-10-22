@@ -1,21 +1,14 @@
 package UI;
 
+import Controller.DoctorController;
 import Entity.Appointment;
 import Entity.Doctor;
 import Interface.IDisplayableView;
 import Interface.IListDisplayableView;
-
-import java.util.InputMismatchException;
-import java.util.Scanner;
-
-
-import Controller.DoctorController;
-import UI.AppointmentOutcomeUI;
-import Entity.Doctor;
-import UI.AvailabilityUI;
 import View.AppointmentListView;
 import View.AppointmentView;
-import View.CommonView;
+import java.util.InputMismatchException;
+import java.util.Scanner;
 
 
 public class DoctorUI {
@@ -91,5 +84,7 @@ public class DoctorUI {
                 scanner.nextLine();
             }
         } while (option != 8);
+
+        
     }
 }
