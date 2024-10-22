@@ -1,6 +1,6 @@
 package UI;
 
-import Controller.StaffManagementController;
+//import Controller.StaffManagementController;
 import Entity.Administrator;
 import Entity.Doctor;
 import Entity.Pharmacist;
@@ -55,7 +55,7 @@ public class AdministratorUI {
                             else if(hospID.charAt(0) == 'P'){
                                 staff = new Pharmacist(hospID, hospPass, hospName, hospGender, Enums.Role.PHARMACIST, hospAge);
                             }
-                            staff_management = new StaffManagementController(staff);
+                            //staff_management = new StaffManagementController(staff);
                             staff_management.addStaff(staff);
 
                             break;

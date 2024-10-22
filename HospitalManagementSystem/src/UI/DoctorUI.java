@@ -3,12 +3,14 @@ package UI;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import Controller.DoctorController;
 import Entity.Doctor;
 import UI.AvailabilityUI;
 
 public class DoctorUI {
 
     private Doctor doctor;
+    private DoctorMedicalRecordUI doctorMedicalRecordUI;
 
     public DoctorUI (Doctor doctor) {
         this.doctor = doctor;
@@ -17,6 +19,10 @@ public class DoctorUI {
     public void displayMenu(){
         Scanner scanner = new Scanner(System.in);
         AvailabilityUI availabilityUI = new AvailabilityUI(this.doctor);
+        DoctorController doctorController = new DoctorController(this.doctor);
+        doctorMedicalRecordUI = new DoctorMedicalRecordUI(doctorController);
+        
+
         int option = -1;
 
         do {
@@ -37,8 +43,10 @@ public class DoctorUI {
 
                 switch (option) {
                     case 1:
+                        doctorMedicalRecordUI.displayMedicalRecord();
                         break;
                     case 2:
+                        doctorMedicalRecordUI.editMedicalRecord();
                         break;
                     case 3:
                         availabilityUI.viewSchedule();

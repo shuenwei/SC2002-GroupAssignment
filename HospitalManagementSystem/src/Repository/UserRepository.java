@@ -33,4 +33,14 @@ public class UserRepository {
             }
         return doctors;
     }
+
+    public static List<Patient> getAllPatients() {
+        List<Patient> patients = new ArrayList<>();
+        for (User user : users.values()) {
+            if (user instanceof Patient) {
+                patients.add((Patient) user);
+            }
+        }
+        return patients;
+    }
 }

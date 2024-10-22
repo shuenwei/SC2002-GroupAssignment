@@ -5,15 +5,18 @@ import java.util.Scanner;
 
 import Entity.Patient;
 import UI.PatientAppointmentUI;
+import UI.PatientMedicalRecordUI;
 
 public class PatientUI {
 
     private Patient patient;
-    private PatientAppointmentUI patientAppointmentUI; 
+    private PatientAppointmentUI patientAppointmentUI;
+    private PatientMedicalRecordUI patientMedicalRecordUI;
 
     public PatientUI (Patient patient) {
         this.patient = patient;
         patientAppointmentUI = new PatientAppointmentUI(this.patient);
+        patientMedicalRecordUI = new PatientMedicalRecordUI(patient.getMedicalRecord());
     }
 
     public void displayMenu(){
@@ -39,8 +42,10 @@ public class PatientUI {
 
                 switch (option) {
                     case 1:
+                        patientMedicalRecordUI.displayMedicalRecord();
                         break;
                     case 2:
+                        patientMedicalRecordUI.editMedicalRecord();
                         break;
                     case 3:
                         patientAppointmentUI.viewSlots();
