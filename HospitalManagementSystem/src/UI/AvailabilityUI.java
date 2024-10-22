@@ -32,8 +32,8 @@ public class AvailabilityUI {
 
     public void viewSchedule(){
         AvailabilityController availabilityController = new AvailabilityController(doctor);
-        ScheduleView scheduleView = new ScheduleView(availabilityController.getSchedule());
-        scheduleView.display();
+        ScheduleView scheduleView = new ScheduleView();
+        scheduleView.display(availabilityController.getSchedule());
     }
 
     public void setSchedule(){
