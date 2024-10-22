@@ -56,13 +56,13 @@ public class UserRepository {
         return staffs;
     }
 
-    public static List<Patient> getAllPatient() {
-        List<Patient> patients = new ArrayList<>();
-            for (User user : users.values()) {
-                if (user instanceof Patient) {
-                    patients.add((Patient) user);
-                }
-            }
-        return patients;
-    }
+//    public static List<Patient> getAllPatient() {
+//        List<Patient> patients = new ArrayList<>();
+//            for (User user : users.values()) {
+//                if (user instanceof Patient) {
+//                    patients.add((Patient) user);
+//                }
+//            }
+//        return patients;
+//    }
 }

@@ -1,11 +1,13 @@
 package UI;
 
+import Entity.Appointment;
 import Entity.Doctor;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 
 import Controller.DoctorController;
+import UI.AppointmentOutcomeUI;
 import Entity.Doctor;
 import UI.AvailabilityUI;
 
@@ -13,7 +15,9 @@ import UI.AvailabilityUI;
 public class DoctorUI {
 
     private Doctor doctor;
+    private Appointment appointment;
     private DoctorMedicalRecordUI doctorMedicalRecordUI;
+    private AppointmentOutcomeUI appointmentOutcomeUI;
 
     public DoctorUI (Doctor doctor) {
         this.doctor = doctor;
@@ -24,7 +28,7 @@ public class DoctorUI {
         AvailabilityUI availabilityUI = new AvailabilityUI(this.doctor);
         DoctorController doctorController = new DoctorController(this.doctor);
         doctorMedicalRecordUI = new DoctorMedicalRecordUI(doctorController);
-        
+        appointmentOutcomeUI = new AppointmentOutcomeUI(appointment);
 
         int option = -1;
 
@@ -63,6 +67,7 @@ public class DoctorUI {
                     case 6:
                         break;
                     case 7:
+                        appointmentOutcomeUI.createAppointmentOutcome();
                         break;
                     case 8:
                         System.out.println("You are now logged out.");

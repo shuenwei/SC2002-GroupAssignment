@@ -1,7 +1,6 @@
 package UI;
 
-import Entity.Diagnoses;
-import Entity.PrescribedMedication;
+import Entity.MedicalHistory;
 import Entity.MedicalRecord;
 import java.util.Scanner;
 import Controller.DoctorController;
@@ -9,7 +8,6 @@ import Controller.DoctorController;
 
 public class DoctorMedicalRecordUI {
     private DoctorController doctorController;
-    private MedicalRecord medicalRecord;
 
     public DoctorMedicalRecordUI(DoctorController doctorController) {
         this.doctorController = doctorController;
@@ -56,28 +54,27 @@ public class DoctorMedicalRecordUI {
                     String treatmentPlan = scanner.nextLine();
                     System.out.println("Please enter the prescribed medication: ");
                     String medication = scanner.nextLine();
-                    //Diagnoses newdiagnosis = new Diagnoses();
+                    MedicalHistory newmedicalHistory = new MedicalHistory(name,treatmentPlan);
+                    newmedicalHistory.addPrescribedMedications(medication);
+                    medicalRecord.addMedicalHistory(newmedicalHistory);
                     break;
                 case 2:
                     System.out.println("Please enter the diagnosis you want to edit: ");
-                    String diagnosis = scanner.nextLine();
-                    Diagnoses diagnoses = doctorController.findDiagnosis(diagnosis, patientID);
+                    String diagnosisName = scanner.nextLine();
+                    MedicalHistory existingMedicalHistory = doctorController.findmedicalHistory(diagnosisName, patientID);
                     System.out.println("Please enter updated name of the diagnosis: ");
                     String updatedName = scanner.nextLine();
-                    diagnoses.setDiagnosis(updatedName);
+                    existingMedicalHistory.setDiagnosis(updatedName);
                     System.out.println("Please enter updated Treatment Plan of the diagnosis: ");
                     String updatedTreatmentPlan = scanner.nextLine();
-                    diagnoses.setTreatmentPlan(updatedTreatmentPlan);
+                    existingMedicalHistory.setTreatmentPlan(updatedTreatmentPlan);
+                    System.out.println("Please enter updated Prescribed Medication: ");
+                    String updatedPrescribedMedication = scanner.nextLine();
+                    existingMedicalHistory.addPrescribedMedications(updatedPrescribedMedication);
                     break;
                 default:
                     break;
-
             }
         }
-
-
-
     }
-
-
 }

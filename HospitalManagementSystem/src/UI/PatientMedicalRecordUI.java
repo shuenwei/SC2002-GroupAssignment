@@ -12,8 +12,8 @@ public class PatientMedicalRecordUI {
     }
 
     public void displayMedicalRecord() {
-        if(medicalRecord.getDiagnoses() != null) {
-            DiagnosesUI diagnosesUI = new DiagnosesUI(medicalRecord.getDiagnoses());
+        if(medicalRecord.getMedicalHistory() != null) {
+            MedicalHistoryUI medicalHistoryUI = new MedicalHistoryUI(medicalRecord.getMedicalHistory());
             System.out.println("PatientID: " + medicalRecord.getPatientID());
             System.out.println("Name: " + medicalRecord.getName());
             System.out.println("Date of Birth: " + medicalRecord.getDateOfBirth());
@@ -21,7 +21,7 @@ public class PatientMedicalRecordUI {
             System.out.println("Email Address: " + medicalRecord.getEmailAddress());
             System.out.println("Phone Number: " + medicalRecord.getPhoneNumber());
             System.out.println("BloodType: " + medicalRecord.getBloodType());
-            diagnosesUI.printDiagnoses();
+            medicalHistoryUI.printMedicalHistory();
         }
         else{
             System.out.println("PatientID: " + medicalRecord.getPatientID());
@@ -31,7 +31,7 @@ public class PatientMedicalRecordUI {
             System.out.println("Email Address: " + medicalRecord.getEmailAddress());
             System.out.println("Phone Number: " + medicalRecord.getPhoneNumber());
             System.out.println("BloodType: " + medicalRecord.getBloodType());
-            System.out.println("Diagnoses: There are no diagnoses ");
+            System.out.println("MedicalHistory: There are no diagnoses ");
         }
 
     }

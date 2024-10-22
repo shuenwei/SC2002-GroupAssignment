@@ -34,7 +34,7 @@ public class Patient extends User {
         patientUi.displayMenu();
     }
 
-     public MedicalRecord getMedicalRecord() {
+    public MedicalRecord getMedicalRecord() {
         return medicalRecord;
     }
   
