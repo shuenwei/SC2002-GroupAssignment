@@ -25,4 +25,16 @@ public class Inventory {
             }
         return medicines;
     }
+    public static void viewInventory() {
+        ArrayList<Medication> medicines = Inventory.getAllMedicine();
+        String[] headers = new String[]{"Medicine Name", "Stock", "AlertLevel", "LowStock"};
+        System.out.println();
+        System.out.printf("| %-15s | %-7s | %-12s | %-7s |%n", headers[0], headers[1], headers[2], headers[3]);
+        System.out.println("-------------------------------------------------------");
+        for (Medication medicine : medicines) {
+            if (medicine != null) {
+                System.out.printf("| %-15s | %-7d | %-12d | %-8s |%n", medicine.getMedicineName(), medicine.getStock(), medicine.getStockThreshold(), medicine.getIsLowStock());
+            }
+        }
+    }
 }
