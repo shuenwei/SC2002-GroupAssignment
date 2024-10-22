@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class DataInitialiser {
+    
     public static void initialisePatient() {
         String patientCsvFilePath = "data/patientCsv.csv";
         String line;

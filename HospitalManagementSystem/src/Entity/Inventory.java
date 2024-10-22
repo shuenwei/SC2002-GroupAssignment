@@ -1,5 +1,6 @@
 package Entity;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Inventory {
@@ -16,4 +17,16 @@ public class Inventory {
             medicineRepo.remove(medicineName);
         }
     }
+
+    public static ArrayList<Medication> getAllMedication() {
+        ArrayList<Medication> medication = new ArrayList<>();
+            for (Medication m : medicineRepo.values()) {
+                if (m instanceof Medication) {
+                    medication.add((Medication) m);
+                }
+            }
+        return medication;
+    }
+
+
 }
