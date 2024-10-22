@@ -4,6 +4,7 @@ import Controller.AdministratorController;
 import Entity.Administrator;
 import Entity.Appointment;
 import Entity.Doctor;
+import Entity.Inventory;
 import Entity.Pharmacist;
 import Entity.Staff;
 import Entity.User;
@@ -17,18 +18,19 @@ import java.util.Scanner;
 public class AdministratorUI {
 
     private Administrator administrator;
+    private AdministratorController administratorController;
     private Staff staff;
     private IStaffManagement staff_management;
     Scanner scanner = new Scanner(System.in);
 
     public AdministratorUI(Administrator administrator) {
         this.administrator = administrator;
+        this.administratorController = new AdministratorController(administrator);
     }
 
     public void displayMenu(){
-        
         int option = -1;
-
+        
         do {
             try {
                 System.out.println();
@@ -49,6 +51,7 @@ public class AdministratorUI {
                     case 3: manageInventoryMenu();
                         break;
                     case 4:
+                        requestMenu();
                         break;
                     case 5:
                         System.out.println("You are now logged out.");
@@ -345,50 +348,123 @@ public class AdministratorUI {
 
     }
 
-    public void manageInventoryMenu(){
-        
-        int options;
+    public void manageInventoryMenu() {
+        int choice = -1;
 
         System.out.println();
         System.out.println("Select an option:");
         System.out.println();
-        System.out.println("(1) View Inventory Level");
-        System.out.println("(2) Add Medicine"); 
-        System.out.println("(3) Update Medicine"); 
-        System.out.println("(4) Remove Medicine"); 
-        
-        options = scanner.nextInt();
+        System.out.println("(1) View Inventory");
+        System.out.println("(2) Manage Inventory"); 
 
-        switch(options){
-            case 1: showStockLevel();
-                    System.out.println();
-                    break;
-            case 2: addStaff();
-                    System.out.println();
-                    break;
-            case 3: updateStaff();
-                    System.out.println();
-                    break;
-            case 4: removeStaff();
-                    System.out.println();
-                    break;
+        choice = scanner.nextInt();
+        switch(choice) {
+            case 1:
+                Inventory.viewInventory();
+                break;
+            case 2:
+                manageInventory();
+                break;
             default:
-                    System.out.println("Invalid option. Please try again.");
-                    break;
+                System.out.println("Invalid input");
         }
-
     }
+    
+    public void manageInventory() {
+        int choice = -1;
+        String medicineName;
+        int quantity;
+        int threshold;
 
-    public void showStockLevel(){
-        List <Staff> staffs = UserRepository.getAllStaff();
         System.out.println();
-        for(Staff s : staffs){
-            System.out.print(s.getName() + " ");
-            System.out.println(s.getRole());
+        System.out.println("Select an option:");
+        System.out.println();
+        System.out.println("(1) Add Stock");
+        System.out.println("(2) Remove Stock");
+        System.out.println("(3) Add New Medicine");
+        System.out.println();
+
+        choice = scanner.nextInt();
+        switch(choice) {
+            case 1:
+                try {
+                    System.out.println("Input medicine name:");
+                    scanner.nextLine();
+                    medicineName = scanner.nextLine();
+                    
+                    System.out.println("Input quantity to add:");
+                    quantity = scanner.nextInt();
+
+                    administratorController.addStock(medicineName, quantity);
+                } catch (InputMismatchException e) {
+                    System.out.println("Invalid input for quantity. Please enter a number.");
+                    scanner.next();  
+                }
+                break;
+            case 2:
+                try {
+                    System.out.println("Input medicine name:");
+                    scanner.nextLine();
+                    medicineName = scanner.nextLine();
+
+                    System.out.println("Input quantity to remove:");
+                    quantity = scanner.nextInt();
+
+                    administratorController.removeStock(medicineName, quantity);
+                } catch(InputMismatchException e) {
+                    System.out.println("Invalid input for quantity. Please enter a number.");
+                    scanner.next();  
+                }
+                break;
+            case 3:
+                try {
+                    System.out.println("Input medicine name:");
+                    scanner.nextLine();
+                    medicineName = scanner.nextLine();
+
+                    System.out.println("Input quantity of medicine:");
+                    quantity = scanner.nextInt();
+
+                    System.out.println("Input stock threshold:");
+                    threshold = scanner.nextInt();
+
+                    administratorController.addNewMedicine(medicineName, quantity, threshold);
+                } catch(InputMismatchException e) {
+                    System.out.println("Invalid input for quantity. Please enter a number.");
+                    scanner.next();  
+                }
+                break;
+            default:
+                System.out.println("Invalid input");
         }
     }
 
+    public void requestMenu() {
+        int choice = -1;
+        String requestMedicine;
 
+        System.out.println();
+        System.out.println("Select an option:");
+        System.out.println();
+        System.out.println("(1) View Requests");
+        System.out.println("(2) Approve Request"); 
+
+        choice = scanner.nextInt();
+        switch(choice) {
+            case 1:
+                Inventory.viewRequests();
+                break;
+            case 2:
+                System.out.println("Input medicine replenishment request to be approved:");
+                scanner.nextLine();
+                requestMedicine = scanner.nextLine();
+                
+                administratorController.approveRequest(requestMedicine);
+                break;
+            default:
+                System.out.println("Invalid input");
+        }
+    }
 }
 
 

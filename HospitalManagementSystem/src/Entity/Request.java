@@ -11,12 +11,14 @@ public class Request {
         this.status = RequestStatus.PENDING;
     }
     
-    public String getRequestMedicine() {
+    public String getRequestedMedicine() {
         return this.medicineName;
     }
+
     public RequestStatus getStatus() {
         return this.status;
     }
+
     public void setStatus(RequestStatus status) {
         this.status = status;
     }
