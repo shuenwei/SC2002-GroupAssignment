@@ -36,7 +36,6 @@ public class UserRepository {
     }
 
    
-
     public static List<Patient> getAllPatients() {
         List<Patient> patients = new ArrayList<>();
         for (User user : users.values()) {
@@ -44,7 +43,9 @@ public class UserRepository {
                 patients.add((Patient) user);
             }
         }
-      
+        return patients;
+    }
+
     public static List<Staff> getAllStaff() {
         List<Staff> staffs = new ArrayList<>();
             for (User user : users.values()) {

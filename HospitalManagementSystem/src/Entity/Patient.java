@@ -16,7 +16,7 @@ public class Patient extends User {
 
 
 	private List<Appointment> appointments;
-	private MedicalRecord MedicalRecord;
+	private MedicalRecord medicalRecord;
     private ArrayList<Appointment> allPatientAppointments; //
     private ArrayList<Appointment> pending; //
 

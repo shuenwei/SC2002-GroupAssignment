@@ -20,7 +20,7 @@ public class PatientMedicalRecordUI {
             System.out.println("Gender: " + medicalRecord.getGender());
             System.out.println("Email Address: " + medicalRecord.getEmailAddress());
             System.out.println("Phone Number: " + medicalRecord.getPhoneNumber());
-            System.out.println("BloodTypeAthithiya: " + medicalRecord.getBloodType());
+            System.out.println("BloodType: " + medicalRecord.getBloodType());
             diagnosesUI.printDiagnoses();
         }
         else{
