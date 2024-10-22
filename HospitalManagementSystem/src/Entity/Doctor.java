@@ -7,13 +7,11 @@ import java.util.ArrayList;
 public class Doctor extends Staff {
 
     private ArrayList<Appointment> appointments;
-    private ArrayList<Appointment> pending;
     private Availability[] schedule = new Availability[7];
 
     public Doctor(String hospitalId,String password, String name, String gender,Enums.Role role, int age) {
         super(hospitalId,password,name,gender,role,age);
-        appointments = new ArrayList<Appointment>(); //
-        pending = new ArrayList<Appointment>(); //
+        appointments = new ArrayList<Appointment>();
     }
 
     public void displayMenu(User currentUser) {
@@ -39,10 +37,6 @@ public class Doctor extends Staff {
         return appointments;
     }
 
-    public ArrayList<Appointment> getAllPendingDoctorAppointments(){
-        return pending;
-    }//
-
     public void setAppointments(ArrayList<Appointment> appointments) {
         this.appointments = appointments;
     }
@@ -53,13 +47,5 @@ public class Doctor extends Staff {
 
     public void removeAppointment(Appointment appointment){
         appointments.remove(appointment);
-    }//
-
-    public void addPendingAppointment(Appointment appointment){
-        pending.add(appointment);
-    }//
-
-    public void removePendingAppointment(Appointment appointment){
-        pending.remove(appointment);
-    }//
+    }
 }
