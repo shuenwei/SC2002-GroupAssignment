@@ -61,6 +61,7 @@ public class DoctorUI {
                         availabilityUI.acceptDecline();
                         break;
                     case 6:
+                        availabilityUI.displayAppointments();
                         break;
                     case 7:
                         break;
