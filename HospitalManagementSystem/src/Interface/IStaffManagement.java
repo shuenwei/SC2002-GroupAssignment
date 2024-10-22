@@ -7,13 +7,13 @@ public interface IStaffManagement{
 
     public void addStaff(Staff staff);
 
-    public void updateStaffAge(int age);
+    public void updateStaffAge(Staff staff, int age);
 
-    public void updateStaffName(String name);
+    public void updateStaffName(Staff staff, String name);
 
-    public void updateStaffGender(String gender);
+    public void updateStaffGender(Staff staff, String gender);
 
-    public void updateStaffPassword(String password);
+    public void updateStaffPassword(Staff staff, String password);
 
     public void removeStaff(String hospitalId);
 

@@ -1,11 +1,29 @@
 import UI.LoginUI;
-import Util.DataInitialiser;
+import Util.*;
+import View.CommonView;
 
 public class Main {
     public static void main(String args[]) {
-        DataInitialiser.initialisePatient();
-        DataInitialiser.initialiseStaff();
-        DataInitialiser.initialiseMedicine();
-        LoginUI.loginMenu();
+
+        try{
+            DataInitialiser.initialisePatient();
+            DataInitialiser.initialiseStaff();
+            DataInitialiser.initialiseMedicine();
+            do{
+                System.out.println("==================== Welcome to Hospital Management System =========================\n");
+                CommonView.pressEnterToContinue();
+                LoginUI.loginMenu();
+
+            }while(true);
+
+        }catch (Exception e) {
+            
+            // DataStore.saveStaffData();
+
+            System.out.println("HMS crashed. Please restart the system.");
+            System.out.println("Error: " + e.getMessage());
+        }
     }
 }
+
+

@@ -54,16 +54,16 @@ public class PatientUI {
                         patientAppointmentUI.viewSlots();
                         break;
                     case 4:
-                        patientAppointmentUI.scheduleAppointment(patient);
+                        patientAppointmentUI.scheduleAppointment();
                         break;
                     case 5:
-                        patientAppointmentUI.rescheduleAppointment(patient);
+                        patientAppointmentUI.rescheduleAppointment();
                         break;
                     case 6:
-                        patientAppointmentUI.cancelAppointment(patient);
+                        patientAppointmentUI.cancelAppointment();
                         break;
                     case 7:
-                        patientAppointmentUI.displayAppointments(patient);
+                        patientAppointmentUI.displayAppointments();
                         break;
                     case 8:
                         patientMedicalRecordUI.displayAppointmentOutcomeRecord();
