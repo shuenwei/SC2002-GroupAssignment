@@ -1,6 +1,9 @@
 package Entity;
 
 import java.util.HashMap;
+
+import Enums.RequestStatus;
+
 import java.util.ArrayList;
 
 public class Inventory {
@@ -12,15 +15,23 @@ public class Inventory {
     }
 
     public static Medication get(String medicineName) {
-        return medicineRepo.get(medicineName);
+        Medication medicine = medicineRepo.get(medicineName);
+        if (medicine != null) {
+            return medicineRepo.get(medicineName);
+        }
+        else {
+            System.out.println("Medicine does not exist");
+            return null;
+        }
     }
+
     public static void remove(String medicineName) {
         if (medicineRepo.get(medicineName) != null) {
             medicineRepo.remove(medicineName);
         }
     }
 
-    public static ArrayList<Medication> getAllMedicine() {
+    private static ArrayList<Medication> getAllMedicines() {
         ArrayList<Medication> medicines = new ArrayList<Medication>();
             for (Medication medicine : medicineRepo.values()) {
                 medicines.add(medicine);
@@ -29,7 +40,7 @@ public class Inventory {
     }
 
     public static void viewInventory() {
-        ArrayList<Medication> medicines = Inventory.getAllMedicine();
+        ArrayList<Medication> medicines = getAllMedicines();
         String[] headers = new String[]{"Medicine Name", "Stock", "AlertLevel", "LowStock"};
         System.out.println();
         System.out.printf("| %-15s | %-7s | %-12s | %-7s |%n", headers[0], headers[1], headers[2], headers[3]);
@@ -41,13 +52,53 @@ public class Inventory {
         }
     }
 
+    public static Request getRequest(String requestedMedicine) {
+        Request request = requestRepo.get(requestedMedicine);
+        if (request != null) {
+            return request;
+        }
+        else {
+            System.out.println("Request does not exist");
+            return null;
+        }
+    }
+
     public static void addRequest(Request request) {
-        requestRepo.put(request.getRequestMedicine(), request);
+        requestRepo.put(request.getRequestedMedicine(), request);
     }
 
     public static void removeRequest(String requestedMedicine) {
-        if (requestRepo.get(requestedMedicine) != null) {
-            requestRepo.remove(requestedMedicine);
+        Request request = getRequest(requestedMedicine);
+        if (request != null) {
+            if (request.getStatus() == RequestStatus.FULFILLED) {
+                requestRepo.remove(requestedMedicine);
+            }
+            else {
+                System.out.println("Request has not been fulfilled yet.");
+            }
+        }
+    }
+
+    private static ArrayList<Request> getAllRequests() {
+        ArrayList<Request> requests = new ArrayList<Request>();
+            for (Request request : requestRepo.values()) {
+                requests.add(request);
+            }
+        return requests;
+    }
+
+    public static void viewRequests() {
+        ArrayList<Request> requests = getAllRequests();
+        String header = "Requests";
+
+        System.out.println();
+        System.out.printf("| %-15s |%n", header);
+        System.out.println("-------------------");
+        
+        for (Request request : requests) {
+            if (request != null) {
+                System.out.printf("| %-15s |%n", request.getRequestedMedicine());
+            }
         }
     }
 }

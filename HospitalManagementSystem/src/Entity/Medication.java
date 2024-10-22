@@ -14,24 +14,31 @@ public class Medication {
             this.isLowStock = "YES";
         }
     }
+
     public String getMedicineName() {
         return this.medicineName;
     }
+
     public void setStock(int stock) {
         this.stock = stock;
     }
+
     public int getStock() {
         return this.stock;
     }
+
     public void setStockThreshold(int stockThreshold) {
         this.lowStockThreshold = stockThreshold;
     }
+
     public int getStockThreshold() {
         return this.lowStockThreshold;
     }
+
     public void setIsLowStock(String isLowStock) {
         this.isLowStock = isLowStock;
     }
+
     public String getIsLowStock() {
         return this.isLowStock;
     }
