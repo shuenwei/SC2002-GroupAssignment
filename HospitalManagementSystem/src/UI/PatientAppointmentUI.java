@@ -6,9 +6,8 @@ import Entity.Doctor;
 import Entity.Patient;
 import Enums.AppointmentStatus;
 import Interface.IListDisplayableView;
+import Interface.IDisplayableView;
 import Repository.UserRepository;
-import View.AppointmentListView;
-import View.AppointmentView;
 import View.CommonView;
 
 import java.time.LocalDate;
@@ -28,11 +27,10 @@ public class PatientAppointmentUI {
     private Scanner scanner;
     private DateTimeFormatter formatter;
 
-    public PatientAppointmentUI(Patient patient,IListDisplayableView<Appointment> listView) {
+    public PatientAppointmentUI(Patient patient) {
         this.patient = patient;
         scanner = new Scanner(System.in);
         formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        this.listView = listView; 
     }
 
     public void viewSlots() {
@@ -162,8 +160,9 @@ public class PatientAppointmentUI {
     }
 
 
-    public void rescheduleAppointment(){
+    public void rescheduleAppointment(IDisplayableView<Appointment> appointmentView,IListDisplayableView<Appointment> appointmentListView){
 
+        
         PatientController patientController = new PatientController(patient);
         
         ArrayList<Appointment> appointments = patientController.getAppointmentsByStatus(Enums.AppointmentStatus.CONFIRMED);
@@ -175,7 +174,6 @@ public class PatientAppointmentUI {
             return;
         }
 
-        AppointmentListView appointmentListView = new AppointmentListView();
         appointmentListView.display(appointments);
 
         int index;
@@ -268,12 +266,11 @@ public class PatientAppointmentUI {
         System.out.println("Appointment has been rescheduled successfully.");
         System.out.println();
         System.out.println("Here are your new appointment details:");
-        AppointmentView appointmentView = new AppointmentView();
         appointmentView.display(selectedAppointment);
         CommonView.pressEnterToContinue();
     } 
 
-    public void displayAppointments(){
+    public void displayAppointments(IListDisplayableView<Appointment> appointmentListView){
         PatientController patientController = new PatientController(patient);
         
         ArrayList<Appointment> pendingAppointments = patientController.getAppointmentsByStatus(Enums.AppointmentStatus.PENDING);
@@ -290,7 +287,6 @@ public class PatientAppointmentUI {
             System.out.println("You have no appointments.");
         } 
         else {
-            AppointmentListView appointmentListView = new AppointmentListView();
 
             System.out.println("You have:"); 
             System.out.println(noOfPendingAppointments + " Pending Appointments");
@@ -360,7 +356,7 @@ public class PatientAppointmentUI {
     
     }
 
-    public void cancelAppointment(){
+    public void cancelAppointment(IListDisplayableView<Appointment> appointmentListView){
             
         PatientController patientController = new PatientController(patient);
         
@@ -373,7 +369,6 @@ public class PatientAppointmentUI {
             return;
         }
 
-        AppointmentListView appointmentListView = new AppointmentListView();
         appointmentListView.display(appointments);
 
         int choice = -1;
