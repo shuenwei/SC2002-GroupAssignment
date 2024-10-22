@@ -5,18 +5,16 @@ import View.CommonView;
 public class Main {
     public static void main(String args[]) {
 
-        boolean flag = true;
-
         try{
             DataInitialiser.initialisePatient();
             DataInitialiser.initialiseStaff();
             DataInitialiser.initialiseMedicine();
-            System.out.println("====================Welcome to Hospital Management System=========================");
-            CommonView.pressEnterToContinue();
             do{
+                System.out.println("==================== Welcome to Hospital Management System =========================\n");
+                CommonView.pressEnterToContinue();
                 LoginUI.loginMenu();
 
-            }while(flag);
+            }while(true);
 
         }catch (Exception e) {
             
