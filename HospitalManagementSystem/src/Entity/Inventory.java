@@ -10,6 +10,7 @@ public class Inventory {
     public static void add(Medication medicine) {
         medicineRepo.put(medicine.getMedicineName(), medicine);
     }
+
     public static Medication get(String medicineName) {
         return medicineRepo.get(medicineName);
     }
@@ -18,6 +19,7 @@ public class Inventory {
             medicineRepo.remove(medicineName);
         }
     }
+
     public static ArrayList<Medication> getAllMedicine() {
         ArrayList<Medication> medicines = new ArrayList<Medication>();
             for (Medication medicine : medicineRepo.values()) {
@@ -25,6 +27,7 @@ public class Inventory {
             }
         return medicines;
     }
+
     public static void viewInventory() {
         ArrayList<Medication> medicines = Inventory.getAllMedicine();
         String[] headers = new String[]{"Medicine Name", "Stock", "AlertLevel", "LowStock"};
@@ -35,6 +38,16 @@ public class Inventory {
             if (medicine != null) {
                 System.out.printf("| %-15s | %-7d | %-12d | %-8s |%n", medicine.getMedicineName(), medicine.getStock(), medicine.getStockThreshold(), medicine.getIsLowStock());
             }
+        }
+    }
+
+    public static void addRequest(Request request) {
+        requestRepo.put(request.getRequestMedicine(), request);
+    }
+
+    public static void removeRequest(String requestedMedicine) {
+        if (requestRepo.get(requestedMedicine) != null) {
+            requestRepo.remove(requestedMedicine);
         }
     }
 }
