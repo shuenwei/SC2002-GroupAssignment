@@ -1,5 +1,9 @@
 package Entity;
 
+
+import java.util.*;
+
+import UI.PatientMedicalRecordUI;
 import Repository.UserRepository;
 import UI.PatientUI;
 import java.util.*;
@@ -9,6 +13,7 @@ public class Patient extends User {
     private String dateOfBirth;
 	private String bloodType;
     private String contactInformation;
+
 
 	private List<Appointment> appointments;
 	private MedicalRecord MedicalRecord;
@@ -20,15 +25,22 @@ public class Patient extends User {
         this.dateOfBirth = dateOfBirth;
         this.bloodType = bloodType;
         this.contactInformation = contactInformation;
+        
+        this.medicalRecord = new MedicalRecord(hospitalId, name, gender, dateOfBirth, bloodType,null,contactInformation);
         allPatientAppointments = new ArrayList<>(); //
         pending = new ArrayList<>();//
     }
 
     public void displayMenu(User currentUser) {
         PatientUI patientUi = new PatientUI((Patient) currentUser);
+        PatientMedicalRecordUI patientMedicalRecordUI = new PatientMedicalRecordUI((MedicalRecord) ((Patient) currentUser).medicalRecord);
         patientUi.displayMenu();
     }
 
+     public MedicalRecord getMedicalRecord() {
+        return medicalRecord;
+    }
+  
     public String getName(){
         return super.getName();
     }
@@ -80,5 +92,4 @@ public class Patient extends User {
         }
 
     } // change to view 
-
 }
