@@ -1,16 +1,21 @@
 package UI;
 
 import Controller.StaffManagementController;
+import Controller.AdministratorController;
 import Entity.Administrator;
 import Entity.Appointment;
 import Entity.Doctor;
 import Entity.Pharmacist;
 import Entity.Staff;
 import Entity.User;
+import Entity.Medication;
+import Entity.Request;
+import Entity.Inventory;
 import Interface.IStaffManagement;
 import Repository.UserRepository;
 import java.util.InputMismatchException;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class AdministratorUI {
@@ -18,7 +23,7 @@ public class AdministratorUI {
     private Administrator administrator;
     private Staff staff;
     private IStaffManagement staff_management;
-    Scanner scanner = new Scanner(System.in);
+    static Scanner scanner = new Scanner(System.in);
 
     public AdministratorUI(Administrator administrator) {
         this.administrator = administrator;
@@ -45,7 +50,7 @@ public class AdministratorUI {
                             break;
                     case 2: showAllDoctorsAppointment(); //incompleted
                             break;
-                    case 3:
+                    case 3: manageInventoryMenu();
                         break;
                     case 4:
                         break;
@@ -304,7 +309,81 @@ public class AdministratorUI {
 
     }
 
+    public static void manageInventoryMenu() {
+        int choice = -1;
 
+        System.out.println();
+        System.out.println("Select an option:");
+        System.out.println();
+        System.out.println("(1) View Inventory");
+        System.out.println("(2) Manage Inventory"); 
+
+        choice = scanner.nextInt();
+        switch(choice) {
+            case 1:
+                viewInventory();
+                break;
+            case 2:
+                manageInventory();
+                break;
+        }
+    }
+    
+    public static void viewInventory() {
+        ArrayList<Medication> medicines = Inventory.getAllMedicine();
+        String[] headers = new String[]{"Medicine Name", "Stock", "AlertLevel", "LowStock"};
+        System.out.println();
+        System.out.printf("| %-15s | %-7s | %-12s | %-7s |%n", headers[0], headers[1], headers[2], headers[3]);
+        System.out.println("-------------------------------------------------------");
+        for (Medication medicine : medicines) {
+            if (medicine != null) {
+                System.out.printf("| %-15s | %-7d | %-12d | %-8s |%n", medicine.getMedicineName(), medicine.getStock(), medicine.getStockThreshold(), medicine.getIsLowStock());
+            }
+        }
+    }
+    public static void manageInventory() {
+        int choice = -1;
+        String medicineName;
+        int quantity;
+        int threshold;
+
+        System.out.println();
+        System.out.println("Select an option:");
+        System.out.println();
+        System.out.println("(1) Add Stock");
+        System.out.println("(2) Remove Stock");
+        System.out.println("(3) Add New Medicine");
+        System.out.println();
+
+        choice = scanner.nextInt();
+        switch(choice) {
+            case 1:
+                System.out.println("Input medicine name:");
+                scanner.nextLine();
+                medicineName = scanner.nextLine();
+                System.out.println("Input quantity to add:");
+                quantity = scanner.nextInt();
+                AdministratorController.addStock(medicineName, quantity);
+                break;
+            case 2:
+                System.out.println("Input nedicine name:");
+                scanner.nextLine();
+                medicineName = scanner.nextLine();
+                System.out.println("Input quantity to remove:");
+                quantity = scanner.nextInt();
+                AdministratorController.removeStock(medicineName, quantity);
+                break;
+            case 3:
+                System.out.println("Input nedicine name:");
+                scanner.nextLine();
+                medicineName = scanner.nextLine();
+                System.out.println("Input quantity of medicine:");
+                quantity = scanner.nextInt();
+                System.out.println("Input stock threshold:");
+                threshold = scanner.nextInt();
+                AdministratorController.addNewMedicine(medicineName, quantity, threshold);
+        }
+    }
 }
 
 
