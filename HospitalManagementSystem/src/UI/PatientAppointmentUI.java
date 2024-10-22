@@ -6,6 +6,8 @@ import Entity.Doctor;
 import Entity.Patient;
 import Enums.AppointmentStatus;
 import Repository.UserRepository;
+import View.AppointmentListView;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -14,6 +16,8 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
+
+import Controller.PatientController;
 
 public class PatientAppointmentUI {
 
@@ -36,6 +40,7 @@ public class PatientAppointmentUI {
         }
 
         System.out.println();
+        System.out.println(selectedDoctor.getName() + "'s General Availability for Appointments:");
         AvailabilityUI availabilityUI = new AvailabilityUI(selectedDoctor);
         availabilityUI.viewSchedule();
         System.out.println();
@@ -78,13 +83,15 @@ public class PatientAppointmentUI {
         displaySlots(selectedDate ,startTime, endTime,existingAppointments,availableSlots);
     }
 
-    public void scheduleAppointment(Patient patient) {
+    public void scheduleAppointment() {
         Doctor selectedDoctor = selectDoctor();
         
         if (selectedDoctor == null) {
             return;
         }
-
+        
+        System.out.println();
+        System.out.println(selectedDoctor.getName() + "'s General Availability for Appointments:");
         AvailabilityUI availabilityUI = new AvailabilityUI(selectedDoctor);
         availabilityUI.viewSchedule();
 
@@ -107,7 +114,7 @@ public class PatientAppointmentUI {
                         return;
                     }
                     else if (option != 1) {
-                        System.out.println("Invalid selection. Please enter a number between 1 and 2");
+                        System.out.println("Invalid selection. Please enter '1' or '2'.");
                     }
                 } catch (InputMismatchException e) {
                     System.out.println("Invalid input. Please enter '1' or '2'.");
@@ -155,16 +162,21 @@ public class PatientAppointmentUI {
     }
 
 
-    public void rescheduleAppointment(Patient patient){
+    public void rescheduleAppointment(){
+
+        PatientController patientController = new PatientController(patient);
         
-        ArrayList<Appointment> appointments = patient.getAppointments();
+        ArrayList<Appointment> appointments = patientController.getAppointmentsByStatus(Enums.AppointmentStatus.CONFIRMED);
+        ArrayList<Appointment> pendingAppointments = patientController.getAppointmentsByStatus(Enums.AppointmentStatus.PENDING);
+        appointments.addAll(pendingAppointments);
 
         if (appointments.isEmpty()) {
             System.out.println("You have no appointments to reschedule.");
             return;
         }
 
-        displayAppointments(this.patient);
+        AppointmentListView appointmentListView = new AppointmentListView();
+        appointmentListView.display(appointments);
 
         System.out.println("Enter the appointment number you wish to reschedule:");
         int index = scanner.nextInt();
@@ -245,51 +257,133 @@ public class PatientAppointmentUI {
 
     } 
 
-    public void displayAppointments(Patient patient){
+    public void displayAppointments(){
+        PatientController patientController = new PatientController(patient);
+        
+        ArrayList<Appointment> pendingAppointments = patientController.getAppointmentsByStatus(Enums.AppointmentStatus.PENDING);
+        ArrayList<Appointment> confirmedAppointments = patientController.getAppointmentsByStatus(Enums.AppointmentStatus.CONFIRMED);
+        ArrayList<Appointment> cancelledAppointments = patientController.getAppointmentsByStatus(Enums.AppointmentStatus.CANCELLED);
+        ArrayList<Appointment> completedAppointments = patientController.getAppointmentsByStatus(Enums.AppointmentStatus.COMPLETED);
 
-        List<Appointment> appointments = patient.getAppointments();
+        int noOfPendingAppointments = pendingAppointments.size();
+        int noOfConfirmedAppointments = confirmedAppointments.size();
+        int noOfCancelledAppointments = cancelledAppointments.size();
+        int noOfCompletedAppointments = completedAppointments.size();
 
-        if (appointments.isEmpty()) {
-            System.out.println("No appointments.");
+        if (patient.getAppointments().size() == 0 ) {
+            System.out.println("You have no appointments.");
         } 
         else {
-            System.out.println(patient.getName() + " has the following appointments:");
+            AppointmentListView appointmentListView = new AppointmentListView();
+
+            System.out.println("You have:"); 
+            System.out.println(noOfPendingAppointments + " Pending Appointments");
+            System.out.println(noOfConfirmedAppointments + " Confirmed Appointments");
+            System.out.println(noOfCancelledAppointments + " Cancelled Appointments");
+            System.out.println(noOfCompletedAppointments + " Completed Appointments");
             System.out.println(); 
-            int count = 1;
-            for (Appointment a : appointments) {
-                
-                System.out.println(count + ". " + a);
-                count++;
+            System.out.println("Which would you like to view?");
+            System.out.println("(1) Pending");
+            System.out.println("(2) Confirmed");
+            System.out.println("(3) Cancelled");
+            System.out.println("(4) Completed");
+
+            int choice = -1;
+            while (choice == -1) {
+                try {
+                    choice = scanner.nextInt();
+                    scanner.nextLine();
+                    
+                    switch (choice) {
+                        case 1:
+                            if (noOfPendingAppointments == 0) {
+                                System.out.println("You have no pending appointments.");
+                            }
+                            else {
+                                appointmentListView.display(pendingAppointments);
+                            }
+                            break;
+                        case 2:
+                            if (noOfConfirmedAppointments == 0) {
+                                System.out.println("You have no confirmed appointments.");
+                            }
+                            else {
+                                appointmentListView.display(confirmedAppointments);
+                            }
+                            break;
+                        case 3:
+                            if (noOfCancelledAppointments == 0) {
+                                System.out.println("You have no cancelled appointments.");
+                            }
+                            else {
+                                appointmentListView.display(cancelledAppointments);
+                            }
+                            break;
+                        case 4:
+                            if (noOfCompletedAppointments == 0) {
+                                System.out.println("You have no completed appointments.");
+                            }
+                            else {
+                                appointmentListView.display(completedAppointments);
+                            }
+                            break;
+                        default:
+                            System.out.println("Invalid choice. Please select a number between 1 and 4.");
+                            choice = -1;
+                            break;
+                    }
+                }
+                catch (InputMismatchException e) {
+                    System.out.println("Invalid input. Please enter a number between 1 and 4.");
+                    scanner.nextLine();
+                    choice = -1;
+                }
+            
             }
         }
     
-        System.out.println(); 
     }
 
-    public void cancelAppointment(Patient patient){
+    public void cancelAppointment(){
             
-        ArrayList<Appointment> appointments = patient.getAppointments();
+        PatientController patientController = new PatientController(patient);
+        
+        ArrayList<Appointment> appointments = patientController.getAppointmentsByStatus(Enums.AppointmentStatus.CONFIRMED);
+        ArrayList<Appointment> pendingAppointments = patientController.getAppointmentsByStatus(Enums.AppointmentStatus.PENDING);
+        appointments.addAll(pendingAppointments);
 
         if (appointments.isEmpty()) {
             System.out.println("You have no appointments to cancel.");
             return;
         }
 
-        displayAppointments(this.patient);
+        AppointmentListView appointmentListView = new AppointmentListView();
+        appointmentListView.display(appointments);
 
-        System.out.println("Enter the appointment number you wish to cancel:");
-        int index = scanner.nextInt();
-        if (index < 1 || index > appointments.size()) {
-            System.out.println("Invalid selection.");
-            return;
+        int choice = -1;
+
+        while (choice == -1) {
+            System.out.println("Enter the appointment number you wish to cancel:");
+            try {
+                choice = scanner.nextInt();
+                scanner.nextLine();
+                if (choice >= 1 && choice <= appointments.size()) {
+                    break;
+                } else {
+                    choice = -1;
+                    System.out.println("Invalid selection. Please enter a number between 1 and " + appointments.size());
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a number.");
+                scanner.nextLine();
+            }
         }
 
-        Appointment selectedAppointment = appointments.get(index-1);
+        Appointment selectedAppointment = appointments.get(choice-1);
         selectedAppointment.setStatus(Enums.AppointmentStatus.CANCELLED);
-        System.out.println("Appointment " + index + " has been cancelled successfully.");
+        System.out.println("Appointment has been cancelled successfully.");
     }
 
-//
     public void displaySlots(LocalDate selectedDate ,LocalTime startTime, LocalTime endTime,ArrayList<Appointment> existingAppointments,ArrayList<LocalTime> availableSlots) {
         while (startTime.isBefore(endTime)) {
 

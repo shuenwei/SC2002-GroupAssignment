@@ -5,13 +5,7 @@ import java.time.DayOfWeek;
 
 public class ScheduleView {
 
-    private Availability[] schedule;
-
-    public ScheduleView(Availability[] schedule) {
-        this.schedule = schedule;
-    }
-
-    public void display() {
+    public void display(Availability[] schedule) {
         
         for (int i = 0; i < 7; i++) {
             DayOfWeek day = DayOfWeek.of(i + 1);
