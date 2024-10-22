@@ -1,11 +1,11 @@
 package Entity;
 
 import java.time.LocalDate;
-import java.util.List;
+import java.util.ArrayList;
 
 public class AppointmentOutcomeRecord {
     private Appointment appointment;
-    private List<PrescribedMedication> prescribedMedications;
+    private ArrayList<PrescribedMedication> prescribedMedications;
     private String TypeOfService;
     private String ConsulationNotes;
 
@@ -32,5 +32,14 @@ public class AppointmentOutcomeRecord {
     public String getConsulationNotes(){
         return ConsulationNotes;
     }
+
+    public ArrayList<PrescribedMedication> getPrescribedMedications(){
+        return prescribedMedications;
+    }
+
+    public void addPrescribedMedication(PrescribedMedication prescribedMedication){
+        prescribedMedications.add(prescribedMedication);
+    }
+
 
 }

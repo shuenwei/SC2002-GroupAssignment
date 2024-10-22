@@ -4,15 +4,11 @@ public class Medication {
     private String medicineName;
     private int stock;
     private int lowStockThreshold;
-    private String isLowStock = "NO";
 
     public Medication(String medicineName, int stock, int lowStockThreshold) {
         this.medicineName = medicineName;
         this.stock = stock;
         this.lowStockThreshold = lowStockThreshold;
-        if (stock <= this.lowStockThreshold) {
-            this.isLowStock = "YES";
-        }
     }
 
     public String getMedicineName() {
@@ -35,11 +31,11 @@ public class Medication {
         return this.lowStockThreshold;
     }
 
-    public void setIsLowStock(String isLowStock) {
-        this.isLowStock = isLowStock;
-    }
-
-    public String getIsLowStock() {
-        return this.isLowStock;
+    public boolean getIsLowStock() {
+        
+        if(this.stock - getStockThreshold() < 0){
+            return true;
+        }
+        else return false;
     }
 }

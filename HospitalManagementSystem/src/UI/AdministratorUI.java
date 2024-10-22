@@ -326,22 +326,35 @@ public class AdministratorUI {
 
     public static void showAllDoctorsAppointment(){
 
-        List <Doctor> doctors = UserRepository.getAllDoctors();
+        ArrayList <Doctor> doctors = UserRepository.getAllDoctors();
         System.out.println();
 
         for (Doctor s : doctors) {
         System.out.println(s.getName() + " has the following appointments:");
         System.out.println();
-        List<Appointment> appointments = s.getAppointments();
+        ArrayList<Appointment> appointments = s.getAppointments();
 
         if (appointments.isEmpty()) {
             System.out.println(" No appointments.");
         } else {
             int count = 1; 
             for (Appointment a : appointments) {
-                System.out.println(" " + count + ". " + a);
-                count++;
+
+                System.out.println(" " + count + ". ");
+                    System.out.println("Status                   : " + a.getStatus());
+                    System.out.println("Doctor                   : " + a.getDoctor());
+                    System.out.println("Patient                  : " + a.getPatient());
+                    System.out.println("Time                     : " + a.getTime());
+                    System.out.println("Date                     : " + a.getAppointmentOutcomeRecord().getAppointmentDate());
+                
+                if(a.getAppointmentOutcomeRecord() != null){
+                    System.out.println("Type of Service          : " + a.getAppointmentOutcomeRecord().getTypeOfService());
+                    System.out.println("Consultation Notes       : " + a.getAppointmentOutcomeRecord().getConsulationNotes());
+                    System.out.println("Prescribed Medication(s) : " + a.getAppointmentOutcomeRecord().getPrescribedMedications());
                 }
+                    
+                count++;
+            }
             }
         System.out.println();
         }

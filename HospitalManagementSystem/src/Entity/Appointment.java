@@ -75,17 +75,5 @@ public class Appointment {
         this.appointmentOutcomeRecord = appointmentOutcomeRecord;
     }
 
-    public String toString() {
-        
-        return  "\t Doctor = " + doctor.getName() +
-                "\n\t Patient = " + patient.getName() + 
-                "\n\t Date = " + this.getDate() +
-                "\n\t Time = " + this.getTime() +
-                "\n\t Status = " + this.getStatus() +
-                "\n";
-
-    }
-
-    
 
 }

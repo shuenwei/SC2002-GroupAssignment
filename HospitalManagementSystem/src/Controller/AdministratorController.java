@@ -60,9 +60,9 @@ public class AdministratorController implements IStaffManagement{
             int newStock = medicine.getStock() + quantity;
             medicine.setStock(newStock);
     
-            if (newStock > medicine.getStockThreshold() && medicine.getIsLowStock() == "YES") {
-                medicine.setIsLowStock("NO");
-            }
+            // if (newStock > medicine.getStockThreshold() && medicine.getIsLowStock() == true) {
+            //     medicine.setIsLowStock(false);
+            // }
 
             System.out.printf("Successfully updated stock level for %s%n", medicineName);
         }
@@ -74,9 +74,9 @@ public class AdministratorController implements IStaffManagement{
             int newStock = medicine.getStock() - quantity;
             medicine.setStock(newStock);
     
-            if (newStock <= medicine.getStockThreshold() && medicine.getIsLowStock() == "NO") {
-                medicine.setIsLowStock("YES");
-            }
+            // if (newStock <= medicine.getStockThreshold() && medicine.getIsLowStock() == false) {
+            //     medicine.setIsLowStock(true);
+            // }
 
             System.out.printf("Successfully updated stock level for %s%n", medicineName);
         }
@@ -102,7 +102,7 @@ public class AdministratorController implements IStaffManagement{
             request.setStatus(RequestStatus.FULFILLED);
             Inventory.removeRequest(requestedMedicine);
 
-            System.out.printf("%s has been sucessfully replenished.", requestedMedicine);
+            System.out.printf("%s has been successfully replenished.", requestedMedicine);
         }
     }
 }
