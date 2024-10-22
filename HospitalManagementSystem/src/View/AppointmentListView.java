@@ -1,12 +1,12 @@
 package View;
 
 import Entity.Appointment;
-import Interface.IListAppointments;
+import Interface.IListDisplayableView;
 import java.util.ArrayList;
 import java.time.format.DateTimeFormatter;
 
 
-public class AppointmentListView implements IListAppointments{
+public class AppointmentListView implements IListDisplayableView<Appointment>{
 
     public void display(ArrayList<Appointment> apptList){
         

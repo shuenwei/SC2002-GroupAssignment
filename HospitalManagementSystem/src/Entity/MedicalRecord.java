@@ -10,7 +10,7 @@ public class MedicalRecord {
     private String bloodType;
     private String phoneNumber;
     private String emailAddress;
-    private ArrayList<Diagnoses> diagnoses;
+    private ArrayList<MedicalHistory> medicalHistory;
 
     public MedicalRecord(String PatientID, String name, String dateOfBirth, String gender, String bloodType, String phoneNumber, String emailAddress) {
         this.PatientID = PatientID;
@@ -20,7 +20,7 @@ public class MedicalRecord {
         this.bloodType = bloodType;
         this.phoneNumber = phoneNumber;
         this.emailAddress = emailAddress;
-        this.diagnoses = new ArrayList<>();
+        this.medicalHistory = new ArrayList<>();
     }
 
     public String getPatientID() {
@@ -59,12 +59,12 @@ public class MedicalRecord {
         return bloodType;
     }
 
-    public void addDiagnoses(Diagnoses diagnosis){
-        this.diagnoses.add(diagnosis);
+    public void addMedicalHistory(MedicalHistory diagnosis){
+        this.medicalHistory.add(diagnosis);
     }
 
-    public ArrayList<Diagnoses> getDiagnoses(){
-        return diagnoses;
+    public ArrayList<MedicalHistory> getMedicalHistory(){
+        return medicalHistory;
     }
 
 }

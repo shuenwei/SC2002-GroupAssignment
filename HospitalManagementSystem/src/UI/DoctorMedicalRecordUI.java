@@ -1,15 +1,17 @@
 package UI;
 
-import Entity.Diagnoses;
-import Entity.PrescribedMedication;
+import Entity.MedicalHistory;
 import Entity.MedicalRecord;
+
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import Controller.DoctorController;
+import View.MedicalHistoryView;
 
 
 public class DoctorMedicalRecordUI {
     private DoctorController doctorController;
-    private MedicalRecord medicalRecord;
+    private MedicalHistoryView medicalHistoryView;
 
     public DoctorMedicalRecordUI(DoctorController doctorController) {
         this.doctorController = doctorController;
@@ -22,6 +24,7 @@ public class DoctorMedicalRecordUI {
         String patientID = scanner.nextLine();
         MedicalRecord medicalRecord = doctorController.findMedicalRecordByID(patientID);
         if(medicalRecord != null) {
+            medicalHistoryView = new MedicalHistoryView();
             System.out.println("PatientID: " + medicalRecord.getPatientID());
             System.out.println("Name: " + medicalRecord.getName());
             System.out.println("Date of Birth: " + medicalRecord.getDateOfBirth());
@@ -29,25 +32,34 @@ public class DoctorMedicalRecordUI {
             System.out.println("Email Address: " + medicalRecord.getEmailAddress());
             System.out.println("Phone Number: " + medicalRecord.getPhoneNumber());
             System.out.println("BloodType: " + medicalRecord.getBloodType());
+            medicalHistoryView.display(medicalRecord.getMedicalHistory());
         }
         else {
-            System.out.println("Sorry Patient with ID: " + patientID + " does not exist");
+            System.out.println("Sorry Patient with ID: " + patientID + " is not under your care, MedicalRecord not accessible");
         }
     }
 
     public void editMedicalRecord() {
+        int choice = -1;
         System.out.println("Please enter the PatientID: ");
         Scanner scanner = new Scanner(System.in);
         String patientID = scanner.nextLine();
         MedicalRecord medicalRecord = doctorController.findMedicalRecordByID(patientID);
         if(medicalRecord == null) {
-            System.out.println("Sorry Patient with ID: " + patientID + " does not exist");
+            System.out.println("Sorry Patient with ID: " + patientID + " is not under your care, MedicalRecord not accessible");
         }
         else {
             System.out.println("1) Create new diagnosis ");
             System.out.println("2) Edit diagnosis ");
             System.out.println("Please enter your choice: ");
-            int choice = scanner.nextInt();
+
+            try {
+                choice = scanner.nextInt();
+                scanner.nextLine();
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a number.");
+                scanner.nextLine();
+            }
             switch (choice) {
                 case 1:
                     System.out.println("Please enter the name of the new diagnosis: ");
@@ -56,28 +68,27 @@ public class DoctorMedicalRecordUI {
                     String treatmentPlan = scanner.nextLine();
                     System.out.println("Please enter the prescribed medication: ");
                     String medication = scanner.nextLine();
-                    //Diagnoses newdiagnosis = new Diagnoses();
+                    MedicalHistory newmedicalHistory = new MedicalHistory(name,treatmentPlan);
+                    newmedicalHistory.addPrescribedMedications(medication);
+                    medicalRecord.addMedicalHistory(newmedicalHistory);
                     break;
                 case 2:
                     System.out.println("Please enter the diagnosis you want to edit: ");
-                    String diagnosis = scanner.nextLine();
-                    Diagnoses diagnoses = doctorController.findDiagnosis(diagnosis, patientID);
+                    String diagnosisName = scanner.nextLine();
+                    MedicalHistory existingMedicalHistory = doctorController.findmedicalHistory(diagnosisName, patientID);
                     System.out.println("Please enter updated name of the diagnosis: ");
                     String updatedName = scanner.nextLine();
-                    diagnoses.setDiagnosis(updatedName);
+                    existingMedicalHistory.setDiagnosis(updatedName);
                     System.out.println("Please enter updated Treatment Plan of the diagnosis: ");
                     String updatedTreatmentPlan = scanner.nextLine();
-                    diagnoses.setTreatmentPlan(updatedTreatmentPlan);
+                    existingMedicalHistory.setTreatmentPlan(updatedTreatmentPlan);
+                    System.out.println("Please enter updated Prescribed Medication: ");
+                    String updatedPrescribedMedication = scanner.nextLine();
+                    existingMedicalHistory.addPrescribedMedications(updatedPrescribedMedication);
                     break;
                 default:
                     break;
-
             }
         }
-
-
-
     }
-
-
 }
