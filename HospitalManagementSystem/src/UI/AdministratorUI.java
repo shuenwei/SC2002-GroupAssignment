@@ -51,6 +51,7 @@ public class AdministratorUI {
                     case 3: manageInventoryMenu();
                         break;
                     case 4:
+                        requestMenu();
                         break;
                     case 5:
                         System.out.println("You are now logged out.");
@@ -392,6 +393,33 @@ public class AdministratorUI {
                     System.out.println("Invalid input for quantity. Please enter a number.");
                     scanner.next();  
                 }
+                break;
+            default:
+                System.out.println("Invalid input");
+        }
+    }
+
+    public void requestMenu() {
+        int choice = -1;
+        String requestMedicine;
+
+        System.out.println();
+        System.out.println("Select an option:");
+        System.out.println();
+        System.out.println("(1) View Requests");
+        System.out.println("(2) Approve Request"); 
+
+        choice = scanner.nextInt();
+        switch(choice) {
+            case 1:
+                Inventory.viewRequests();
+                break;
+            case 2:
+                System.out.println("Input medicine replenishment request to be approved:");
+                scanner.nextLine();
+                requestMedicine = scanner.nextLine();
+                
+                administratorController.approveRequest(requestMedicine);
                 break;
             default:
                 System.out.println("Invalid input");

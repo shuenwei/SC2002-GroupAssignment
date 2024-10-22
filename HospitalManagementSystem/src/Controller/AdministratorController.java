@@ -1,6 +1,12 @@
 package Controller;
 
-import Entity.*;
+import Entity.Administrator;
+import Entity.Medication;
+import Entity.Inventory;
+import Entity.Request;
+import Enums.RequestStatus;
+
+import java.util.ArrayList;
 
 public class AdministratorController {
     private Administrator administrator;
@@ -23,9 +29,6 @@ public class AdministratorController {
 
             System.out.printf("Successfully updated stock level for %s%n", medicineName);
         }
-        else {
-            System.out.println("Medicine does not exist!");
-        }
     }
 
     public void removeStock(String medicineName, int quantity) {
@@ -40,13 +43,29 @@ public class AdministratorController {
 
             System.out.printf("Successfully updated stock level for %s%n", medicineName);
         }
-        else {
-            System.out.println("Medicine does not exist!");
+    }
+
+    private void replenishStock(String medicineName) {
+        Medication medicine = Inventory.get(medicineName);
+        if (medicine != null) {
+            medicine.setStock(medicine.getStockThreshold());
         }
     }
 
     public void addNewMedicine(String medicineName, int stock, int lowStockThreshold) {
         Medication newMedicine = new Medication(medicineName, stock, lowStockThreshold);
         Inventory.add(newMedicine);
+    }
+
+    public void approveRequest(String requestedMedicine) {
+        Request request = Inventory.getRequest(requestedMedicine);
+
+        if (request != null) {
+            replenishStock(requestedMedicine);
+            request.setStatus(RequestStatus.FULFILLED);
+            Inventory.removeRequest(requestedMedicine);
+
+            System.out.printf("%s has been sucessfully replenished.", requestedMedicine);
+        }
     }
 }
