@@ -15,10 +15,8 @@ public class Patient extends User {
     private String contactInformation;
 
 
-	private List<Appointment> appointments;
+	private ArrayList<Appointment> appointments;
 	private MedicalRecord medicalRecord;
-    private ArrayList<Appointment> allPatientAppointments; //
-    private ArrayList<Appointment> pending; //
 
     public Patient(String hospitalId,String password, String name, String gender, String dateOfBirth, String bloodType, String contactInformation) {
         super(hospitalId,password,name,gender);
@@ -27,8 +25,7 @@ public class Patient extends User {
         this.contactInformation = contactInformation;
         
         this.medicalRecord = new MedicalRecord(hospitalId, name, gender, dateOfBirth, bloodType,null,contactInformation);
-        allPatientAppointments = new ArrayList<>(); //
-        pending = new ArrayList<>();//
+        appointments = new ArrayList<>();
     }
 
     public void displayMenu(User currentUser) {
@@ -45,29 +42,17 @@ public class Patient extends User {
         return super.getName();
     }
 
-    public ArrayList<Appointment> getAllAppointments(){
-        return allPatientAppointments;
-    }//
+    public ArrayList<Appointment> getAppointments(){
+        return appointments;
+    }
 
-    public ArrayList<Appointment> getAllPendingAppointments(){
-        return pending;
-    }//
+    public void addAppointment(Appointment appointment) {
+        appointments.add(appointment);
+    }
 
-    public void addPatientAppointment(Appointment appointment) {
-        allPatientAppointments.add(appointment);
-    }//
-
-    public void removePatientAppointment(Appointment appointment){
-        allPatientAppointments.remove(appointment);
-    }//
-
-    public void addPendingPatientAppointment(Appointment appointment){
-        pending.add(appointment);
-    }//
-
-    public void removePendingPatientAppointment(Appointment appointment){
-        pending.remove(appointment);
-    }//
+    public void removeAppointment(Appointment appointment){
+        appointments.remove(appointment);
+    }
 
     public void showAllPatientAppointment(){
 
