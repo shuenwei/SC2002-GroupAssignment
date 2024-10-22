@@ -30,7 +30,6 @@ public class Patient extends User {
 
     public void displayMenu(User currentUser) {
         PatientUI patientUi = new PatientUI((Patient) currentUser);
-        PatientMedicalRecordUI patientMedicalRecordUI = new PatientMedicalRecordUI((MedicalRecord) ((Patient) currentUser).medicalRecord);
         patientUi.displayMenu();
     }
 

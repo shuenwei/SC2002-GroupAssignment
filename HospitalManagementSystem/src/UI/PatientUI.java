@@ -19,7 +19,7 @@ public class PatientUI {
     public PatientUI (Patient patient) {
         this.patient = patient;
         patientAppointmentUI = new PatientAppointmentUI(this.patient);
-        patientMedicalRecordUI = new PatientMedicalRecordUI(patient.getMedicalRecord());
+        patientMedicalRecordUI = new PatientMedicalRecordUI(patient.getMedicalRecord(),patient);
     }
 
     public void displayMenu(){
@@ -66,6 +66,7 @@ public class PatientUI {
                         patientAppointmentUI.displayAppointments(patient);
                         break;
                     case 8:
+                        patientMedicalRecordUI.displayAppointmentOutcomeRecord();
                         break;
                     case 9:
                         System.out.println("You are now logged out.");

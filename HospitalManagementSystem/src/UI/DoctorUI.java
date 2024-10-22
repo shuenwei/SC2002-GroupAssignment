@@ -28,7 +28,7 @@ public class DoctorUI {
         AvailabilityUI availabilityUI = new AvailabilityUI(this.doctor);
         DoctorController doctorController = new DoctorController(this.doctor);
         doctorMedicalRecordUI = new DoctorMedicalRecordUI(doctorController);
-        appointmentOutcomeUI = new AppointmentOutcomeUI(appointment);
+        appointmentOutcomeUI = new AppointmentOutcomeUI(doctor);
 
         int option = -1;
 

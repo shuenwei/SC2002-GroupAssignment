@@ -1,5 +1,6 @@
 package Controller;
 
+import Entity.Appointment;
 import Entity.AppointmentOutcomeRecord;
 import Entity.Inventory;
 import Entity.PrescribedMedication;
@@ -21,7 +22,13 @@ public class AppointmentOutcomeController {
         return true;
     }
 
-    public static AppointmentOutcomeRecord createAppointmentOutcomeRecord(String serviceType, String consultationNotes, ArrayList<PrescribedMedication> prescribedMedications) {
-        return new AppointmentOutcomeRecord(serviceType, consultationNotes, prescribedMedications);
+    public static AppointmentOutcomeRecord createAppointmentOutcomeRecord(String serviceType, String consultationNotes, ArrayList<PrescribedMedication> prescribedMedications,Appointment appointment) {
+        return new AppointmentOutcomeRecord(serviceType, consultationNotes, prescribedMedications,appointment);
+    }
+
+
+    public void setAppointmentOutcomeRecord(Appointment appointment) {
+        appointment.setAppointmentOutcomeRecord(appointmentOutcomeRecord);
+
     }
 }

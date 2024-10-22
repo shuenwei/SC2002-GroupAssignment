@@ -9,10 +9,15 @@ public class AppointmentOutcomeRecord {
     private String TypeOfService;
     private String ConsultationNotes;
 
-    public AppointmentOutcomeRecord(String typeOfService, String consulationNotes, ArrayList<PrescribedMedication> prescribedMedications) {
+    public AppointmentOutcomeRecord(String typeOfService, String consulationNotes, ArrayList<PrescribedMedication> prescribedMedications,Appointment appointment    ) {
+        this.appointment = appointment;
         this.TypeOfService = typeOfService;
         this.ConsultationNotes = consulationNotes;
         this.prescribedMedications = prescribedMedications;
+    }
+
+    public Appointment getappointment() {
+        return appointment;
     }
 
     public LocalDate getAppointmentDate(){
@@ -35,7 +40,7 @@ public class AppointmentOutcomeRecord {
         return ConsultationNotes;
     }
     
-    public ArrayList<PrescribedMedication> getPrescribedMedications(PrescribedMedication prescribedMedication){
+    public ArrayList<PrescribedMedication> getPrescribedMedications(){
         return prescribedMedications;
     }
 

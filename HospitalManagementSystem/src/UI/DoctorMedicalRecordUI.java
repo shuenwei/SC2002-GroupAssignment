@@ -2,12 +2,16 @@ package UI;
 
 import Entity.MedicalHistory;
 import Entity.MedicalRecord;
+
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import Controller.DoctorController;
+import View.MedicalHistoryView;
 
 
 public class DoctorMedicalRecordUI {
     private DoctorController doctorController;
+    private MedicalHistoryView medicalHistoryView;
 
     public DoctorMedicalRecordUI(DoctorController doctorController) {
         this.doctorController = doctorController;
@@ -20,6 +24,7 @@ public class DoctorMedicalRecordUI {
         String patientID = scanner.nextLine();
         MedicalRecord medicalRecord = doctorController.findMedicalRecordByID(patientID);
         if(medicalRecord != null) {
+            medicalHistoryView = new MedicalHistoryView();
             System.out.println("PatientID: " + medicalRecord.getPatientID());
             System.out.println("Name: " + medicalRecord.getName());
             System.out.println("Date of Birth: " + medicalRecord.getDateOfBirth());
@@ -27,25 +32,34 @@ public class DoctorMedicalRecordUI {
             System.out.println("Email Address: " + medicalRecord.getEmailAddress());
             System.out.println("Phone Number: " + medicalRecord.getPhoneNumber());
             System.out.println("BloodType: " + medicalRecord.getBloodType());
+            medicalHistoryView.display(medicalRecord.getMedicalHistory());
         }
         else {
-            System.out.println("Sorry Patient with ID: " + patientID + " does not exist");
+            System.out.println("Sorry Patient with ID: " + patientID + " is not under your care, MedicalRecord not accessible");
         }
     }
 
     public void editMedicalRecord() {
+        int choice = -1;
         System.out.println("Please enter the PatientID: ");
         Scanner scanner = new Scanner(System.in);
         String patientID = scanner.nextLine();
         MedicalRecord medicalRecord = doctorController.findMedicalRecordByID(patientID);
         if(medicalRecord == null) {
-            System.out.println("Sorry Patient with ID: " + patientID + " does not exist");
+            System.out.println("Sorry Patient with ID: " + patientID + " is not under your care, MedicalRecord not accessible");
         }
         else {
             System.out.println("1) Create new diagnosis ");
             System.out.println("2) Edit diagnosis ");
             System.out.println("Please enter your choice: ");
-            int choice = scanner.nextInt();
+
+            try {
+                choice = scanner.nextInt();
+                scanner.nextLine();
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a number.");
+                scanner.nextLine();
+            }
             switch (choice) {
                 case 1:
                     System.out.println("Please enter the name of the new diagnosis: ");
