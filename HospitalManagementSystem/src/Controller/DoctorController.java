@@ -29,10 +29,10 @@ public class DoctorController {
         return null;
     }
 
-    public Diagnoses findDiagnosis(String diagnosis,String patientID) {
-        for(Diagnoses diagnoses : findMedicalRecordByID(patientID).getDiagnoses()){
-            if(diagnoses.getDiagnosisName().equals(diagnosis)){
-                return diagnoses;
+    public MedicalHistory findmedicalHistory(String diagnosis, String patientID) {
+        for(MedicalHistory medicalHistory : findMedicalRecordByID(patientID).getMedicalHistory()){
+            if(medicalHistory.getDiagnosisName().equals(diagnosis)){
+                return medicalHistory;
             }
         }
         return null;

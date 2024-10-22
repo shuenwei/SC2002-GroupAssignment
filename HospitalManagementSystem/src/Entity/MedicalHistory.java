@@ -2,12 +2,12 @@ package Entity;
 
 import java.util.ArrayList;
 
-public class Diagnoses {
+public class MedicalHistory {
     private String diagnosisName;
     private String TreatmentPlan;
-    private ArrayList<PrescribedMedication> prescribedMedications;
+    private ArrayList<String> prescribedMedications;
 
-    public Diagnoses(String diagnosisName,String TreatmentPlan) {
+    public MedicalHistory(String diagnosisName, String TreatmentPlan) {
         this.diagnosisName = diagnosisName;
         this.TreatmentPlan = TreatmentPlan;
         this.prescribedMedications = new ArrayList<>();
@@ -29,11 +29,11 @@ public class Diagnoses {
         this.TreatmentPlan = TreatmentPlan;
     }
 
-    public ArrayList<PrescribedMedication> getPrescribedMedications() {
+    public ArrayList<String> getPrescribedMedications() {
         return prescribedMedications;
     }
 
-    public void addPrescribedMedications(PrescribedMedication prescribedMedications) {
+    public void addPrescribedMedications(String prescribedMedications) {
         this.prescribedMedications.add(prescribedMedications);
     }
 

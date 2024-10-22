@@ -23,8 +23,6 @@ public class Main {
             System.out.println("HMS crashed. Please restart the system.");
             System.out.println("Error: " + e.getMessage());
         }
-    
-           
     }
 }
 
