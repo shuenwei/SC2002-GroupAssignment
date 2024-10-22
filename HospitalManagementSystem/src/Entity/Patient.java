@@ -30,11 +30,10 @@ public class Patient extends User {
 
     public void displayMenu(User currentUser) {
         PatientUI patientUi = new PatientUI((Patient) currentUser);
-        PatientMedicalRecordUI patientMedicalRecordUI = new PatientMedicalRecordUI((MedicalRecord) ((Patient) currentUser).medicalRecord);
         patientUi.displayMenu();
     }
 
-     public MedicalRecord getMedicalRecord() {
+    public MedicalRecord getMedicalRecord() {
         return medicalRecord;
     }
   
@@ -54,27 +53,4 @@ public class Patient extends User {
         appointments.remove(appointment);
     }
 
-    public void showAllPatientAppointment(){
-
-        List <Doctor> doctors = UserRepository.getAllDoctors();
-        System.out.println();
-
-        for (Doctor s : doctors) {
-        System.out.println(s.getName() + " has the following appointments:");
-        System.out.println();
-        List<Appointment> appointments = s.getAppointments();
-
-        if (appointments.isEmpty()) {
-            System.out.println(" No appointments.");
-        } else {
-            int count = 1; 
-            for (Appointment a : appointments) {
-                System.out.println(" " + count + ". " + a);
-                count++;
-                }
-            }
-        System.out.println();
-        }
-
-    } // change to view 
 }

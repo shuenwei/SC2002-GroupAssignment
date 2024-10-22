@@ -5,8 +5,10 @@ import Entity.Availability;
 import Entity.Doctor;
 import Entity.Patient;
 import Enums.AppointmentStatus;
+import Interface.IListDisplayableView;
+import Interface.IDisplayableView;
 import Repository.UserRepository;
-import View.AppointmentListView;
+import View.CommonView;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -39,8 +41,6 @@ public class PatientAppointmentUI {
             return;
         }
 
-        System.out.println();
-        System.out.println(selectedDoctor.getName() + "'s General Availability for Appointments:");
         AvailabilityUI availabilityUI = new AvailabilityUI(selectedDoctor);
         availabilityUI.viewSchedule();
         System.out.println();
@@ -90,8 +90,6 @@ public class PatientAppointmentUI {
             return;
         }
         
-        System.out.println();
-        System.out.println(selectedDoctor.getName() + "'s General Availability for Appointments:");
         AvailabilityUI availabilityUI = new AvailabilityUI(selectedDoctor);
         availabilityUI.viewSchedule();
 
@@ -162,8 +160,9 @@ public class PatientAppointmentUI {
     }
 
 
-    public void rescheduleAppointment(){
+    public void rescheduleAppointment(IDisplayableView<Appointment> appointmentView,IListDisplayableView<Appointment> appointmentListView){
 
+        
         PatientController patientController = new PatientController(patient);
         
         ArrayList<Appointment> appointments = patientController.getAppointmentsByStatus(Enums.AppointmentStatus.CONFIRMED);
@@ -175,15 +174,25 @@ public class PatientAppointmentUI {
             return;
         }
 
-        AppointmentListView appointmentListView = new AppointmentListView();
         appointmentListView.display(appointments);
 
-        System.out.println("Enter the appointment number you wish to reschedule:");
-        int index = scanner.nextInt();
-        scanner.nextLine();
-        if (index < 1 || index > appointments.size()) {
-            System.out.println("Invalid selection.");
-            return;
+        int index;
+
+        while (true) {
+            try {
+                System.out.print("Enter the appointment number you wish to reschedule:");
+                index = scanner.nextInt();
+                scanner.nextLine();
+                if (index < 1 || index > appointments.size()) {
+                    System.out.println("Invalid selection. Please enter a number between 1 and " + appointments.size());
+                }
+                else {
+                    break;
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a number.");
+                scanner.nextLine();
+            }
         }
 
         Appointment selectedAppointment = appointments.get(index -1 );
@@ -254,10 +263,14 @@ public class PatientAppointmentUI {
         selectedAppointment.setDate(selectedDate);
         selectedAppointment.setTime(selectedTime);
         selectedAppointment.setStatus(Enums.AppointmentStatus.PENDING);
-
+        System.out.println("Appointment has been rescheduled successfully.");
+        System.out.println();
+        System.out.println("Here are your new appointment details:");
+        appointmentView.display(selectedAppointment);
+        CommonView.pressEnterToContinue();
     } 
 
-    public void displayAppointments(){
+    public void displayAppointments(IListDisplayableView<Appointment> appointmentListView){
         PatientController patientController = new PatientController(patient);
         
         ArrayList<Appointment> pendingAppointments = patientController.getAppointmentsByStatus(Enums.AppointmentStatus.PENDING);
@@ -274,7 +287,6 @@ public class PatientAppointmentUI {
             System.out.println("You have no appointments.");
         } 
         else {
-            AppointmentListView appointmentListView = new AppointmentListView();
 
             System.out.println("You have:"); 
             System.out.println(noOfPendingAppointments + " Pending Appointments");
@@ -344,7 +356,7 @@ public class PatientAppointmentUI {
     
     }
 
-    public void cancelAppointment(){
+    public void cancelAppointment(IListDisplayableView<Appointment> appointmentListView){
             
         PatientController patientController = new PatientController(patient);
         
@@ -357,7 +369,6 @@ public class PatientAppointmentUI {
             return;
         }
 
-        AppointmentListView appointmentListView = new AppointmentListView();
         appointmentListView.display(appointments);
 
         int choice = -1;
@@ -391,7 +402,7 @@ public class PatientAppointmentUI {
 
             for (int i = 0; i < existingAppointments.size(); i++) {
                 Appointment appointment = existingAppointments.get(i);
-                if (appointment.getDate().equals(selectedDate) && appointment.getTime().equals(startTime) && (appointment.getStatus().equals(Enums.AppointmentStatus.CONFIRMED) || appointment.getStatus().equals(Enums.AppointmentStatus.PENDING) || appointment.getStatus().equals(Enums.AppointmentStatus.COMPLETED))) {
+                if (appointment.getDate().equals(selectedDate) && appointment.getTime().equals(startTime) && !appointment.getStatus().equals(Enums.AppointmentStatus.CANCELLED)) {
                     slotOccupied++;
                     break;
                 }
@@ -459,7 +470,6 @@ public class PatientAppointmentUI {
                 return appointmentDate;
             } catch (DateTimeParseException e) {
                 System.out.println("Invalid date format. Please enter in 'dd-mm-yyyy' format.");
-                scanner.nextLine();
             }
         }
     }

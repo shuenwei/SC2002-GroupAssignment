@@ -1,6 +1,10 @@
 package UI;
 
+import Entity.Appointment;
 import Entity.Patient;
+import Interface.IListDisplayableView;
+import Interface.IDisplayableView;
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -8,7 +12,8 @@ import java.util.Scanner;
 import Entity.Patient;
 import UI.PatientAppointmentUI;
 import UI.PatientMedicalRecordUI;
-
+import View.AppointmentListView;
+import View.AppointmentView;
 
 public class PatientUI {
 
@@ -19,12 +24,15 @@ public class PatientUI {
     public PatientUI (Patient patient) {
         this.patient = patient;
         patientAppointmentUI = new PatientAppointmentUI(this.patient);
-        patientMedicalRecordUI = new PatientMedicalRecordUI(patient.getMedicalRecord());
+        patientMedicalRecordUI = new PatientMedicalRecordUI(patient.getMedicalRecord(),patient);
     }
 
     public void displayMenu(){
         Scanner scanner = new Scanner(System.in);
         int option = -1;
+
+        IDisplayableView<Appointment> appointmentView = new AppointmentView();
+        IListDisplayableView<Appointment> appointmentListView = new AppointmentListView();
 
         do {
             try {
@@ -57,15 +65,16 @@ public class PatientUI {
                         patientAppointmentUI.scheduleAppointment();
                         break;
                     case 5:
-                        patientAppointmentUI.rescheduleAppointment();
+                        patientAppointmentUI.rescheduleAppointment(appointmentView,appointmentListView);
                         break;
                     case 6:
-                        patientAppointmentUI.cancelAppointment();
+                        patientAppointmentUI.cancelAppointment(appointmentListView);
                         break;
                     case 7:
-                        patientAppointmentUI.displayAppointments();
+                        patientAppointmentUI.displayAppointments(appointmentListView);
                         break;
                     case 8:
+                        patientMedicalRecordUI.displayAppointmentOutcomeRecord();
                         break;
                     case 9:
                         System.out.println("You are now logged out.");
