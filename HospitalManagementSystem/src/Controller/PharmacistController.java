@@ -12,20 +12,20 @@ public class PharmacistController {
         this.pharmacist = pharmacist;
     }
 
-    public static void submitRequest(String requestMedicine) {
-        Request newRequest = new Request(requestMedicine);
-        if (requestMedicine != null) {
-            Medication medicine = Inventory.get(requestMedicine);
+    public void submitRequest(String requestMedicine) {
+        Medication medicine = Inventory.get(requestMedicine);
+        if (medicine != null) {
             if (medicine.getIsLowStock() != "YES") {
                 System.out.printf("%s is not low on stock%n", requestMedicine);
             }
             else {
+                Request newRequest = new Request(requestMedicine);
                 Inventory.addRequest(newRequest);
                 System.out.printf("Successfully submitted replenishment request for %s%n", requestMedicine);
             }
         }
         else {
-            System.out.println("Medicine does not exist!");
+            System.out.println("Medicine does not exist");
         }
     }
 }

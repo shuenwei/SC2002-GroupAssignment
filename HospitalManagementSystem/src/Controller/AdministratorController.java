@@ -11,7 +11,7 @@ public class AdministratorController {
 
     // StaffManagementController staffManagementController = new StaffManagementController
 
-    public static void addStock(String medicineName, int quantity) {
+    public void addStock(String medicineName, int quantity) {
         Medication medicine = Inventory.get(medicineName);
         if (medicine != null) {
             int newStock = medicine.getStock() + quantity;
@@ -28,7 +28,7 @@ public class AdministratorController {
         }
     }
 
-    public static void removeStock(String medicineName, int quantity) {
+    public void removeStock(String medicineName, int quantity) {
         Medication medicine = Inventory.get(medicineName);
         if (medicine != null) {
             int newStock = medicine.getStock() - quantity;
@@ -45,7 +45,7 @@ public class AdministratorController {
         }
     }
 
-    public static void addNewMedicine(String medicineName, int stock, int lowStockThreshold) {
+    public void addNewMedicine(String medicineName, int stock, int lowStockThreshold) {
         Medication newMedicine = new Medication(medicineName, stock, lowStockThreshold);
         Inventory.add(newMedicine);
     }
