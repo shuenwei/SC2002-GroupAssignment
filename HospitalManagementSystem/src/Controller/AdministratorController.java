@@ -8,4 +8,6 @@ public class AdministratorController {
     public AdministratorController(Administrator administrator){
         this.administrator = administrator;
     }
+
+    // StaffManagementController staffManagementController = new StaffManagementController
 }

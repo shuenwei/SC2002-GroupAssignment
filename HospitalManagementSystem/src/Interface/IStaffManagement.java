@@ -5,11 +5,17 @@ import Entity.*;
 
 public interface IStaffManagement{
 
-    void addStaff(Staff staff);
+    public void addStaff(Staff staff);
 
-    void updateStaff(Staff staff);
+    public void updateStaffAge(int age);
 
-    void removeStaff(Staff staff);
+    public void updateStaffName(String name);
+
+    public void updateStaffGender(String gender);
+
+    public void updateStaffPassword(String password);
+
+    public void removeStaff(String hospitalId);
 
     // void List<Staff> listStaff();
 

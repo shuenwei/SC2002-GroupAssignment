@@ -6,19 +6,14 @@ import Entity.Doctor;
 import Entity.Patient;
 import Enums.AppointmentStatus;
 import Repository.UserRepository;
-import Controller.AvailabilityController;
-import View.ScheduleView;
-
-import java.util.Scanner;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
-import java.time.format.DateTimeParseException;
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
+import java.util.Scanner;
 
 public class PatientAppointmentUI {
 
@@ -83,9 +78,9 @@ public class PatientAppointmentUI {
         displaySlots(selectedDate ,startTime, endTime,existingAppointments,availableSlots);
     }
 
-    public void scheduleAppointment() {
+    public void scheduleAppointment(Patient patient) {
         Doctor selectedDoctor = selectDoctor();
-
+        
         if (selectedDoctor == null) {
             return;
         }
@@ -153,11 +148,146 @@ public class PatientAppointmentUI {
         // Schedule the Appointment
         LocalTime selectedTime = availableSlots.get(slotChoice - 1);
         Appointment appointment = new Appointment(selectedDoctor, this.patient, selectedDate, selectedTime, AppointmentStatus.PENDING, null);
-        selectedDoctor.addAppointment(appointment);
+        selectedDoctor.addPendingAppointment(appointment);// selectedDoctor.addAppointment(appointment);
+        patient.addPendingPatientAppointment(appointment);// patient.addPatientAppointment(appointment);
 
         System.out.println("Appointment scheduled with Dr. " + selectedDoctor.getName() + " on " + selectedDate.format(formatter) + " at " + selectedTime);
     }
 
+//
+    public void rescheduleAppointment(Patient patient){
+        
+        ArrayList<Appointment> appointments = patient.getAllAppointments();
+
+        if (appointments.isEmpty()) {
+            System.out.println("You have no appointments to reschedule.");
+            return;
+        }
+
+        displayAppointments(this.patient);
+
+        System.out.println("Enter the appointment number you wish to reschedule:");
+        int index = scanner.nextInt();
+        if (index < 1 || index > appointments.size()) {
+            System.out.println("Invalid selection.");
+            return;
+        }
+
+        int count = 1;
+        for(Appointment a : appointments){
+
+            if(count == index){
+                List <Doctor> doctors = UserRepository.getAllDoctors();
+                patient.removePatientAppointment(a);
+                for(Doctor d : doctors){
+                    if(d.getAppointments().contains(a)){
+                        d.removeAppointment(a);    //change updating object instead
+                    }
+                }
+                System.out.println();
+                System.out.println("Appointment " + index + " has been removed successfully.");
+                scheduleAppointment(patient);
+                System.out.println(); 
+                break;
+            }
+            else{
+                count++;
+            }
+        }
+
+    }
+//  
+
+    public static List<Appointment> getAllAppointmentsByPatient(Patient patient){
+        List<Appointment> filteredAppointments = new ArrayList<>();
+        String patientName = patient.getName();
+
+        for(Appointment a : patient.getAllAppointments()){
+            if(a.getPatient().getName().equals(patientName)){
+                filteredAppointments.add(a);
+            }
+        }
+
+        return filteredAppointments;
+    }
+//
+    public static List<Appointment> getAllPending(Patient patient){
+        List<Appointment> filteredPending = new ArrayList<>();
+        String patientName = patient.getName();
+
+        for(Appointment a : patient.getAllPendingAppointments()){
+            if(a.getPatient().getName().equals(patientName)){
+                filteredPending.add(a);
+            }
+        }
+
+        return filteredPending;
+    }
+//
+    public void displayAppointments(Patient patient){
+
+        List<Appointment> appointments = getAllAppointmentsByPatient(patient);
+
+        if (appointments.isEmpty()) {
+            System.out.println("No appointments.");
+        } 
+        else {
+            System.out.println(patient.getName() + " has the following appointments:");
+            System.out.println(); 
+            int count = 1;
+            for (Appointment a : appointments) {
+                
+                System.out.println(count + ". " + a);
+                count++;
+            }
+        }
+    
+        System.out.println(); 
+    }
+//  
+
+public void cancelAppointment(Patient patient){
+        
+    ArrayList<Appointment> appointments = patient.getAllAppointments();
+
+    if (appointments.isEmpty()) {
+        System.out.println("You have no appointments to cancel.");
+        return;
+    }
+
+    displayAppointments(this.patient);
+
+    System.out.println("Enter the appointment number you wish to cancel:");
+    int index = scanner.nextInt();
+    if (index < 1 || index > appointments.size()) {
+        System.out.println("Invalid selection.");
+        return;
+    }
+
+    int count = 1;
+    for(Appointment a : appointments){
+
+        if(count == index){
+            List <Doctor> doctors = UserRepository.getAllDoctors();
+            patient.removePatientAppointment(a);
+            for(Doctor d : doctors){
+                if(d.getAppointments().contains(a)){
+                    d.removeAppointment(a);
+                }
+            }
+            System.out.println();
+            System.out.println("Appointment " + index + " has been removed successfully.");
+            System.out.println();
+            break;
+            }
+        else{
+            count++;
+            }
+        }
+
+    } // change status to cancelled
+
+//
     public void displaySlots(LocalDate selectedDate ,LocalTime startTime, LocalTime endTime,ArrayList<Appointment> existingAppointments,ArrayList<LocalTime> availableSlots) {
         while (startTime.isBefore(endTime)) {
 
@@ -165,7 +295,7 @@ public class PatientAppointmentUI {
 
             for (int i = 0; i < existingAppointments.size(); i++) {
                 Appointment appointment = existingAppointments.get(i);
-                if (appointment.getDate().equals(selectedDate) && appointment.getTime().equals(startTime)) {
+                if (appointment.getDate().equals(selectedDate) && appointment.getTime().equals(startTime) && (appointment.getStatus().equals(Enums.AppointmentStatus.CONFIRMED) || appointment.getStatus().equals(Enums.AppointmentStatus.PENDING) || appointment.getStatus().equals(Enums.AppointmentStatus.COMPLETED))) {
                     slotOccupied++;
                     break;
                 }
@@ -237,4 +367,5 @@ public class PatientAppointmentUI {
             }
         }
     }
+
 }

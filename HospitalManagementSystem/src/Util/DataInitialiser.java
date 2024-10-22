@@ -66,4 +66,24 @@ public class DataInitialiser {
             e.printStackTrace();
         }
     }
+    
+    public static void initialiseMedicine() {
+        String medicineListCsvFilePath = "data/medicineListCsv.csv";
+        String line;
+        try(BufferedReader br = new BufferedReader(new FileReader(medicineListCsvFilePath))) {  
+            line = br.readLine(); // Skip header
+            while ((line = br.readLine()) != null) {  
+                String[] medicineListCsv = line.split(",");
+
+                String medicineName = medicineListCsv[0];
+                int stock = Integer.valueOf(medicineListCsv[1]);
+                int lowStockLevel = Integer.valueOf(medicineListCsv[2]);
+
+                Medication medicine = new Medication(medicineName, stock, lowStockLevel);
+                Inventory.add(medicine);  
+            }     
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

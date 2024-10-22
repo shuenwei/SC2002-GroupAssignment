@@ -1,11 +1,14 @@
 package UI;
 
+import Entity.Doctor;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+
 
 import Controller.DoctorController;
 import Entity.Doctor;
 import UI.AvailabilityUI;
+
 
 public class DoctorUI {
 
@@ -55,6 +58,7 @@ public class DoctorUI {
                         availabilityUI.setSchedule();
                         break;
                     case 5:
+                        availabilityUI.acceptDecline();
                         break;
                     case 6:
                         break;

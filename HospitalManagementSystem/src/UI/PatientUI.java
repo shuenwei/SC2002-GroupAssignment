@@ -1,11 +1,14 @@
 package UI;
 
+import Entity.Patient;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+
 
 import Entity.Patient;
 import UI.PatientAppointmentUI;
 import UI.PatientMedicalRecordUI;
+
 
 public class PatientUI {
 
@@ -51,13 +54,16 @@ public class PatientUI {
                         patientAppointmentUI.viewSlots();
                         break;
                     case 4:
-                        patientAppointmentUI.scheduleAppointment();
+                        patientAppointmentUI.scheduleAppointment(patient);
                         break;
                     case 5:
+                        patientAppointmentUI.rescheduleAppointment(patient);
                         break;
                     case 6:
+                        patientAppointmentUI.cancelAppointment(patient);
                         break;
                     case 7:
+                        patientAppointmentUI.displayAppointments(patient);
                         break;
                     case 8:
                         break;

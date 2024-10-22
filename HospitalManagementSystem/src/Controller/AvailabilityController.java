@@ -2,8 +2,6 @@ package Controller;
 
 import Entity.Availability;
 import Entity.Doctor;
-
-import java.util.HashMap;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 
@@ -35,4 +33,7 @@ public class AvailabilityController {
             System.out.println("Availability set for " + day + ": " + startTime + " - " + endTime);
         }
     }
+
+   
+    
 }
