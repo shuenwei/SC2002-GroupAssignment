@@ -1,6 +1,10 @@
 package UI;
 
+import Entity.Appointment;
 import Entity.Doctor;
+import Interface.IDisplayableView;
+import Interface.IListDisplayableView;
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -8,6 +12,9 @@ import java.util.Scanner;
 import Controller.DoctorController;
 import Entity.Doctor;
 import UI.AvailabilityUI;
+import View.AppointmentListView;
+import View.AppointmentView;
+import View.CommonView;
 
 
 public class DoctorUI {
@@ -22,8 +29,12 @@ public class DoctorUI {
     public void displayMenu(){
         Scanner scanner = new Scanner(System.in);
         AvailabilityUI availabilityUI = new AvailabilityUI(this.doctor);
+        DoctorAppointmentUI doctorAppointmentUI = new DoctorAppointmentUI(this.doctor);
         DoctorController doctorController = new DoctorController(this.doctor);
         doctorMedicalRecordUI = new DoctorMedicalRecordUI(doctorController);
+
+        IDisplayableView<Appointment> appointmentView = new AppointmentView();
+        IListDisplayableView<Appointment> appointmentListView = new AppointmentListView();
         
 
         int option = -1;
@@ -58,17 +69,16 @@ public class DoctorUI {
                         availabilityUI.setSchedule();
                         break;
                     case 5:
-                        availabilityUI.acceptDecline();
+                        doctorAppointmentUI.acceptDecline(appointmentView,appointmentListView);
                         break;
                     case 6:
-                        availabilityUI.displayAppointments();
+                        doctorAppointmentUI.displayAppointments(appointmentListView);
                         break;
                     case 7:
                         break;
                     case 8:
                         System.out.println("You are now logged out.");
-                        LoginUI.loginMenu();
-                        break;
+                        return;
                     default:
                         System.out.println("Invalid option. Please try again.");
                         break;

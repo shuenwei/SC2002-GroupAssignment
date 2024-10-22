@@ -1,10 +1,10 @@
 package View;
 
 import Entity.Appointment;
-import Interface.IAppointments;
+import Interface.IDisplayableView;
 import java.time.format.DateTimeFormatter;
 
-public class AppointmentView implements IAppointments{
+public class AppointmentView implements IDisplayableView<Appointment>{
 
 
     public void display(Appointment a){
