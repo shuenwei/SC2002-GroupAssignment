@@ -58,8 +58,7 @@ public class PharmacistUI {
                         break;
                     case 5:
                         System.out.println("You are now logged out.");
-                        LoginUI.loginMenu();
-                        break;
+                        return;
                     default:
                         System.out.println("Invalid option. Please try again.");
                         break;

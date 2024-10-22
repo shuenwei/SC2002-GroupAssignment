@@ -39,14 +39,6 @@ public class AppointmentOutcomeRecord {
     public String getConsultationNotes(){
         return ConsultationNotes;
     }
-    
-    public ArrayList<PrescribedMedication> getPrescribedMedications(){
-        return prescribedMedications;
-    }
-
-    public void addPrescribedMedication(PrescribedMedication prescribedMedication){
-        prescribedMedications.add(prescribedMedication);
-    }
 
     public ArrayList<PrescribedMedication> getPrescribedMedications(){
         return prescribedMedications;

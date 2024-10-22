@@ -1,9 +1,8 @@
 package UI;
 
-import java.util.Scanner;
-
 import Controller.AuthController;
 import Entity.*;
+import java.util.Scanner;
 
 public class LoginUI {
 
@@ -28,7 +27,10 @@ public class LoginUI {
                 if (AuthController.checkDefaultPassword(currentUser) == true) {
                     changeDefaultPassword(currentUser);             
                 }
-                currentUser.displayMenu(currentUser);
+                else{
+                    currentUser.displayMenu(currentUser);
+                }
+                
             }
         }
     }
@@ -46,7 +48,6 @@ public class LoginUI {
             if (newPassword.equals(reenterNewPassword)) {
                 AuthController.changeDefaultPassword(currentUser, newPassword);
                 System.out.println("Password changed successfully. Please re-login to access the system.");
-                loginMenu();
                 break;
             }
             else {

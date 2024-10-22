@@ -3,12 +3,12 @@ package View;
 import Entity.Appointment;
 import Enums.AppointmentStatus;
 import java.util.ArrayList;
-import Controller.PharmacistController;
-
-public class ViewPendingMedicine {
 
 
-    public void displayPendingMenu(ArrayList<Appointment> appt){
+public class PendingMedicineView {
+
+
+    public void display(ArrayList<Appointment> appt){
     
         if (appt.isEmpty()) {
             System.out.println(" No appointments.");

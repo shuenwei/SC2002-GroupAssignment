@@ -55,9 +55,6 @@ public class AdministratorUI {
                         break;
                     case 5:
                         System.out.println("You are now logged out.");
-                        LoginUI.loginMenu();
-                        break;
-                    case 6:
                         return;
                     default:
                         System.out.println("Invalid option. Please try again.");
@@ -349,7 +346,7 @@ public class AdministratorUI {
                 
                 if(a.getAppointmentOutcomeRecord() != null){
                     System.out.println("Type of Service          : " + a.getAppointmentOutcomeRecord().getTypeOfService());
-                    System.out.println("Consultation Notes       : " + a.getAppointmentOutcomeRecord().getConsulationNotes());
+                    System.out.println("Consultation Notes       : " + a.getAppointmentOutcomeRecord().getConsultationNotes());
                     System.out.println("Prescribed Medication(s) : " + a.getAppointmentOutcomeRecord().getPrescribedMedications());
                 }
                     
