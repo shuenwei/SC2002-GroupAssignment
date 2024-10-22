@@ -174,7 +174,5 @@ public class AvailabilityUI {
             System.out.println("Appointment Status updated to CANCELLED");
         }
 
-
-
     }
 }
