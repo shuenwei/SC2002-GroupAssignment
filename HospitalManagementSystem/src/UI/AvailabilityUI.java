@@ -1,10 +1,12 @@
 package UI;
 
 import Controller.AvailabilityController;
+import Controller.DoctorController;
 import Entity.Appointment;
 import Entity.Doctor;
 import Entity.Patient;
 import Enums.AppointmentStatus;//
+import View.AppointmentListView;
 import Repository.UserRepository;
 import View.ScheduleView;
 import java.time.DayOfWeek;
@@ -12,16 +14,18 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.InputMismatchException;
-import java.util.List;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class AvailabilityUI {
     private Doctor doctor;
-    private Scanner scanner;//
+    private Scanner scanner;
+    private DoctorController doctorController;
 
     public AvailabilityUI(Doctor doctor){
         this.doctor = doctor;
         scanner = new Scanner(System.in);
+        doctorController = new DoctorController(doctor);
     }
 
     public void viewSchedule(){
@@ -31,7 +35,6 @@ public class AvailabilityUI {
     }
 
     public void setSchedule(){
-        Scanner scanner = new Scanner(System.in);
         AvailabilityController availabilityController = new AvailabilityController(doctor);
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 
@@ -108,92 +111,70 @@ public class AvailabilityUI {
         } while (day != 8);
     }
 
-    public void displayPendingAppointments(Doctor doctor){
-
-        List<Appointment> pending = doctor.getAllPendingDoctorAppointments();
-
-        if (pending.isEmpty()) {
-            System.out.println("No appointments.");
-        } 
-        else {
-            System.out.println(doctor.getName() + " has the following PENDING appointments:");
-            System.out.println(); 
-            int count = 1;
-            for (Appointment a : pending) {
-                
-                System.out.println(count + ". " + a);
-                count++;
-            }
-        }
-    
-        System.out.println(); 
-    }
-//
-    // public void getPendingAppointments(){
-
-    //     ArrayList<Appointment> pending = doctor.getAllPendingDoctorAppointments();
-
-    //     if (pending.isEmpty()) {
-    //         System.out.println("You have no pending appointments.");
-    //         return;
-    //     }
-
-
-
-    // }
-
-    // public static List<Appointment> getAllAppointmentsByPatient(Patient patient){
-    //     List<Appointment> filteredAppointments = new ArrayList<>();
-    //     String patientName = patient.getName();
-
-    //     for(Appointment a : patient.getAllAppointments()){
-    //         if(a.getPatient().getName().equals(patientName)){
-    //             filteredAppointments.add(a);
-    //         }
-    //     }
-
-    //     return filteredAppointments;
-    // }
-
     public void acceptDecline(){
 
-        List<Appointment> pending = doctor.getAllPendingDoctorAppointments();
+        ArrayList<Appointment> pendingAppointments = doctorController.getAppointmentsByStatus(Enums.AppointmentStatus.PENDING);
 
-        if (pending.isEmpty()) {
-            System.out.println("No appointments.");
-        } 
-
-        displayPendingAppointments(doctor);
-
-        System.out.println("Enter the appointment number you wish to accept:");
-        int index = scanner.nextInt();
-        if (index < 1 || index > pending.size()) {
-            System.out.println("Invalid selection.");
+        if (pendingAppointments.isEmpty()) {
+            System.out.println("You have no Pending Appointments.");
             return;
+        } 
+        
+        AppointmentListView appointmentListView = new AppointmentListView();
+        appointmentListView.display(pendingAppointments);
+
+        int appointmentChoice = -1;
+
+        while (appointmentChoice == -1) {
+            System.out.print("Please select an appointment to update status by entering the corresponding number: ");
+            try {
+                appointmentChoice = scanner.nextInt();
+                scanner.nextLine();
+                if (appointmentChoice >= 1 && appointmentChoice <= pendingAppointments.size()) {
+                    break;
+                } else {
+                    appointmentChoice = -1;
+                    System.out.println("Invalid selection. Please enter a number between 1 and " + pendingAppointments.size() + ".");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a number.");
+                scanner.nextLine();
+            }
+        }
+        
+        Appointment selectedAppointment = pendingAppointments.get(appointmentChoice - 1);
+
+        int statusChoice = -1;
+
+        while (statusChoice == -1) {
+            System.out.println("(1) Accept");
+            System.out.println("(2) Deny");
+            System.out.print("Please select to Accept or Deny the appointment by entering the corresponding number: ");
+            try {
+                statusChoice = scanner.nextInt();
+                scanner.nextLine();
+                if (appointmentChoice >= 1 && appointmentChoice <= 2) {
+                    break;
+                } else {
+                    statusChoice = -1;
+                    System.out.println("Invalid selection. Please enter a number between 1 and 2");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a number.");
+                scanner.nextLine();
+            }
         }
 
-        int count = 1;
-        for(Appointment a : pending){
-
-            if(count == index){
-                List <Patient> patients = UserRepository.getAllPatient();
-                doctor.removePendingAppointment(a);
-                a.setStatus(AppointmentStatus.CONFIRMED);
-                for(Patient p : patients){
-                    if(p.getAllPendingAppointments().contains(a)){
-                        p.removePendingPatientAppointment(a);
-                        p.addPatientAppointment(a);
-                    }
-                } // just change status
-                System.out.println();
-                System.out.println("Appointment " + index + " has been CONFIRMED successfully.");
-                System.out.println();
-                break;
-            }
-            else{
-                count++;
-            }
+        if (statusChoice == 1) {
+            selectedAppointment.setStatus(Enums.AppointmentStatus.CONFIRMED);
+            System.out.println("Appointment Status updated to CONFIRMED");
         }
+        else if (statusChoice == 2) {
+            selectedAppointment.setStatus(Enums.AppointmentStatus.CANCELLED);
+            System.out.println("Appointment Status updated to CANCELLED");
+        }
+
+
 
     }
 }

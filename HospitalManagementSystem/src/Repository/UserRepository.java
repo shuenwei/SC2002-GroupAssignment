@@ -2,13 +2,12 @@ package Repository;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import Entity.*;
 
 public class UserRepository {
     private static HashMap<String, User> users = new HashMap<String, User>();
-    private static List<Appointment> allAppointments;
+    private static ArrayList<Appointment> allAppointments;
 
     public static void add(User user) {
         users.put(user.getHospitalId(),user);
@@ -25,8 +24,8 @@ public class UserRepository {
     } 
 
 
-    public static List<Doctor> getAllDoctors() {
-        List<Doctor> doctors = new ArrayList<>();
+    public static ArrayList<Doctor> getAllDoctors() {
+        ArrayList<Doctor> doctors = new ArrayList<>();
             for (User user : users.values()) {
                 if (user instanceof Doctor) {
                     doctors.add((Doctor) user);
@@ -36,8 +35,8 @@ public class UserRepository {
     }
 
    
-    public static List<Patient> getAllPatients() {
-        List<Patient> patients = new ArrayList<>();
+    public static ArrayList<Patient> getAllPatients() {
+        ArrayList<Patient> patients = new ArrayList<>();
         for (User user : users.values()) {
             if (user instanceof Patient) {
                 patients.add((Patient) user);
@@ -46,8 +45,28 @@ public class UserRepository {
         return patients;
     }
 
-    public static List<Staff> getAllStaff() {
-        List<Staff> staffs = new ArrayList<>();
+    public static ArrayList<Pharmacist> getAllPharmacists() {
+        ArrayList<Pharmacist> pharmacist = new ArrayList<>();
+        for (User user : users.values()) {
+            if (user instanceof Pharmacist) {
+                pharmacist.add((Pharmacist) user);
+            }
+        }
+        return pharmacist;
+    }
+
+    public static ArrayList<Administrator> getAllAdministrators() {
+        ArrayList<Administrator> administrators = new ArrayList<>();
+        for (User user : users.values()) {
+            if (user instanceof Administrator) {
+                administrators.add((Administrator) user);
+            }
+        }
+        return administrators;
+    }
+
+    public static ArrayList<Staff> getAllStaff() {
+        ArrayList<Staff> staffs = new ArrayList<>();
             for (User user : users.values()) {
                 if (user instanceof Staff) {
                     staffs.add((Staff) user);
@@ -56,13 +75,5 @@ public class UserRepository {
         return staffs;
     }
 
-    public static List<Patient> getAllPatient() {
-        List<Patient> patients = new ArrayList<>();
-            for (User user : users.values()) {
-                if (user instanceof Patient) {
-                    patients.add((Patient) user);
-                }
-            }
-        return patients;
-    }
+    
 }
