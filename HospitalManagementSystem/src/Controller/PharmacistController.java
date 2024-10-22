@@ -24,8 +24,5 @@ public class PharmacistController {
                 System.out.printf("Successfully submitted replenishment request for %s%n", requestMedicine);
             }
         }
-        else {
-            System.out.println("Medicine does not exist");
-        }
     }
 }
