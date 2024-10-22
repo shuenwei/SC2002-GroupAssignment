@@ -8,31 +8,29 @@ import Entity.Doctor;
 import Entity.Pharmacist;
 import Entity.Staff;
 import Entity.User;
-import Entity.Medication;
-import Entity.Request;
 import Entity.Inventory;
 import Interface.IStaffManagement;
 import Repository.UserRepository;
 import java.util.InputMismatchException;
 import java.util.List;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class AdministratorUI {
 
     private Administrator administrator;
+    private AdministratorController administratorController;
     private Staff staff;
     private IStaffManagement staff_management;
-    static Scanner scanner = new Scanner(System.in);
+    Scanner scanner = new Scanner(System.in);
 
     public AdministratorUI(Administrator administrator) {
         this.administrator = administrator;
+        this.administratorController = new AdministratorController(administrator);
     }
 
     public void displayMenu(){
-        
         int option = -1;
-
+        
         do {
             try {
                 System.out.println();
@@ -309,7 +307,7 @@ public class AdministratorUI {
 
     }
 
-    public static void manageInventoryMenu() {
+    public void manageInventoryMenu() {
         int choice = -1;
 
         System.out.println();
@@ -326,10 +324,12 @@ public class AdministratorUI {
             case 2:
                 manageInventory();
                 break;
+            default:
+                System.out.println("Invalid input");
         }
     }
     
-    public static void manageInventory() {
+    public void manageInventory() {
         int choice = -1;
         String medicineName;
         int quantity;
@@ -346,30 +346,55 @@ public class AdministratorUI {
         choice = scanner.nextInt();
         switch(choice) {
             case 1:
-                System.out.println("Input medicine name:");
-                scanner.nextLine();
-                medicineName = scanner.nextLine();
-                System.out.println("Input quantity to add:");
-                quantity = scanner.nextInt();
-                AdministratorController.addStock(medicineName, quantity);
+                try {
+                    System.out.println("Input medicine name:");
+                    scanner.nextLine();
+                    medicineName = scanner.nextLine();
+                    
+                    System.out.println("Input quantity to add:");
+                    quantity = scanner.nextInt();
+
+                    administratorController.addStock(medicineName, quantity);
+                } catch (InputMismatchException e) {
+                    System.out.println("Invalid input for quantity. Please enter a number.");
+                    scanner.next();  
+                }
                 break;
             case 2:
-                System.out.println("Input nedicine name:");
-                scanner.nextLine();
-                medicineName = scanner.nextLine();
-                System.out.println("Input quantity to remove:");
-                quantity = scanner.nextInt();
-                AdministratorController.removeStock(medicineName, quantity);
+                try {
+                    System.out.println("Input medicine name:");
+                    scanner.nextLine();
+                    medicineName = scanner.nextLine();
+
+                    System.out.println("Input quantity to remove:");
+                    quantity = scanner.nextInt();
+
+                    administratorController.removeStock(medicineName, quantity);
+                } catch(InputMismatchException e) {
+                    System.out.println("Invalid input for quantity. Please enter a number.");
+                    scanner.next();  
+                }
                 break;
             case 3:
-                System.out.println("Input nedicine name:");
-                scanner.nextLine();
-                medicineName = scanner.nextLine();
-                System.out.println("Input quantity of medicine:");
-                quantity = scanner.nextInt();
-                System.out.println("Input stock threshold:");
-                threshold = scanner.nextInt();
-                AdministratorController.addNewMedicine(medicineName, quantity, threshold);
+                try {
+                    System.out.println("Input medicine name:");
+                    scanner.nextLine();
+                    medicineName = scanner.nextLine();
+
+                    System.out.println("Input quantity of medicine:");
+                    quantity = scanner.nextInt();
+
+                    System.out.println("Input stock threshold:");
+                    threshold = scanner.nextInt();
+
+                    administratorController.addNewMedicine(medicineName, quantity, threshold);
+                } catch(InputMismatchException e) {
+                    System.out.println("Invalid input for quantity. Please enter a number.");
+                    scanner.next();  
+                }
+                break;
+            default:
+                System.out.println("Invalid input");
         }
     }
 }
