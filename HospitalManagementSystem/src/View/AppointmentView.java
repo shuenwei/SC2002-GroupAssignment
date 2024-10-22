@@ -3,10 +3,10 @@ package View;
 import Entity.Appointment;
 import Interface.IAppointments;
 
-public class ViewAppointment implements IAppointments{
+public class AppointmentView implements IAppointments{
 
 
-    public void getAppointment(Appointment a){
+    public void display(Appointment a){
         System.out.println("Patient Name : " + a.getPatient().getName());
         System.out.println("Doctor Name  : " + a.getDoctor().getName());
         System.out.println("Date         : " + a.getDate());

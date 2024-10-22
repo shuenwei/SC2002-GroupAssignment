@@ -5,5 +5,5 @@ import Entity.Appointment;
 
 public interface IAppointments{
 
-    public void getAppointment(Appointment a);
+    public void display(Appointment a);
 }

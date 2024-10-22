@@ -1,6 +1,7 @@
 package Controller;
 
 import Entity.*;
+import java.util.ArrayList;
 
 
 public class DoctorController {
@@ -35,6 +36,20 @@ public class DoctorController {
             }
         }
         return null;
+    }
+
+    public ArrayList<Appointment> getAppointmentsByStatus(Enums.AppointmentStatus status) {
+        ArrayList<Appointment> filteredAppointments = new ArrayList<>();
+
+        ArrayList<Appointment> appointments = doctor.getAppointments();
+        
+        for (Appointment appointment : appointments) {
+            if (appointment.getStatus() == status) {
+                filteredAppointments.add(appointment);
+            }
+        }
+        
+        return filteredAppointments;
     }
 
 }

@@ -154,7 +154,7 @@ public class PatientAppointmentUI {
         System.out.println("Appointment scheduled with Dr. " + selectedDoctor.getName() + " on " + selectedDate.format(formatter) + " at " + selectedTime);
     }
 
-//
+
     public void rescheduleAppointment(Patient patient){
         
         ArrayList<Appointment> appointments = patient.getAppointments();
@@ -241,35 +241,10 @@ public class PatientAppointmentUI {
         LocalTime selectedTime = availableSlots.get(slotChoice - 1);
         selectedAppointment.setDate(selectedDate);
         selectedAppointment.setTime(selectedTime);
+        selectedAppointment.setStatus(Enums.AppointmentStatus.PENDING);
 
     } 
-/*
-    public static List<Appointment> getAllAppointmentsByPatient(Patient patient){
-        List<Appointment> filteredAppointments = new ArrayList<>();
-        String patientName = patient.getName();
 
-        for(Appointment a : patient.getAppointments()){
-            if(a.getPatient().getName().equals(patientName)){
-                filteredAppointments.add(a);
-            }
-        }
-
-        return filteredAppointments;
-    }
-
-    public static List<Appointment> getAllPending(Patient patient){
-        List<Appointment> filteredPending = new ArrayList<>();
-        String patientName = patient.getName();
-
-        for(Appointment a : patient.getAllPendingAppointments()){
-            if(a.getPatient().getName().equals(patientName)){
-                filteredPending.add(a);
-            }
-        }
-
-        return filteredPending;
-    }
-*/
     public void displayAppointments(Patient patient){
 
         List<Appointment> appointments = patient.getAppointments();

@@ -5,5 +5,5 @@ import java.util.ArrayList;
 
 public interface IListAppointments {
 
-    public void getAppointmentList(ArrayList<Appointment> a);
+    public void display(ArrayList<Appointment> a);
 }
