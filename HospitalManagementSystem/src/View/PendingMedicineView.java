@@ -1,6 +1,7 @@
 package View;
 
 import Entity.Appointment;
+import Entity.PrescribedMedication;
 import Enums.AppointmentStatus;
 import java.util.ArrayList;
 
@@ -15,10 +16,18 @@ public class PendingMedicineView {
         } else {
             int count = 1; 
             for (Appointment a : appt) {
-                System.out.println(" " + count + ". " + a);
+                System.out.println();
+                System.out.println("("+ count +")");
+                System.out.println("Date of appointment       : " + a.getAppointmentOutcomeRecord().getAppointmentDate());
+                System.out.println("Type of Service Provided  : " + a.getAppointmentOutcomeRecord().getTypeOfService());
+                System.out.println("Consultation Notes        : " + a.getAppointmentOutcomeRecord().getConsultationNotes());
+                for( PrescribedMedication j:a.getAppointmentOutcomeRecord().getPrescribedMedications()){
+                    System.out.println("Prescribed medication : " + j.getMedicineName());
+                }
                 count++;
+                System.out.println();
                 }
             }
-        System.out.println();
+        
     }
 }

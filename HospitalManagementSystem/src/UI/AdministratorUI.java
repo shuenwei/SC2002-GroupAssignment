@@ -6,6 +6,7 @@ import Entity.Appointment;
 import Entity.Doctor;
 import Entity.Inventory;
 import Entity.Pharmacist;
+import Entity.PrescribedMedication;
 import Entity.Staff;
 import Entity.User;
 import Interface.IStaffManagement;
@@ -339,15 +340,21 @@ public class AdministratorUI {
 
                 System.out.println(" " + count + ". ");
                     System.out.println("Status                   : " + a.getStatus());
-                    System.out.println("Doctor                   : " + a.getDoctor());
-                    System.out.println("Patient                  : " + a.getPatient());
+                    System.out.println("Doctor                   : " + a.getDoctor().getName());
+                    System.out.println("Patient                  : " + a.getPatient().getName());
                     System.out.println("Time                     : " + a.getTime());
                     System.out.println("Date                     : " + a.getAppointmentOutcomeRecord().getAppointmentDate());
                 
                 if(a.getAppointmentOutcomeRecord() != null){
                     System.out.println("Type of Service          : " + a.getAppointmentOutcomeRecord().getTypeOfService());
                     System.out.println("Consultation Notes       : " + a.getAppointmentOutcomeRecord().getConsultationNotes());
-                    System.out.println("Prescribed Medication(s) : " + a.getAppointmentOutcomeRecord().getPrescribedMedications());
+
+                    ArrayList<PrescribedMedication> medications = a.getAppointmentOutcomeRecord().getPrescribedMedications();
+                    System.out.println("The Prescribed Medication(s) is as follows: ");
+                    for (PrescribedMedication medication : medications) {
+                        System.out.println("Medication Name: " + medication.getMedicineName());
+                    }
+                    
                 }
                     
                 count++;

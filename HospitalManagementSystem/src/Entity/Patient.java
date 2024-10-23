@@ -1,10 +1,6 @@
 package Entity;
 
 
-import java.util.*;
-
-import UI.PatientMedicalRecordUI;
-import Repository.UserRepository;
 import UI.PatientUI;
 import java.util.*;
 
@@ -40,6 +36,10 @@ public class Patient extends User {
     public String getName(){
         return super.getName();
     }
+
+    public void setName(String name){
+        super.setName(name);
+    }//
 
     public ArrayList<Appointment> getAppointments(){
         return appointments;
