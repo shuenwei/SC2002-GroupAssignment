@@ -20,11 +20,11 @@ public class Doctor extends Staff {
     }
 
     public String getName(){
-        return super.name;
+        return super.getName();
     }//
 
     public void setName(String name){
-        super.name = this.name;
+        super.setName(name);
     }//
 
     public Availability[] getSchedule() {
