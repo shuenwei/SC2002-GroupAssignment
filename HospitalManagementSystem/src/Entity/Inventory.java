@@ -48,7 +48,12 @@ public class Inventory {
         System.out.println("-------------------------------------------------------");
         for (Medication medicine : medicines) {
             if (medicine != null) {
-                System.out.printf("| %-15s | %-7d | %-12d | %-8s |%n", medicine.getMedicineName(), medicine.getStock(), medicine.getStockThreshold(), medicine.getIsLowStock());
+                if(medicine.getIsLowStock()){
+                    System.out.printf("| %-15s | %-7d | %-12d | %-8s |%n", medicine.getMedicineName(), medicine.getStock(), medicine.getStockThreshold(), "YES");
+                }
+                else{
+                    System.out.printf("| %-15s | %-7d | %-12d | %-8s |%n", medicine.getMedicineName(), medicine.getStock(), medicine.getStockThreshold(), "NO");
+                }
             }
         }
     }
