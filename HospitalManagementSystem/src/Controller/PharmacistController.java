@@ -45,7 +45,7 @@ public class PharmacistController {
         System.out.println("Which Medicine number would you like to dispense?");
 
         for(PrescribedMedication m : a.getAppointmentOutcomeRecord().getPrescribedMedications()){
-                System.out.println(" " + index + ". " + m.getMedicineName());
+                System.out.println(" " + index + ". " + m.getMedicineName() + " " + m.getTick());
                 index++;
         }
         
@@ -58,6 +58,7 @@ public class PharmacistController {
                 if(med.getStock() > 0 && (a.getAppointmentOutcomeRecord().getPrescribedMedications().get(choice-1).getStatus() == Enums.PrescriptionStatus.PENDING)){
                     med.setStock(med.getStock()-1);
                     a.getAppointmentOutcomeRecord().getPrescribedMedications().get(choice-1).setStatus(PrescriptionStatus.DISPENSED);
+                    a.getAppointmentOutcomeRecord().getPrescribedMedications().get(choice-1).setTick("[DISPENSED]");
                     System.out.println(a.getAppointmentOutcomeRecord().getPrescribedMedications().get(choice-1).getMedicineName() + " has been dispensed!");
                 }
                 else if(med.getStock() < 0){
@@ -70,7 +71,7 @@ public class PharmacistController {
                 index = 1;
 
                 for(PrescribedMedication m : a.getAppointmentOutcomeRecord().getPrescribedMedications()){
-                    System.out.println(" " + index + ". " + m.getMedicineName());
+                    System.out.println(" " + index + ". " + m.getMedicineName() + " " + m.getTick());
                     index++;
                 }
                 
