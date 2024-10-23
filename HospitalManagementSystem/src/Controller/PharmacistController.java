@@ -49,20 +49,35 @@ public class PharmacistController {
                 index++;
         }
         
-        System.out.println(" " + (index+1) + ". Exit");
+        System.out.println(" " + (index) + ". Exit");
         int choice = sc.nextInt();
 
-        while(choice != index+ 1){
+        while(choice != index){
         
-                Medication med = Inventory.get(a.getAppointmentOutcomeRecord().getPrescribedMedications().get(choice -1).getMedicineName());
-                if(med.getStock() > 0){
+                Medication med = Inventory.get(a.getAppointmentOutcomeRecord().getPrescribedMedications().get(choice-1).getMedicineName());
+                if(med.getStock() > 0 && (a.getAppointmentOutcomeRecord().getPrescribedMedications().get(choice-1).getStatus() == Enums.PrescriptionStatus.PENDING)){
                     med.setStock(med.getStock()-1);
-                    a.getAppointmentOutcomeRecord().getPrescribedMedications().get(choice -1).setStatus(PrescriptionStatus.DISPENSED);
+                    a.getAppointmentOutcomeRecord().getPrescribedMedications().get(choice-1).setStatus(PrescriptionStatus.DISPENSED);
+                    System.out.println(a.getAppointmentOutcomeRecord().getPrescribedMedications().get(choice-1).getMedicineName() + " has been dispensed!");
+                }
+                else if(med.getStock() < 0){
+                    System.out.println(a.getAppointmentOutcomeRecord().getPrescribedMedications().get(choice-1).getMedicineName() + " is not available!");
                 }
                 else{
-                    System.out.println(a.getAppointmentOutcomeRecord().getPrescribedMedications().get(choice -1).getMedicineName() + " is not available!");
+                    System.out.println(a.getAppointmentOutcomeRecord().getPrescribedMedications().get(choice-1).getMedicineName() + " has already been dispensed! Try another Medication!");
                 }
-        
+
+                index = 1;
+
+                for(PrescribedMedication m : a.getAppointmentOutcomeRecord().getPrescribedMedications()){
+                    System.out.println(" " + index + ". " + m.getMedicineName());
+                    index++;
+                }
+                
+                System.out.println(" " + (index) + ". Exit");
+                
+                choice = sc.nextInt();
+                sc.nextLine();
         } 
            
         for(int i = 0; i < a.getAppointmentOutcomeRecord().getPrescribedMedications().size(); i++){
@@ -71,7 +86,8 @@ public class PharmacistController {
                 System.out.println("Appointment Status not Completed!");
                 return;
             }
-        }
+        }   
+            System.out.println("Appointment Status updated to Completed!");
             a.setStatus(AppointmentStatus.COMPLETED);
         
         } 

@@ -19,6 +19,14 @@ public class Doctor extends Staff {
         doctorUi.displayMenu();
     }
 
+    public String getName(){
+        return super.name;
+    }//
+
+    public void setName(String name){
+        super.name = this.name;
+    }//
+
     public Availability[] getSchedule() {
         return schedule;
     }
