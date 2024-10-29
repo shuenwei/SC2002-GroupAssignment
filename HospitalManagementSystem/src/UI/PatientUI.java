@@ -6,6 +6,8 @@ import Interface.IDisplayableView;
 import Interface.IListDisplayableView;
 import View.AppointmentListView;
 import View.AppointmentView;
+import View.CommonView;
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -34,9 +36,10 @@ public class PatientUI {
 
         do {
             try {
+                CommonView.newPage();
+                System.out.println("Hello, " + patient.getName());
                 System.out.println();
                 System.out.println("Select an option:");
-                System.out.println();
                 System.out.println("(1) View Medical Record");
                 System.out.println("(2) Update Personal Information"); 
                 System.out.println("(3) View Available Appointment Slots"); 

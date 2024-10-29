@@ -10,6 +10,7 @@ public class Main {
             DataInitialiser.initialiseStaff();
             DataInitialiser.initialiseMedicine();
             do{
+                CommonView.newPage();
                 System.out.println("==================== Welcome to Hospital Management System =========================\n");
                 CommonView.pressEnterToContinue();
                 LoginUI.loginMenu();

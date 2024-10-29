@@ -36,7 +36,6 @@ public class PatientAppointmentUI extends AppointmentUI {
     }
 
     public void viewSlots() {
-        
         Doctor selectedDoctor = selectDoctor();
 
         if (selectedDoctor == null) {
@@ -45,7 +44,6 @@ public class PatientAppointmentUI extends AppointmentUI {
 
         AvailabilityUI availabilityUI = new AvailabilityUI(selectedDoctor);
         availabilityUI.viewSchedule();
-        System.out.println();
 
         LocalDate selectedDate = null;
         Availability availability = null;
@@ -56,6 +54,7 @@ public class PatientAppointmentUI extends AppointmentUI {
 
             availability = selectedDoctor.getAvailability(selectedDate.getDayOfWeek());
             if (availability == null) {
+                CommonView.newPage();
                 System.out.println("Doctor is not available on this day. Would you like to search for another date?");
                 System.out.println("(1) Yes");
                 System.out.println("(2) No");
@@ -353,8 +352,11 @@ public class PatientAppointmentUI extends AppointmentUI {
     
         List<Doctor> doctors = UserRepository.getAllDoctors();
 
+        CommonView.newPage();
+
         if (doctors.isEmpty()) {
             System.out.println("No doctors are available.");
+            CommonView.pressEnterToContinue();
             return null;
         }
 
@@ -385,6 +387,7 @@ public class PatientAppointmentUI extends AppointmentUI {
         LocalDate appointmentDate = null;
 
         while (true) {
+            CommonView.newPage();
             System.out.print("Enter appointment date (dd-mm-yyyy): ");
             String input = scanner.nextLine();
 
@@ -392,11 +395,13 @@ public class PatientAppointmentUI extends AppointmentUI {
                 appointmentDate = LocalDate.parse(input, formatter);
                 if (appointmentDate.isBefore(LocalDate.now())) {
                     System.out.println("Invalid date. You may only book an appointment from today onwards.");
+                    CommonView.pressEnterToContinue();
                 } else {
                     return appointmentDate;
                 }
             } catch (DateTimeParseException e) {
                 System.out.println("Invalid date format. Please enter in 'dd-mm-yyyy' format.");
+                CommonView.pressEnterToContinue();
             }
         }
     }
