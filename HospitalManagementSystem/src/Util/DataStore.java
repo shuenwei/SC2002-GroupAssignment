@@ -31,16 +31,18 @@ public class DataStore {
     public static void savePatientData() {
         String patientCsvFilePath = "data/patientCsv_1.csv";
         try (PrintWriter pw = new PrintWriter(new FileWriter(patientCsvFilePath))) {
-            pw.println("Patient ID,Password,Name,Date of Birth,Gender,Blood Type,Contact Information");
+            pw.println("Patient ID,Password,Name,Date of Birth,Gender,Blood Type,Email Address,Phone Number");
             for (Patient patient : UserRepository.getAllPatients()) {
+                MedicalRecord medicalRecord = patient.getMedicalRecord();
                 String[] data = {
                     patient.getHospitalId(),
                     patient.getPassword(),
                     patient.getName(),
-                    patient.getDateOfBirth(),
+                    medicalRecord.getDateOfBirth(),
                     patient.getGender(),
-                    patient.getBloodType(),
-                    patient.getContactInformation(),
+                    medicalRecord.getBloodType(),
+                    medicalRecord.getEmailAddress(),
+                    medicalRecord.getPhoneNumber()
                 };
                 pw.println(String.join(",", data));
             }

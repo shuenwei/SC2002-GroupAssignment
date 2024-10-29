@@ -22,9 +22,10 @@ public class DataInitialiser {
                 String dateOfBirth = patientCsv[3];
                 String gender = patientCsv[4];
                 String bloodType = patientCsv[5];
-                String contactInformation = patientCsv[6];
+                String emailAddress = patientCsv[6];
+                String phoneNumber = patientCsv[7];
 
-                Patient patient = new Patient(hospitalId,password,name,gender,dateOfBirth,bloodType,contactInformation);
+                Patient patient = new Patient(hospitalId,password,name,gender,dateOfBirth,bloodType,emailAddress,phoneNumber);
                 UserRepository.add(patient);  
             }     
         } catch (IOException e) {
