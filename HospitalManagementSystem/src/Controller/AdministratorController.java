@@ -6,10 +6,9 @@ import Entity.Medication;
 import Entity.Request;
 import Entity.Staff;
 import Enums.RequestStatus;
-import Interface.IStaffManagement;
 import Repository.UserRepository;
 
-public class AdministratorController implements IStaffManagement{
+public class AdministratorController{
 
     // private Staff staff;
     private Administrator administrator;

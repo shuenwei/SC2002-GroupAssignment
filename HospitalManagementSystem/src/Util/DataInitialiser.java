@@ -24,7 +24,7 @@ public class DataInitialiser {
                 String bloodType = patientCsv[5];
                 String contactInformation = patientCsv[6];
 
-                Patient patient = new Patient(hospitalId,password,name,dateOfBirth,gender,bloodType,contactInformation);
+                Patient patient = new Patient(hospitalId,password,name,gender,dateOfBirth,bloodType,contactInformation);
                 UserRepository.add(patient);  
             }     
         } catch (IOException e) {
@@ -58,6 +58,10 @@ public class DataInitialiser {
                 else if (role.equals("Administrator")) {
                     Administrator administrator = new Administrator(hospitalId,password,name,gender,Enums.Role.ADMINISTRATOR,age);
                     UserRepository.add(administrator);
+                }
+                else if (role.equals("Nurse")){
+                    Nurse nurse = new Nurse(hospitalId,password,name,gender,Enums.Role.NURSE,age);
+                    UserRepository.add(nurse);
                 }
                 else {
                     throw new IllegalArgumentException("Invalid role: " + role);
