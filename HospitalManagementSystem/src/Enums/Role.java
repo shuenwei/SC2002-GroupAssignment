@@ -4,5 +4,6 @@ public enum Role {
     DOCTOR,
     PATIENT,
     ADMINISTRATOR,
-    PHARMACIST
+    PHARMACIST,
+    NURSE
 }

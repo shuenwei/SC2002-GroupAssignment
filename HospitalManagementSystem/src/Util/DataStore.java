@@ -9,9 +9,9 @@ import java.io.PrintWriter;
 public class DataStore {
     
     public static void saveStaffData() {
-        String staffCsvFilePath = "data/staffCsv.csv";
+        String staffCsvFilePath = "data/staffCsv_1.csv";
         try (PrintWriter pw = new PrintWriter(new FileWriter(staffCsvFilePath))) {
-            pw.println("HospitalId,Password,Name,Role,Gender,Age"); // Writing header
+            pw.println("Staff ID,Password,Name,Role,Gender,Age"); // Writing header
             for (Staff staff : UserRepository.getAllStaff()) {
                 String[] data = {
                     staff.getHospitalId(),
@@ -27,4 +27,26 @@ public class DataStore {
             e.printStackTrace();
         }
     }
+
+    public static void savePatientData() {
+        String patientCsvFilePath = "data/patientCsv_1.csv";
+        try (PrintWriter pw = new PrintWriter(new FileWriter(patientCsvFilePath))) {
+            pw.println("Patient ID,Password,Name,Date of Birth,Gender,Blood Type,Contact Information");
+            for (Patient patient : UserRepository.getAllPatients()) {
+                String[] data = {
+                    patient.getHospitalId(),
+                    patient.getPassword(),
+                    patient.getName(),
+                    patient.getDateOfBirth(),
+                    patient.getGender(),
+                    patient.getBloodType(),
+                    patient.getContactInformation(),
+                };
+                pw.println(String.join(",", data));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
