@@ -1,8 +1,10 @@
 package UI;
 
+import Controller.AppointmentOutcomeController;
 import Entity.MedicalHistory;
 import Entity.MedicalRecord;
 
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import Controller.DoctorController;
@@ -22,9 +24,11 @@ public class DoctorMedicalRecordUI {
         System.out.println("Please enter the PatientID: ");
         Scanner scanner = new Scanner(System.in);
         String patientID = scanner.nextLine();
+        System.out.println();
         MedicalRecord medicalRecord = doctorController.findMedicalRecordByID(patientID);
         if(medicalRecord != null) {
             medicalHistoryView = new MedicalHistoryView();
+            System.out.println("MedicalRecord: ");
             System.out.println("PatientID: " + medicalRecord.getPatientID());
             System.out.println("Name: " + medicalRecord.getName());
             System.out.println("Date of Birth: " + medicalRecord.getDateOfBirth());
@@ -73,18 +77,59 @@ public class DoctorMedicalRecordUI {
                     medicalRecord.addMedicalHistory(newmedicalHistory);
                     break;
                 case 2:
-                    System.out.println("Please enter the diagnosis you want to edit: ");
-                    String diagnosisName = scanner.nextLine();
-                    MedicalHistory existingMedicalHistory = doctorController.findmedicalHistory(diagnosisName, patientID);
+
+                    ArrayList<MedicalHistory> medicalHistoryArrayList = medicalRecord.getMedicalHistory();
+                    if(medicalHistoryArrayList.isEmpty()) {
+                        System.out.println("There is no medical history associated with the patientID: " + patientID);
+                        System.out.println("Please create a medical history first. ");
+                        return;
+                    }
+
+                    MedicalHistoryView medicalHistoryView = new MedicalHistoryView();
+                    medicalHistoryView.display(medicalHistoryArrayList);
+
+                    int medicalHistoryChoice = -1;
+
+                    while (medicalHistoryChoice == -1) {
+                        System.out.print("Please select an appointment to create appointment outcome record for by entering the corresponding number: ");
+                        try {
+                            medicalHistoryChoice = scanner.nextInt();
+                            scanner.nextLine();
+                            if (medicalHistoryChoice >= 1 && medicalHistoryChoice <= medicalHistoryArrayList.size()) {
+                                break;
+                            } else {
+                                medicalHistoryChoice = -1;
+                                System.out.println("Invalid selection. Please enter a number between 1 and " + medicalHistoryArrayList.size() + ".");
+                            }
+                        } catch (InputMismatchException e) {
+                            System.out.println("Invalid input. Please enter a number.");
+                            scanner.nextLine();
+                        }
+                    }
+
+                    MedicalHistory selectedMedicalHistory = medicalHistoryArrayList.get(medicalHistoryChoice - 1);
+                    selectedMedicalHistory.getPrescribedMedications().clear();
                     System.out.println("Please enter updated name of the diagnosis: ");
                     String updatedName = scanner.nextLine();
-                    existingMedicalHistory.setDiagnosis(updatedName);
+                    selectedMedicalHistory.setDiagnosis(updatedName);
                     System.out.println("Please enter updated Treatment Plan of the diagnosis: ");
                     String updatedTreatmentPlan = scanner.nextLine();
-                    existingMedicalHistory.setTreatmentPlan(updatedTreatmentPlan);
-                    System.out.println("Please enter updated Prescribed Medication: ");
-                    String updatedPrescribedMedication = scanner.nextLine();
-                    existingMedicalHistory.addPrescribedMedications(updatedPrescribedMedication);
+                    selectedMedicalHistory.setTreatmentPlan(updatedTreatmentPlan);
+                    while(true) {
+                        System.out.print("Enter names of medication to be prescribed (If no more prescriptions type 'Exit') : ");
+                        String updatedPrescribedMedication = scanner.nextLine();
+                        if(updatedPrescribedMedication.equals("Exit")) {
+                            break;
+                        }
+                        else {
+                            selectedMedicalHistory.addPrescribedMedications(updatedPrescribedMedication);
+                        }
+                    }
+                    System.out.println();
+                    System.out.println("Updated Medical History: ");
+                    System.out.println("Name of Diagnosis: " + selectedMedicalHistory.getDiagnosisName());
+                    System.out.println("Treatment Plan: " + selectedMedicalHistory.getTreatmentPlan());
+                    System.out.println("Prescribed Medication: " + selectedMedicalHistory.getPrescribedMedications());
                     break;
                 default:
                     break;

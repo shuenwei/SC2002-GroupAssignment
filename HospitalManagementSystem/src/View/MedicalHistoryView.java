@@ -11,7 +11,9 @@ public class MedicalHistoryView implements IMedicalHistory {
         if (medicalHistoryList.isEmpty()) {
             System.out.println("No diagnoses available.");
         } else {
+            int count = 1;
             for (MedicalHistory medicalHistory : medicalHistoryList) {
+                System.out.println("(" + count + ") ");
                 System.out.println("Name of Diagnosis: " + medicalHistory.getDiagnosisName());
                 System.out.println("Treatment Plan: " + medicalHistory.getTreatmentPlan());
 
@@ -25,6 +27,7 @@ public class MedicalHistoryView implements IMedicalHistory {
                     }
                 }
                 System.out.println();
+                count++;
             }
         }
     }

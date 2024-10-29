@@ -1,6 +1,7 @@
 package UI;
 
 import java.util.InputMismatchException;
+import java.util.Objects;
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -67,22 +68,20 @@ public class AppointmentOutcomeUI {
         System.out.println("Enter consultation notes: ");
         String notes = sc.nextLine();
         while(true) {
-            System.out.print("Enter names of medication to be prescribed: ");
+            System.out.print("Enter names of medication to be prescribed (If no more prescriptions type 'Exit') : ");
             String name = sc.nextLine();
-            try{
-                Integer.parseInt(name);
+            if(name.equals("Exit")) {
                 break;
-            } catch (NumberFormatException e) {
-                boolean exist = AppointmentOutcomeController.checkMedicationExist(name);
-                if(exist) {
-                    prescribedMedications.add(name);
-                    System.out.println("Medication added: " + name);
-                }
-                else{
-                    System.out.println("Medication does not exist");
-                }
+            }
+
+            boolean exist = AppointmentOutcomeController.checkMedicationExist(name);
+
+            if(exist) {
+                prescribedMedications.add(name);
+                System.out.println("Medication added: " + name);
             }
         }
+
         for(String medication : prescribedMedications){
             PrescribedMedication prescribedMedication = new PrescribedMedication(medication);
             prescribedMedicationsList.add(prescribedMedication);
@@ -95,6 +94,15 @@ public class AppointmentOutcomeUI {
         }
         else {
             selectedAppointment.setStatus(AppointmentStatus.MEDICINE_PENDING);
+        }
+
+        System.out.println();
+        System.out.println("Appointment Outcome record created.");
+        System.out.println("Date of Appointment:      " + selectedAppointment.getDate());
+        System.out.println("Type of Service provided: " + selectedAppointment.getAppointmentOutcomeRecord().getTypeOfService());
+        System.out.println("Consultation notes:       " + selectedAppointment.getAppointmentOutcomeRecord().getConsultationNotes());
+        for (PrescribedMedication j : selectedAppointment.getAppointmentOutcomeRecord().getPrescribedMedications()) {
+            System.out.println("Prescribed medication:    " + j.getMedicineName() + " [" + j.getStatus() + "]");
         }
 
     }
