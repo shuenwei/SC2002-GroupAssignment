@@ -5,11 +5,11 @@ import Entity.Administrator;
 import Entity.Appointment;
 import Entity.Doctor;
 import Entity.Inventory;
+import Entity.Nurse;
 import Entity.Pharmacist;
 import Entity.PrescribedMedication;
 import Entity.Staff;
 import Entity.User;
-import Interface.IStaffManagement;
 import Repository.UserRepository;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
@@ -21,7 +21,7 @@ public class AdministratorUI {
     private Administrator administrator;
     private AdministratorController administratorController;
     private Staff staff;
-    private IStaffManagement staff_management;
+    // private IStaffManagement staff_management;
     Scanner scanner = new Scanner(System.in);
 
     public AdministratorUI(Administrator administrator) {
@@ -131,66 +131,77 @@ public class AdministratorUI {
                 throw new IllegalArgumentException("Gender cannot be empty.");
             }
             System.out.println("Enter Role: ");
-            String hospRole = scanner.nextLine();
+            String hospRole = scanner.nextLine().toUpperCase();
             if (hospRole.isEmpty()) {
                 throw new IllegalArgumentException("Gender cannot be empty.");
             }
             System.out.println("Enter Age: ");
             int hospAge = scanner.nextInt();
             System.out.println();
-
-            switch (hospRole.charAt(0)) {
-
-                case 'D':
-
-                    ArrayList<Doctor> doctors = UserRepository.getAllDoctors();
+            if (hospAge <= 0) {
+                throw new IllegalArgumentException("Age must be greater than 0.");
+            }
             
-                    int max_d = 0;
-                    for(Doctor d : doctors){
-                        if(Integer.parseInt(d.getHospitalId().substring(1))>max_d){
-                            max_d = Integer.parseInt(d.getHospitalId().substring(1));
-                        }
-                    }
-                    max_d++;
-                    staff = new Doctor("D" + String.format("%03d", max_d), "",hospName, hospGender, Enums.Role.DOCTOR, hospAge);
+            if(hospRole.equals("DOCTOR")){
+    
+                ArrayList<Doctor> doctors = UserRepository.getAllDoctors();
         
-                    break;
-
-                case 'P':
-                    
-                    ArrayList<Pharmacist> pharmacists = UserRepository.getAllPharmacists();
-
-                    int max_p = 0;
-                    for(Pharmacist p : pharmacists){
-                        if(Integer.parseInt(p.getHospitalId().substring(1))>max_p){
-                            max_p = Integer.parseInt(p.getHospitalId().substring(1));
-                        }
+                int max_d = 0;
+                for(Doctor d : doctors){
+                    if(Integer.parseInt(d.getHospitalId().substring(1))>max_d){
+                        max_d = Integer.parseInt(d.getHospitalId().substring(1));
                     }
-                    max_p++;
-                    
-                    staff = new Pharmacist("P" + String.format("%03d", max_p), "", hospName, hospGender, Enums.Role.PHARMACIST, hospAge);
-                    break;
-                    
-                case 'A':
+                }
+                max_d++;
+                staff = new Doctor("D" + String.format("%03d", max_d), "",hospName, hospGender, Enums.Role.DOCTOR, hospAge);
+    
+            }else if(hospRole.equals("PHARMACIST")){
+                        
+                ArrayList<Pharmacist> pharmacists = UserRepository.getAllPharmacists();
 
-                    ArrayList<Administrator> administrators = UserRepository.getAllAdministrators();
-
-                    int max_a = 0;
-                    for(Administrator a : administrators){
-                        if(Integer.parseInt(a.getHospitalId().substring(1))>max_a){
-                            max_a = Integer.parseInt(a.getHospitalId().substring(1));
-                        }
+                int max_p = 0;
+                for(Pharmacist p : pharmacists){
+                    if(Integer.parseInt(p.getHospitalId().substring(1))>max_p){
+                        max_p = Integer.parseInt(p.getHospitalId().substring(1));
                     }
-                    max_a++;
-                    
-                    staff = new Administrator("A" + String.format("%03d", max_a), "password", hospName, hospGender, Enums.Role.ADMINISTRATOR, hospAge);
-                    break;
-                default:
-                    throw new IllegalArgumentException("Error: Invalid Hospital ID. Must start with 'D', 'P', or 'A'.");
+                }
+                max_p++;
+                
+                staff = new Pharmacist("P" + String.format("%03d", max_p), "", hospName, hospGender, Enums.Role.PHARMACIST, hospAge);
+
+            }else if(hospRole.equals("ADMINISTRATOR")){
+    
+                ArrayList<Administrator> administrators = UserRepository.getAllAdministrators();
+    
+                int max_a = 0;
+                for(Administrator a : administrators){
+                    if(Integer.parseInt(a.getHospitalId().substring(1))>max_a){
+                        max_a = Integer.parseInt(a.getHospitalId().substring(1));
+                    }
+                }
+                max_a++;
+                
+                staff = new Administrator("A" + String.format("%03d", max_a), "", hospName, hospGender, Enums.Role.ADMINISTRATOR, hospAge);
+
+            }else if(hospRole.equals("NURSE")){
+
+                ArrayList<Nurse> nurses = UserRepository.getAllNurses();
+    
+                int max_n = 0;
+                for(Nurse n : nurses){
+                    if(Integer.parseInt(n.getHospitalId().substring(1))>max_n){
+                        max_n = Integer.parseInt(n.getHospitalId().substring(1));
+                    }
+                }
+                max_n++;
+                
+                staff = new Nurse("N" + String.format("%03d", max_n), "", hospName, hospGender, Enums.Role.NURSE , hospAge);
+            
+            }else{
+                throw new IllegalArgumentException("Error: Invalid Role. Must be either Doctor, Pharmacist or Administrator");
             }
 
-            staff_management = new AdministratorController(administrator);
-            staff_management.addStaff((Staff) staff);
+            administratorController.addStaff((Staff) staff);
 
         } catch (InputMismatchException e) {
             System.out.println("Error: Invalid input type. Age must be an integer.");
@@ -222,8 +233,8 @@ public class AdministratorUI {
                 throw new IllegalArgumentException("Hospital ID cannot be empty.");
             }
 
-            staff_management = new AdministratorController(administrator);
-            staff_management.removeStaff(hospID);
+            administratorController.removeStaff(hospID);
+
        } catch (IllegalArgumentException e) {
         System.out.println(e.getMessage());
         } catch (Exception e) {
@@ -244,7 +255,7 @@ public class AdministratorUI {
             }
 
             User staff_details = UserRepository.get(hospID);
-            staff_management = new AdministratorController(administrator);
+            // staff_management = new AdministratorController(administrator);
             Staff staff_det = (Staff) staff_details;
 
             System.out.println();
@@ -265,7 +276,7 @@ public class AdministratorUI {
                         if (hospPass.isEmpty()) {
                             throw new IllegalArgumentException("Password cannot be empty.");
                         }
-                        staff_management.updateStaffPassword(staff_det, hospPass);
+                        administratorController.updateStaffPassword(staff_det, hospPass);
                         System.out.println();
                         System.out.println("Your updated details are as follows"); 
                         System.out.println("Hospital ID : " + staff_details.getHospitalId());
@@ -280,7 +291,7 @@ public class AdministratorUI {
                         if (hospName.isEmpty()) {
                             throw new IllegalArgumentException("Name cannot be empty.");
                         }
-                        staff_management.updateStaffName(staff_det, hospName);
+                        administratorController.updateStaffName(staff_det, hospName);
                         System.out.println();
                         System.out.println("Your updated details are as follows"); 
                         System.out.println("Hospital ID : " + staff_details.getHospitalId());
@@ -295,7 +306,7 @@ public class AdministratorUI {
                         if (hospGender.isEmpty()) {
                             throw new IllegalArgumentException("Gender cannot be empty.");
                         }
-                        staff_management.updateStaffGender(staff_det, hospGender);
+                        administratorController.updateStaffGender(staff_det, hospGender);
                         System.out.println();
                         System.out.println("Your updated details are as follows"); 
                         System.out.println("Hospital ID : " + staff_details.getHospitalId());
@@ -307,7 +318,7 @@ public class AdministratorUI {
                 case 4: System.out.println("Enter Age: ");
                         scanner.nextLine();
                         int hospAge = scanner.nextInt();
-                        staff_management.updateStaffAge(staff_det, hospAge);
+                        administratorController.updateStaffAge(staff_det, hospAge);
                         System.out.println();
                         System.out.println("Your updated details are as follows"); 
                         System.out.println("Hospital ID : " + staff_details.getHospitalId());

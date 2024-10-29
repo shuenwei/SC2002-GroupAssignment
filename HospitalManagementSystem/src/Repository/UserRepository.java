@@ -65,6 +65,16 @@ public class UserRepository {
         return administrators;
     }
 
+    public static ArrayList<Nurse> getAllNurses() {
+        ArrayList<Nurse> nurses = new ArrayList<>();
+        for (User user : users.values()) {
+            if (user instanceof Nurse) {
+                nurses.add((Nurse) user);
+            }
+        }
+        return nurses;
+    }
+
     public static ArrayList<Staff> getAllStaff() {
         ArrayList<Staff> staffs = new ArrayList<>();
             for (User user : users.values()) {
