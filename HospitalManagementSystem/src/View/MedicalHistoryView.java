@@ -1,11 +1,10 @@
 package View;
 
 import Entity.MedicalHistory;
-import Interface.IMedicalHistory;
-
+import Interface.IListDisplayableView;
 import java.util.ArrayList;
 
-public class MedicalHistoryView implements IMedicalHistory {
+public class MedicalHistoryView implements IListDisplayableView<MedicalHistory> {
 
     public void display(ArrayList<MedicalHistory> medicalHistoryList) {
         if (medicalHistoryList.isEmpty()) {

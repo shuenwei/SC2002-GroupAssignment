@@ -28,7 +28,7 @@ public class DoctorUI {
         DoctorAppointmentUI doctorAppointmentUI = new DoctorAppointmentUI(this.doctor);
         DoctorController doctorController = new DoctorController(this.doctor);
         doctorMedicalRecordUI = new DoctorMedicalRecordUI(doctorController);
-        appointmentOutcomeUI = new AppointmentOutcomeUI(doctor);
+        appointmentOutcomeUI = new AppointmentOutcomeUI(doctor,doctorController);
         IDisplayableView<Appointment> appointmentView = new AppointmentView();
         IListDisplayableView<Appointment> appointmentListView = new AppointmentListView();
 
@@ -70,7 +70,7 @@ public class DoctorUI {
                         doctorAppointmentUI.displayAppointments(appointmentListView);
                         break;
                     case 7:
-                        appointmentOutcomeUI.createAppointmentOutcome();
+                        appointmentOutcomeUI.createAppointmentOutcome(appointmentListView);
                         break;
                     case 8:
                         System.out.println("You are now logged out.");
