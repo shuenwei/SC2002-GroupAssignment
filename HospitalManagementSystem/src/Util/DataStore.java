@@ -50,5 +50,26 @@ public class DataStore {
             e.printStackTrace();
         }
     }
+    
+    public static void saveAppointmentData() {
+        String appointmentCsvFilePath = "data/appointmentCsv.csv";
+        try (PrintWriter pw = new PrintWriter(new FileWriter(appointmentCsvFilePath))) {
+            pw.println("Patient ID,Doctor ID,Date,Time,Status");
+            for (Patient patient : UserRepository.getAllPatients()) {
+                for (Appointment appointment : patient.getAppointments()) {
+                    String[] data = {
+                        appointment.getPatient().getHospitalId(),
+                        appointment.getDoctor().getHospitalId(),
+                        appointment.getDate().toString(),
+                        appointment.getTime().toString(),
+                        appointment.getStatus().toString()
+                    };
+                    pw.println(String.join(",", data));
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 }

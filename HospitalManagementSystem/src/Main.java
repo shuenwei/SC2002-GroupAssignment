@@ -28,6 +28,7 @@ public class Main {
                         System.out.println("Exiting the system...");
                         DataStore.saveStaffData();
                         DataStore.savePatientData();
+                        DataStore.saveAppointmentData();
                         System.exit(0);
                         break;
                     default:
