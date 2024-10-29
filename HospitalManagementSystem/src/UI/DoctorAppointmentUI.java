@@ -21,18 +21,18 @@ import java.util.Scanner;
 
 import Controller.DoctorController;
 
-public class DoctorAppointmentUI {
+public class DoctorAppointmentUI extends AppointmentUI {
 
     private Doctor doctor;
     private Scanner scanner;
     private DateTimeFormatter formatter;
     private DoctorController doctorController;
 
-    public DoctorAppointmentUI(Doctor doctor) {
+    public DoctorAppointmentUI(Doctor doctor, DoctorController doctorController) {
         this.doctor = doctor;
         scanner = new Scanner(System.in);
         formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        doctorController = new DoctorController(doctor);
+        this.doctorController = doctorController;
     }
 
     public void acceptDecline(IDisplayableView<Appointment> appointmentView,IListDisplayableView<Appointment> appointmentListView){
@@ -107,84 +107,11 @@ public class DoctorAppointmentUI {
     
         ArrayList<Appointment> pendingAppointments = doctorController.getAppointmentsByStatus(Enums.AppointmentStatus.PENDING);
         ArrayList<Appointment> confirmedAppointments = doctorController.getAppointmentsByStatus(Enums.AppointmentStatus.CONFIRMED);
-        ArrayList<Appointment> cancelledAppointments = doctorController.getAppointmentsByStatus(Enums.AppointmentStatus.CANCELLED);
+        ArrayList<Appointment> medicinePendingAppointments = doctorController.getAppointmentsByStatus(Enums.AppointmentStatus.MEDICINE_PENDING);
         ArrayList<Appointment> completedAppointments = doctorController.getAppointmentsByStatus(Enums.AppointmentStatus.COMPLETED);
+        ArrayList<Appointment> cancelledAppointments = doctorController.getAppointmentsByStatus(Enums.AppointmentStatus.CANCELLED);
 
-        int noOfPendingAppointments = pendingAppointments.size();
-        int noOfConfirmedAppointments = confirmedAppointments.size();
-        int noOfCancelledAppointments = cancelledAppointments.size();
-        int noOfCompletedAppointments = completedAppointments.size();
-
-        if (doctor.getAppointments().size() == 0 ) {
-            System.out.println("You have no appointments.");
-        } 
-        else {
-
-            System.out.println("You have:"); 
-            System.out.println(noOfPendingAppointments + " Pending Appointments");
-            System.out.println(noOfConfirmedAppointments + " Confirmed Appointments");
-            System.out.println(noOfCancelledAppointments + " Cancelled Appointments");
-            System.out.println(noOfCompletedAppointments + " Completed Appointments");
-            System.out.println(); 
-            System.out.println("Which would you like to view?");
-            System.out.println("(1) Pending");
-            System.out.println("(2) Confirmed");
-            System.out.println("(3) Cancelled");
-            System.out.println("(4) Completed");
-
-            int choice = -1;
-            while (choice == -1) {
-                try {
-                    choice = scanner.nextInt();
-                    scanner.nextLine();
-                    
-                    switch (choice) {
-                        case 1:
-                            if (noOfPendingAppointments == 0) {
-                                System.out.println("You have no pending appointments.");
-                            }
-                            else {
-                                appointmentListView.display(pendingAppointments);
-                            }
-                            break;
-                        case 2:
-                            if (noOfConfirmedAppointments == 0) {
-                                System.out.println("You have no confirmed appointments.");
-                            }
-                            else {
-                                appointmentListView.display(confirmedAppointments);
-                            }
-                            break;
-                        case 3:
-                            if (noOfCancelledAppointments == 0) {
-                                System.out.println("You have no cancelled appointments.");
-                            }
-                            else {
-                                appointmentListView.display(cancelledAppointments);
-                            }
-                            break;
-                        case 4:
-                            if (noOfCompletedAppointments == 0) {
-                                System.out.println("You have no completed appointments.");
-                            }
-                            else {
-                                appointmentListView.display(completedAppointments);
-                            }
-                            break;
-                        default:
-                            System.out.println("Invalid choice. Please select a number between 1 and 4.");
-                            choice = -1;
-                            break;
-                    }
-                }
-                catch (InputMismatchException e) {
-                    System.out.println("Invalid input. Please enter a number between 1 and 4.");
-                    scanner.nextLine();
-                    choice = -1;
-                }
-            
-            }
-        }
+        super.displayAppointments(appointmentListView, pendingAppointments, confirmedAppointments, medicinePendingAppointments, completedAppointments, cancelledAppointments);
 
     }   
 

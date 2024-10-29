@@ -17,16 +17,17 @@ public class DoctorUI {
     private Appointment appointment;
     private DoctorMedicalRecordUI doctorMedicalRecordUI;
     private AppointmentOutcomeUI appointmentOutcomeUI;
+    private DoctorController doctorController;
 
     public DoctorUI (Doctor doctor) {
         this.doctor = doctor;
+        doctorController = new DoctorController(this.doctor);
     }
 
     public void displayMenu(){
         Scanner scanner = new Scanner(System.in);
         AvailabilityUI availabilityUI = new AvailabilityUI(this.doctor);
-        DoctorAppointmentUI doctorAppointmentUI = new DoctorAppointmentUI(this.doctor);
-        DoctorController doctorController = new DoctorController(this.doctor);
+        DoctorAppointmentUI doctorAppointmentUI = new DoctorAppointmentUI(this.doctor,doctorController);
         doctorMedicalRecordUI = new DoctorMedicalRecordUI(doctorController);
         appointmentOutcomeUI = new AppointmentOutcomeUI(doctor);
         IDisplayableView<Appointment> appointmentView = new AppointmentView();
