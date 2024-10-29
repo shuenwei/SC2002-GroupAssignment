@@ -10,7 +10,7 @@ public class AppointmentOutcomeRecordView implements IDisplayableView<Appointmen
         if(a == null)
             {
                 System.out.println();
-                System.out.println("Your appointment is still pending and has not been accepted by the doctor");
+                System.out.println("No Appointment Outcome Record ");
             }
             else {
                 System.out.println();

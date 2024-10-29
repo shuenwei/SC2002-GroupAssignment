@@ -79,10 +79,16 @@ public class NurseUI {
             if (hospBlood.isEmpty()) {
                 throw new IllegalArgumentException("Blood Type cannot be empty.");
             }
-            System.out.println("Contact Information: ");
-            String hospContact = scanner.nextLine();
+            System.out.println("Email Address: ");
+            String hospEmailAddress = scanner.nextLine();
             System.out.println();
-            if (hospContact.isEmpty()) {
+            if (hospEmailAddress.isEmpty()) {
+                throw new IllegalArgumentException("Contact Information cannot be empty.");
+            }
+            System.out.println("Phone Number: ");
+            String hospPhoneNumber = scanner.nextLine();
+            System.out.println();
+            if (hospPhoneNumber.isEmpty()) {
                 throw new IllegalArgumentException("Contact Information cannot be empty.");
             }
         
@@ -96,7 +102,7 @@ public class NurseUI {
             }
 
             max_p++;
-            patient = new Patient("P" + String.format("%04d", max_p), "",hospName, hospGender, hospDate, hospBlood, hospContact);
+            patient = new Patient("P" + String.format("%04d", max_p), "",hospName, hospGender, hospDate, hospBlood, hospEmailAddress,hospPhoneNumber );
 
             nurseController.addPatient((Patient) patient);
 

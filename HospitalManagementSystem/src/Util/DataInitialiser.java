@@ -26,6 +26,7 @@ public class DataInitialiser {
                 String phoneNumber = patientCsv[7];
 
                 Patient patient = new Patient(hospitalId,password,name,gender,dateOfBirth,bloodType,emailAddress,phoneNumber);
+
                 UserRepository.add(patient);  
             }     
         } catch (IOException e) {

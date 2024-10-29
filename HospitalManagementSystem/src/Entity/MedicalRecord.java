@@ -12,7 +12,7 @@ public class MedicalRecord {
     private String emailAddress;
     private ArrayList<MedicalHistory> medicalHistory;
 
-    public MedicalRecord(String PatientID, String name, String dateOfBirth, String gender, String bloodType, String phoneNumber, String emailAddress) {
+    public MedicalRecord(String PatientID, String name, String gender, String dateOfBirth, String bloodType, String phoneNumber, String emailAddress) {
         this.PatientID = PatientID;
         this.name = name;
         this.dateOfBirth = dateOfBirth;
