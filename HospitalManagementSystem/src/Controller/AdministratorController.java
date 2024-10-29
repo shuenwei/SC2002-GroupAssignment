@@ -8,7 +8,7 @@ import Entity.Staff;
 import Enums.RequestStatus;
 import Repository.UserRepository;
 
-public class AdministratorController{
+public class AdministratorController extends StaffController{
 
     // private Staff staff;
     private Administrator administrator;

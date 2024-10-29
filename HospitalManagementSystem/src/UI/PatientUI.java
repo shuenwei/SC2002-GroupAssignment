@@ -9,15 +9,19 @@ import View.AppointmentView;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import Controller.PatientController;
+
 public class PatientUI {
 
     private Patient patient;
+    private PatientController patientController;
     private PatientAppointmentUI patientAppointmentUI;
     private PatientMedicalRecordUI patientMedicalRecordUI;
 
     public PatientUI (Patient patient) {
         this.patient = patient;
-        patientAppointmentUI = new PatientAppointmentUI(this.patient);
+        patientController = new PatientController(patient);
+        patientAppointmentUI = new PatientAppointmentUI(this.patient,this.patientController);
         patientMedicalRecordUI = new PatientMedicalRecordUI(patient.getMedicalRecord(),patient);
     }
 
