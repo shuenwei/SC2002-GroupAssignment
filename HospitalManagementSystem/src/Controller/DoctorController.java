@@ -4,7 +4,7 @@ import Entity.*;
 import java.util.ArrayList;
 
 
-public class DoctorController {
+public class DoctorController extends StaffController {
 
     private Doctor doctor;
 

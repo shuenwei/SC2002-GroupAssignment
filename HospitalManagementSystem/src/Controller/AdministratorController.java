@@ -9,7 +9,7 @@ import Enums.RequestStatus;
 import Interface.IStaffManagement;
 import Repository.UserRepository;
 
-public class AdministratorController implements IStaffManagement{
+public class AdministratorController extends StaffController implements IStaffManagement{
 
     // private Staff staff;
     private Administrator administrator;

@@ -13,7 +13,7 @@ import Repository.UserRepository;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class PharmacistController {
+public class PharmacistController extends StaffController {
 
     private Pharmacist pharmacist;
     private Medication med;
