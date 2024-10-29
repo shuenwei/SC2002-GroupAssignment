@@ -1,11 +1,15 @@
 package UI;
 
 import Entity.Appointment;
+import Entity.AppointmentOutcomeRecord;
+import Entity.MedicalHistory;
 import Entity.Patient;
 import Interface.IDisplayableView;
 import Interface.IListDisplayableView;
 import View.AppointmentListView;
+import View.AppointmentOutcomeRecordView;
 import View.AppointmentView;
+import View.MedicalHistoryView;
 import View.CommonView;
 
 import java.util.InputMismatchException;
@@ -32,7 +36,9 @@ public class PatientUI {
         int option = -1;
 
         IDisplayableView<Appointment> appointmentView = new AppointmentView();
+        IDisplayableView<AppointmentOutcomeRecord> appointmentOutcomeView = new AppointmentOutcomeRecordView();
         IListDisplayableView<Appointment> appointmentListView = new AppointmentListView();
+        IListDisplayableView<MedicalHistory> medicalHistoryView = new MedicalHistoryView();
 
         do {
             try {
@@ -54,7 +60,7 @@ public class PatientUI {
 
                 switch (option) {
                     case 1:
-                        patientMedicalRecordUI.displayMedicalRecord();
+                        patientMedicalRecordUI.displayMedicalRecord(medicalHistoryView);
                         break;
                     case 2:
                         patientMedicalRecordUI.editMedicalRecord();
@@ -75,7 +81,7 @@ public class PatientUI {
                         patientAppointmentUI.displayAppointments(appointmentListView);
                         break;
                     case 8:
-                        patientMedicalRecordUI.displayAppointmentOutcomeRecord();
+                        patientMedicalRecordUI.displayAppointmentOutcomeRecord(appointmentListView, appointmentOutcomeView);
                         break;
                     case 9:
                         System.out.println("You are now logged out.");

@@ -1,7 +1,6 @@
 package UI;
 
 import java.util.InputMismatchException;
-import java.util.Objects;
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -12,7 +11,7 @@ import Controller.AppointmentOutcomeController;
 import Entity.Doctor;
 import Entity.PrescribedMedication;
 import Enums.AppointmentStatus;
-import View.AppointmentListView;
+import Interface.IListDisplayableView;
 
 public class AppointmentOutcomeUI {
 
@@ -22,13 +21,14 @@ public class AppointmentOutcomeUI {
     private Scanner scanner;
     Scanner sc = new Scanner(System.in);
 
-    public AppointmentOutcomeUI(Doctor doctor) {
+    public AppointmentOutcomeUI(Doctor doctor,DoctorController doctorController) {
         this.doctor = doctor;
+        this.doctorController = doctorController;
         scanner = new Scanner(System.in);
-        doctorController = new DoctorController(doctor);
+
     }
 
-    public void createAppointmentOutcome() {
+    public void createAppointmentOutcome(IListDisplayableView<Appointment> appointmentListView) {
         ArrayList<Appointment> ConfirmedAppointments = doctorController.getAppointmentsByStatus(AppointmentStatus.CONFIRMED);
 
         if (ConfirmedAppointments.isEmpty()) {
@@ -36,7 +36,6 @@ public class AppointmentOutcomeUI {
             return;
         }
 
-        AppointmentListView appointmentListView = new AppointmentListView();
         appointmentListView.display(ConfirmedAppointments);
 
         int appointmentChoice = -1;

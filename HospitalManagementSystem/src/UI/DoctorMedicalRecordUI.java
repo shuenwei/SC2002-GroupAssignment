@@ -1,13 +1,12 @@
 package UI;
 
-import Controller.AppointmentOutcomeController;
 import Entity.MedicalHistory;
 import Entity.MedicalRecord;
-
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import Controller.DoctorController;
+import Entity.PrescribedMedication;
 import View.MedicalHistoryView;
 
 
@@ -17,7 +16,6 @@ public class DoctorMedicalRecordUI {
 
     public DoctorMedicalRecordUI(DoctorController doctorController) {
         this.doctorController = doctorController;
-
     }
 
     public void displayMedicalRecord() {
@@ -57,12 +55,20 @@ public class DoctorMedicalRecordUI {
             System.out.println("2) Edit diagnosis ");
             System.out.println("Please enter your choice: ");
 
-            try {
-                choice = scanner.nextInt();
-                scanner.nextLine();
-            } catch (InputMismatchException e) {
-                System.out.println("Invalid input. Please enter a number.");
-                scanner.nextLine();
+            while (true) {
+                try {
+                    choice = scanner.nextInt();
+                    scanner.nextLine();
+
+                    if (choice >= 1 && choice <= 2) {
+                        break;
+                    } else {
+                        System.out.println("Invalid choice. Please enter 1 or 2.");
+                    }
+                } catch (InputMismatchException e) {
+                    System.out.println("Invalid input. Please enter a number.");
+                    scanner.nextLine();
+                }
             }
             switch (choice) {
                 case 1:
@@ -70,14 +76,20 @@ public class DoctorMedicalRecordUI {
                     String name = scanner.nextLine();
                     System.out.println("Please enter the Treatment Plan of the diagnosis: ");
                     String treatmentPlan = scanner.nextLine();
-                    System.out.println("Please enter the prescribed medication: ");
-                    String medication = scanner.nextLine();
                     MedicalHistory newmedicalHistory = new MedicalHistory(name,treatmentPlan);
-                    newmedicalHistory.addPrescribedMedications(medication);
+                    while(true) {
+                        System.out.print("Enter names of medication to be prescribed (If no more prescriptions type 'Exit') : ");
+                        String addedPrescribedMedication = scanner.nextLine();
+                        if(addedPrescribedMedication.equals("Exit")) {
+                            break;
+                        }
+                        else {
+                            newmedicalHistory.addPrescribedMedications(addedPrescribedMedication);
+                        }
+                    }
                     medicalRecord.addMedicalHistory(newmedicalHistory);
                     break;
                 case 2:
-
                     ArrayList<MedicalHistory> medicalHistoryArrayList = medicalRecord.getMedicalHistory();
                     if(medicalHistoryArrayList.isEmpty()) {
                         System.out.println("There is no medical history associated with the patientID: " + patientID);
@@ -91,7 +103,7 @@ public class DoctorMedicalRecordUI {
                     int medicalHistoryChoice = -1;
 
                     while (medicalHistoryChoice == -1) {
-                        System.out.print("Please select an appointment to create appointment outcome record for by entering the corresponding number: ");
+                        System.out.print("Please select the diagnosis you wish to edit by entering the corresponding number: ");
                         try {
                             medicalHistoryChoice = scanner.nextInt();
                             scanner.nextLine();
@@ -129,7 +141,11 @@ public class DoctorMedicalRecordUI {
                     System.out.println("Updated Medical History: ");
                     System.out.println("Name of Diagnosis: " + selectedMedicalHistory.getDiagnosisName());
                     System.out.println("Treatment Plan: " + selectedMedicalHistory.getTreatmentPlan());
-                    System.out.println("Prescribed Medication: " + selectedMedicalHistory.getPrescribedMedications());
+                    System.out.println("Prescribed Medications:");
+                    for(String i : selectedMedicalHistory.getPrescribedMedications()) {
+                        System.out.println("-  " + i);
+                    }
+
                     break;
                 default:
                     break;
