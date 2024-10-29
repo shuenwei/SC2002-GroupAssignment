@@ -10,19 +10,24 @@ import View.AppointmentListView;
 import View.AppointmentOutcomeRecordView;
 import View.AppointmentView;
 import View.MedicalHistoryView;
+import View.CommonView;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import Controller.PatientController;
+
 public class PatientUI {
 
     private Patient patient;
+    private PatientController patientController;
     private PatientAppointmentUI patientAppointmentUI;
     private PatientMedicalRecordUI patientMedicalRecordUI;
 
     public PatientUI (Patient patient) {
         this.patient = patient;
-        patientAppointmentUI = new PatientAppointmentUI(this.patient);
+        patientController = new PatientController(patient);
+        patientAppointmentUI = new PatientAppointmentUI(this.patient,this.patientController);
         patientMedicalRecordUI = new PatientMedicalRecordUI(patient.getMedicalRecord(),patient);
     }
 
@@ -37,9 +42,10 @@ public class PatientUI {
 
         do {
             try {
+                CommonView.newPage();
+                System.out.println("Hello, " + patient.getName());
                 System.out.println();
                 System.out.println("Select an option:");
-                System.out.println();
                 System.out.println("(1) View Medical Record");
                 System.out.println("(2) Update Personal Information"); 
                 System.out.println("(3) View Available Appointment Slots"); 

@@ -2,6 +2,8 @@ package UI;
 
 import Controller.AuthController;
 import Entity.*;
+import View.CommonView;
+
 import java.util.Scanner;
 
 public class LoginUI {
@@ -11,7 +13,7 @@ public class LoginUI {
         User currentUser = null;
 
         while (currentUser == null) {
-
+            CommonView.newPage();
             System.out.print("Enter Hospital ID: ");
             String hospitalId = scanner.nextLine();
 
@@ -22,6 +24,7 @@ public class LoginUI {
 
             if (currentUser == null) {
                 System.out.println("Invalid HospitalID or Password.");
+                CommonView.pressEnterToContinue();
             }
             else {
                 if (AuthController.checkDefaultPassword(currentUser) == true) {

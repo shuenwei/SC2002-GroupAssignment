@@ -12,7 +12,7 @@ public class CommonView {
 
 	public static void pressEnterToContinue() {
 		System.out.println();
-		System.out.print("Press Enter key to continue...");
+		System.out.print("[Press Enter key to continue]");
 		sc.nextLine();
 	}
 }

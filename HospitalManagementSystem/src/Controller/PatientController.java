@@ -4,7 +4,7 @@ import Entity.Appointment;
 import Entity.Patient;
 import java.util.ArrayList;
 
-public class PatientController {
+public class PatientController extends UserController {
     private Patient patient;
 
     public PatientController(Patient patient){

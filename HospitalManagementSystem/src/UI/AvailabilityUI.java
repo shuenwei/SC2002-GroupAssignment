@@ -32,6 +32,7 @@ public class AvailabilityUI {
     }
 
     public void viewSchedule(){
+        CommonView.newPage();
         AvailabilityController availabilityController = new AvailabilityController(doctor);
         System.out.println();
         System.out.println("Dr. " + doctor.getName() + "'s Availability for Appointments:");
