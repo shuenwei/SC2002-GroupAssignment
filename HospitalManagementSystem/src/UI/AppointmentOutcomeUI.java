@@ -5,12 +5,10 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 import Controller.DoctorController;
-import Entity.Appointment;
-import Entity.AppointmentOutcomeRecord;
+import Entity.*;
 import Controller.AppointmentOutcomeController;
-import Entity.Doctor;
-import Entity.PrescribedMedication;
 import Enums.AppointmentStatus;
+import Interface.IDisplayableView;
 import Interface.IListDisplayableView;
 
 public class AppointmentOutcomeUI {
@@ -28,7 +26,7 @@ public class AppointmentOutcomeUI {
 
     }
 
-    public void createAppointmentOutcome(IListDisplayableView<Appointment> appointmentListView) {
+    public void createAppointmentOutcome(IListDisplayableView<Appointment> appointmentListView, IDisplayableView<AppointmentOutcomeRecord> appointmentOutcomeRecordView, IDisplayableView<MedicalHistory> medicalHistoryView) {
         ArrayList<Appointment> ConfirmedAppointments = doctorController.getAppointmentsByStatus(AppointmentStatus.CONFIRMED);
 
         if (ConfirmedAppointments.isEmpty()) {
@@ -42,6 +40,7 @@ public class AppointmentOutcomeUI {
 
         while (appointmentChoice == -1) {
             System.out.print("Please select an appointment to create appointment outcome record for by entering the corresponding number: ");
+            System.out.println();
             try {
                 appointmentChoice = scanner.nextInt();
                 scanner.nextLine();
@@ -62,6 +61,7 @@ public class AppointmentOutcomeUI {
         ArrayList<String> prescribedMedications = new ArrayList<>();
         ArrayList<PrescribedMedication> prescribedMedicationsList = new ArrayList<>();
         System.out.println("Create Appointment Outcome");
+        System.out.println();
         System.out.println("Enter type of service administered: ");
         String service = sc.nextLine();
         System.out.println("Enter consultation notes: ");
@@ -97,13 +97,48 @@ public class AppointmentOutcomeUI {
 
         System.out.println();
         System.out.println("Appointment Outcome record created.");
-        System.out.println("Date of Appointment:      " + selectedAppointment.getDate());
-        System.out.println("Type of Service provided: " + selectedAppointment.getAppointmentOutcomeRecord().getTypeOfService());
-        System.out.println("Consultation notes:       " + selectedAppointment.getAppointmentOutcomeRecord().getConsultationNotes());
-        for (PrescribedMedication j : selectedAppointment.getAppointmentOutcomeRecord().getPrescribedMedications()) {
-            System.out.println("Prescribed medication:    " + j.getMedicineName() + " [" + j.getStatus() + "]");
+        appointmentOutcomeRecordView.display(selectedAppointment.getAppointmentOutcomeRecord());
+
+        int choice = -1;
+
+        System.out.println("Do you wish to add Appointment Outcome Record to Patients Medical History?");
+        System.out.println("(1) Add to Medical History");
+        System.out.println("(2) Do not Add to Medical History");
+
+        while (choice == -1) {
+            try {
+                choice = scanner.nextInt();
+                scanner.nextLine();
+                if (choice == 1 || choice == 2) {
+                    break;
+                } else {
+                    choice = -1;
+                    System.out.println("Invalid selection. Please choose either 1 or 2 ");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a number.");
+                scanner.nextLine();
+            }
         }
 
+        switch (choice) {
+            case 1:
+                Patient patient = selectedAppointment.getPatient();
+
+                MedicalHistory newMedicalHistory = new MedicalHistory(record.getTypeOfService(), record.getConsultationNotes());
+                for(PrescribedMedication i :record.getPrescribedMedications()){
+                    newMedicalHistory.addPrescribedMedications(i.getMedicineName());
+                }
+
+                patient.getMedicalRecord().addMedicalHistory(newMedicalHistory);
+
+                medicalHistoryView.display(newMedicalHistory);
+                break;
+            case 2:
+                System.out.println("Medical History has not been updated");
+                break;
+
+        }
     }
 
 

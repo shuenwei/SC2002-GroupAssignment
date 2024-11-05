@@ -29,6 +29,5 @@ public class AppointmentOutcomeController {
 
     public void setAppointmentOutcomeRecord(Appointment appointment) {
         appointment.setAppointmentOutcomeRecord(appointmentOutcomeRecord);
-
     }
 }

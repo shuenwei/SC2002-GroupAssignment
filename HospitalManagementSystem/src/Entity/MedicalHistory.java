@@ -3,22 +3,22 @@ package Entity;
 import java.util.ArrayList;
 
 public class MedicalHistory {
-    private String diagnosisName;
+    private String diagnosisandType;
     private String TreatmentPlan;
     private ArrayList<String> prescribedMedications;
 
-    public MedicalHistory(String diagnosisName, String TreatmentPlan) {
-        this.diagnosisName = diagnosisName;
+    public MedicalHistory(String diagnosisandType, String TreatmentPlan) {
+        this.diagnosisandType = diagnosisandType;
         this.TreatmentPlan = TreatmentPlan;
         this.prescribedMedications = new ArrayList<>();
     }
 
-    public String getDiagnosisName() {
-        return diagnosisName;
+    public String getDiagnosisandType() {
+        return diagnosisandType;
     }
 
-    public void setDiagnosis(String diagnosis) {
-        this.diagnosisName = diagnosis;
+    public void setDiagnosisandType(String diagnosis) {
+        this.diagnosisandType = diagnosis;
     }
 
     public String getTreatmentPlan() {

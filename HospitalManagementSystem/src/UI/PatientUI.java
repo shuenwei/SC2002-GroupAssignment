@@ -9,7 +9,7 @@ import Interface.IListDisplayableView;
 import View.AppointmentListView;
 import View.AppointmentOutcomeRecordView;
 import View.AppointmentView;
-import View.MedicalHistoryView;
+import View.MedicalHistoryListView;
 import View.CommonView;
 
 import java.util.InputMismatchException;
@@ -38,7 +38,7 @@ public class PatientUI {
         IDisplayableView<Appointment> appointmentView = new AppointmentView();
         IDisplayableView<AppointmentOutcomeRecord> appointmentOutcomeView = new AppointmentOutcomeRecordView();
         IListDisplayableView<Appointment> appointmentListView = new AppointmentListView();
-        IListDisplayableView<MedicalHistory> medicalHistoryView = new MedicalHistoryView();
+        IListDisplayableView<MedicalHistory> medicalHistoryView = new MedicalHistoryListView();
 
         do {
             try {

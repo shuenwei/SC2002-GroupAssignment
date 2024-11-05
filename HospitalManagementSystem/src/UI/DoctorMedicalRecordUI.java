@@ -6,13 +6,12 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import Controller.DoctorController;
-import Entity.PrescribedMedication;
-import View.MedicalHistoryView;
+import View.MedicalHistoryListView;
 
 
 public class DoctorMedicalRecordUI {
     private DoctorController doctorController;
-    private MedicalHistoryView medicalHistoryView;
+    private MedicalHistoryListView medicalHistoryView;
 
     public DoctorMedicalRecordUI(DoctorController doctorController) {
         this.doctorController = doctorController;
@@ -25,7 +24,7 @@ public class DoctorMedicalRecordUI {
         System.out.println();
         MedicalRecord medicalRecord = doctorController.findMedicalRecordByID(patientID);
         if(medicalRecord != null) {
-            medicalHistoryView = new MedicalHistoryView();
+            medicalHistoryView = new MedicalHistoryListView();
             System.out.println("MedicalRecord: ");
             System.out.println("PatientID: " + medicalRecord.getPatientID());
             System.out.println("Name: " + medicalRecord.getName());
@@ -97,7 +96,7 @@ public class DoctorMedicalRecordUI {
                         return;
                     }
 
-                    MedicalHistoryView medicalHistoryView = new MedicalHistoryView();
+                    MedicalHistoryListView medicalHistoryView = new MedicalHistoryListView();
                     medicalHistoryView.display(medicalHistoryArrayList);
 
                     int medicalHistoryChoice = -1;
@@ -123,7 +122,7 @@ public class DoctorMedicalRecordUI {
                     selectedMedicalHistory.getPrescribedMedications().clear();
                     System.out.println("Please enter updated name of the diagnosis: ");
                     String updatedName = scanner.nextLine();
-                    selectedMedicalHistory.setDiagnosis(updatedName);
+                    selectedMedicalHistory.setDiagnosisandType(updatedName);
                     System.out.println("Please enter updated Treatment Plan of the diagnosis: ");
                     String updatedTreatmentPlan = scanner.nextLine();
                     selectedMedicalHistory.setTreatmentPlan(updatedTreatmentPlan);
@@ -139,7 +138,7 @@ public class DoctorMedicalRecordUI {
                     }
                     System.out.println();
                     System.out.println("Updated Medical History: ");
-                    System.out.println("Name of Diagnosis: " + selectedMedicalHistory.getDiagnosisName());
+                    System.out.println("Name of Diagnosis: " + selectedMedicalHistory.getDiagnosisandType());
                     System.out.println("Treatment Plan: " + selectedMedicalHistory.getTreatmentPlan());
                     System.out.println("Prescribed Medications:");
                     for(String i : selectedMedicalHistory.getPrescribedMedications()) {

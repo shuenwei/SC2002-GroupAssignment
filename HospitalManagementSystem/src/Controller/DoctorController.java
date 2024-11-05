@@ -31,7 +31,7 @@ public class DoctorController extends StaffController {
 
     public MedicalHistory findmedicalHistory(String diagnosis, String patientID) {
         for(MedicalHistory medicalHistory : findMedicalRecordByID(patientID).getMedicalHistory()){
-            if(medicalHistory.getDiagnosisName().equals(diagnosis)){
+            if(medicalHistory.getDiagnosisandType().equals(diagnosis)){
                 return medicalHistory;
             }
         }
