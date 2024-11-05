@@ -7,7 +7,6 @@ import Entity.*;
 
 public class UserRepository {
     private static HashMap<String, User> users = new HashMap<String, User>();
-    private static ArrayList<Appointment> allAppointments;
 
     public static void add(User user) {
         users.put(user.getHospitalId(),user);

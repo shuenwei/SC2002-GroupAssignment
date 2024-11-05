@@ -38,7 +38,6 @@ public class AvailabilityUI {
         System.out.println("Dr. " + doctor.getName() + "'s Availability for Appointments:");
         ScheduleView scheduleView = new ScheduleView();
         scheduleView.display(availabilityController.getSchedule());
-        CommonView.pressEnterToContinue();
     }
 
     public void setSchedule(){
@@ -106,7 +105,6 @@ public class AvailabilityUI {
             
                     DayOfWeek dayOfWeek = DayOfWeek.of(day);
                     availabilityController.setSchedule(dayOfWeek, startTime, endTime);
-                    CommonView.pressEnterToContinue();
                     
                 } else if (day != 8) {
                     System.out.println("Invalid input. Please enter a number between 1 and 8.");

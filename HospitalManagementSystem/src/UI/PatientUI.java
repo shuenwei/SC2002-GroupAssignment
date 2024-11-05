@@ -15,6 +15,7 @@ import View.CommonView;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import Controller.AppointmentController;
 import Controller.PatientController;
 
 public class PatientUI {
@@ -35,6 +36,7 @@ public class PatientUI {
         Scanner scanner = new Scanner(System.in);
         int option = -1;
 
+        AppointmentController appointmentController = new AppointmentController();
         IDisplayableView<Appointment> appointmentView = new AppointmentView();
         IDisplayableView<AppointmentOutcomeRecord> appointmentOutcomeView = new AppointmentOutcomeRecordView();
         IListDisplayableView<Appointment> appointmentListView = new AppointmentListView();
@@ -69,7 +71,7 @@ public class PatientUI {
                         patientAppointmentUI.viewSlots();
                         break;
                     case 4:
-                        patientAppointmentUI.scheduleAppointment();
+                        patientAppointmentUI.scheduleAppointment(appointmentController);
                         break;
                     case 5:
                         patientAppointmentUI.rescheduleAppointment(appointmentView,appointmentListView);
