@@ -1,7 +1,6 @@
 package Controller;
 
 import Entity.Appointment;
-import Entity.Doctor;
 import Entity.Inventory;
 import Entity.Medication;
 import Entity.Pharmacist;
@@ -9,7 +8,7 @@ import Entity.PrescribedMedication;
 import Entity.Request;
 import Enums.AppointmentStatus;
 import Enums.PrescriptionStatus;
-import Repository.UserRepository;
+import Repository.AppointmentRepository;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -102,14 +101,7 @@ public class PharmacistController extends StaffController {
         
     public ArrayList<Appointment> getAllAppointmentsByStatus(Enums.AppointmentStatus status) {
         ArrayList<Appointment> filteredAppointments = new ArrayList<>();
-        ArrayList<Doctor> doctors = UserRepository.getAllDoctors();
-        ArrayList<Appointment> appointments = new ArrayList<>();
-        
-        for(Doctor d : doctors){
-            for(Appointment a : d.getAppointments()){
-                appointments.add(a);
-            }
-        }
+        ArrayList<Appointment> appointments = AppointmentRepository.getAllAppointments();
         
         for (Appointment appointment : appointments) {
             if (appointment.getStatus() == status) {

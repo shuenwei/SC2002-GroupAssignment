@@ -7,6 +7,7 @@ import Interface.IDisplayableView;
 import Interface.IListDisplayableView;
 import View.AppointmentListView;
 import View.AppointmentView;
+import View.CommonView;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -37,6 +38,8 @@ public class DoctorUI {
 
         do {
             try {
+                CommonView.newPage();
+                System.out.println("Hello, " + doctor.getName());
                 System.out.println();
                 System.out.println("Select an option:");
                 System.out.println();

@@ -11,7 +11,7 @@ public class PendingMedicineView {
     public void display(ArrayList<Appointment> appt){
     
         if (appt.isEmpty()) {
-            System.out.println(" No appointments.");
+            System.out.println(" No appointment outcome record(s).");
         } else {
             int count = 1; 
             for (Appointment a : appt) {

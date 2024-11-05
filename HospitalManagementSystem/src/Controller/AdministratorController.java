@@ -13,6 +13,7 @@ import Entity.Staff;
 import Entity.User;
 import Enums.RequestStatus;
 import Interface.IDisplayableView;
+import Repository.AppointmentRepository;
 import Repository.UserRepository;
 import View.StaffView;
 import java.util.ArrayList;
@@ -76,7 +77,9 @@ public class AdministratorController extends StaffController{
     private void replenishStock(String medicineName) {
         Medication medicine = Inventory.get(medicineName);
         if (medicine != null) {
-            medicine.setStock(5*(medicine.getStockThreshold()));
+            System.out.printf("How many %s would you like to replenish?%n", medicineName);
+            int num = scanner.nextInt();
+            medicine.setStock(num);
         }
     }
 
@@ -98,20 +101,11 @@ public class AdministratorController extends StaffController{
         }
     }
 
-    public void showAllDoctorsAppointment(IDisplayableView<Appointment> appointmentView) {
+    public void showAllAppointments(IDisplayableView<Appointment> appointmentView) {
 
-        ArrayList <Doctor> doctors = UserRepository.getAllDoctors();
         System.out.println();
 
-        if(doctors.isEmpty()){
-            System.out.println("No doctors found.");
-            return;
-        }
-        
-        for (Doctor s : doctors) {
-        System.out.println(s.getName() + " has the following appointments:");
-        System.out.println();
-        ArrayList<Appointment> appointments = s.getAppointments();
+        ArrayList<Appointment> appointments = AppointmentRepository.getAllAppointments();
 
         if (appointments.isEmpty()) {
             System.out.println(" No appointments.");
@@ -140,7 +134,7 @@ public class AdministratorController extends StaffController{
             }
             }
         System.out.println();
-        }
+
 
     }
 

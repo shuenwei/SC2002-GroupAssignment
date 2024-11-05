@@ -8,10 +8,9 @@ import Entity.Staff;
 import Interface.IDisplayableView;
 import Interface.IListDisplayableView;
 import Repository.UserRepository;
-import View.AppointmentListView;
 import View.AppointmentView;
+import View.CommonView;
 import View.StaffListView;
-import View.StaffView;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -37,15 +36,15 @@ public class AdministratorUI {
 
     public void displayMenu(){
         int option = -1;
-
-        IListDisplayableView<Staff> staffListView = new StaffListView();
-        IDisplayableView<Staff> staffView = new StaffView();
-        IListDisplayableView<Appointment> appointmentListView = new AppointmentListView();
+        
         IDisplayableView<Appointment> appointmentView = new AppointmentView();
         
         
         do {
             try {
+                CommonView.newPage();
+                System.out.println("Hello, " + administrator.getName());
+                System.out.println();
                 System.out.println();
                 System.out.println("Select an option:");
                 System.out.println();
@@ -59,7 +58,7 @@ public class AdministratorUI {
                 switch (option) {
                     case 1: manageStaffUI.manageUserMenu();
                             break;
-                    case 2: administratorController.showAllDoctorsAppointment(appointmentView); 
+                    case 2: administratorController.showAllAppointments(appointmentView); 
                             break;
                     case 3: manageInventoryUI.manageInventoryMenu();
                         break;
@@ -95,6 +94,7 @@ public class AdministratorUI {
         
         do{
             try{
+                CommonView.newPage();
                 System.out.println();
                 System.out.println("Select an option:");
                 System.out.println();

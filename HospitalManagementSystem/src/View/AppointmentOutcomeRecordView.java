@@ -13,6 +13,7 @@ public class AppointmentOutcomeRecordView implements IDisplayableView<Appointmen
                 System.out.println("No Appointment Outcome Record ");
             }
             else {
+                
                 System.out.println();
                 System.out.println("Date of appointment       : " + a.getappointment().getDate());
                 System.out.println("Type of Service Provided  : " + a.getTypeOfService());
