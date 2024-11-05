@@ -19,6 +19,7 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
+import Controller.AppointmentController;
 import Controller.PatientController;
 
 public class PatientAppointmentUI extends AppointmentUI {
@@ -84,7 +85,7 @@ public class PatientAppointmentUI extends AppointmentUI {
         displaySlots(selectedDate ,startTime, endTime,existingAppointments,availableSlots);
     }
 
-    public void scheduleAppointment() {
+    public void scheduleAppointment(AppointmentController appointmentController) {
         Doctor selectedDoctor = selectDoctor();
         
         if (selectedDoctor == null) {
@@ -153,9 +154,7 @@ public class PatientAppointmentUI extends AppointmentUI {
 
         // Schedule the Appointment
         LocalTime selectedTime = availableSlots.get(slotChoice - 1);
-        Appointment appointment = new Appointment(selectedDoctor, this.patient, selectedDate, selectedTime, AppointmentStatus.PENDING, null);
-        selectedDoctor.addAppointment(appointment);
-        patient.addAppointment(appointment);
+        appointmentController.newAppointment(selectedDoctor, patient, selectedDate, selectedTime);
 
         System.out.println("Appointment scheduled with Dr. " + selectedDoctor.getName() + " on " + selectedDate.format(formatter) + " at " + selectedTime);
     }
@@ -265,7 +264,6 @@ public class PatientAppointmentUI extends AppointmentUI {
         System.out.println();
         System.out.println("Here are your new appointment details:");
         appointmentView.display(selectedAppointment);
-        CommonView.pressEnterToContinue();
     } 
 
     public void displayAppointments(IListDisplayableView<Appointment> appointmentListView){
@@ -356,7 +354,6 @@ public class PatientAppointmentUI extends AppointmentUI {
 
         if (doctors.isEmpty()) {
             System.out.println("No doctors are available.");
-            CommonView.pressEnterToContinue();
             return null;
         }
 
@@ -395,13 +392,11 @@ public class PatientAppointmentUI extends AppointmentUI {
                 appointmentDate = LocalDate.parse(input, formatter);
                 if (appointmentDate.isBefore(LocalDate.now())) {
                     System.out.println("Invalid date. You may only book an appointment from today onwards.");
-                    CommonView.pressEnterToContinue();
                 } else {
                     return appointmentDate;
                 }
             } catch (DateTimeParseException e) {
                 System.out.println("Invalid date format. Please enter in 'dd-mm-yyyy' format.");
-                CommonView.pressEnterToContinue();
             }
         }
     }

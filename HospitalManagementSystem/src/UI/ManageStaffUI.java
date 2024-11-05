@@ -4,6 +4,7 @@ import Controller.AdministratorController;
 import Entity.Staff;
 import Enums.Role;
 import Interface.IListDisplayableView;
+import View.CommonView;
 import View.StaffListView;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
@@ -25,8 +26,7 @@ public class ManageStaffUI {
         int options=0;
         do{
             try{
-                
-
+                CommonView.newPage();
                 System.out.println();
                 System.out.println("Select an option:");
                 System.out.println();
@@ -76,8 +76,7 @@ public class ManageStaffUI {
 
         do{
             try{
-                
-
+                CommonView.newPage();
                 System.out.println();
                 System.out.println("Select an option:");
                 System.out.println();
@@ -121,6 +120,7 @@ public class ManageStaffUI {
                             }
                             break;
                     case 3: try{
+                            CommonView.newPage();
                             System.out.println("Enter range of age: ");
                             System.out.println("(1) < 20  years");
                             System.out.println("(2) 20-30 years");

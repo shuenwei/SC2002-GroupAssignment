@@ -5,6 +5,7 @@ import Entity.Appointment;
 import Entity.Inventory;
 import Entity.Pharmacist;
 import Enums.AppointmentStatus;
+import View.CommonView;
 import View.PendingMedicineView;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
@@ -13,21 +14,24 @@ import java.util.Scanner;
 public class PharmacistUI {
     private Pharmacist pharmacist;
     private PharmacistController pharmacistController;
-    private PendingMedicineView viewPending;
     Scanner sc = new Scanner(System.in);
 
     public PharmacistUI(Pharmacist pharmacist) {
         this.pharmacist = pharmacist;
         this.pharmacistController= new PharmacistController(pharmacist);
-        viewPending = new PendingMedicineView();
     }
     
     public void displayMenu() {
-        ArrayList<Appointment> appt = pharmacistController.getAllAppointmentsByStatus(AppointmentStatus.MEDICINE_PENDING);
+        
         int option = -1;
+
+        ArrayList<Appointment> appt = pharmacistController.getAllAppointmentsByStatus(AppointmentStatus.MEDICINE_PENDING);
+        PendingMedicineView viewPending = new PendingMedicineView();
 
         do {
             try {
+                CommonView.newPage();
+                System.out.println("Hello, " + pharmacist.getName());
                 System.out.println();
                 System.out.println("Select an option:");
                 System.out.println();

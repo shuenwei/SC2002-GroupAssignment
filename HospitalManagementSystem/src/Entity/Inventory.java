@@ -5,8 +5,6 @@ import java.util.HashMap;
 
 import Enums.RequestStatus;
 
-import java.util.ArrayList;
-
 public class Inventory {
     private static HashMap<String, Medication> medicineRepo = new HashMap<String, Medication>();
     private static HashMap<String, Request> requestRepo = new HashMap<String, Request>();

@@ -2,8 +2,8 @@ package View;
 
 import Entity.Appointment;
 import Interface.IListDisplayableView;
-import java.util.ArrayList;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 
 public class AppointmentListView implements IListDisplayableView<Appointment>{
@@ -12,17 +12,15 @@ public class AppointmentListView implements IListDisplayableView<Appointment>{
         
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
-        int index = 1;
+        
+        String[] headers = new String[]{"Patient Name", "Doctor Name", "Date", "Time", "Status"};
+        System.out.println();
+        System.out.printf("| %-13s | %-13s | %-12s | %-6s | %-8s |%n", headers[0], headers[1], headers[2], headers[3], headers[4]);
+        System.out.println("--------------------------------------------------------------------");
         for(Appointment a : apptList){
-            System.out.println();
-            System.out.println("("+ index +")");
-            System.out.println("Patient Name : " + a.getPatient().getName());
-            System.out.println("Doctor Name  : " + a.getDoctor().getName());
-            System.out.println("Date         : " + a.getDate().format(formatter));
-            System.out.println("Time         : " + a.getTime());
-            System.out.println("Status       : " + a.getStatus());
-            index++;
+            System.out.printf("| %-13s | %-13s | %-12s | %-6s | %-8s |%n", a.getPatient().getName(), a.getDoctor().getName(),a.getDate().format(formatter), a.getTime(), a.getStatus());
         }
+        
     }
 
 

@@ -7,8 +7,11 @@ import Entity.Doctor;
 import Entity.MedicalHistory;
 import Interface.IDisplayableView;
 import Interface.IListDisplayableView;
-import View.*;
-
+import View.MedicalHistoryView;
+import View.AppointmentView;
+import View.AppointmentListView;
+import View.AppointmentOutcomeRecordView;
+import View.CommonView;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -41,6 +44,8 @@ public class DoctorUI {
 
         do {
             try {
+                CommonView.newPage();
+                System.out.println("Hello, " + doctor.getName());
                 System.out.println();
                 System.out.println("Select an option:");
                 System.out.println();

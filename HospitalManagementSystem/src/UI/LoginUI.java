@@ -24,7 +24,6 @@ public class LoginUI {
 
             if (currentUser == null) {
                 System.out.println("Invalid HospitalID or Password.");
-                CommonView.pressEnterToContinue();
             }
             else {
                 if (AuthController.checkDefaultPassword(currentUser) == true) {

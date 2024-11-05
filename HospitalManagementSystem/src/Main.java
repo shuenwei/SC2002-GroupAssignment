@@ -16,10 +16,9 @@ public class Main {
             DataInitialiser.initialiseMedicine();
             do{
                 CommonView.newPage();
-                System.out.println("==================== Welcome to Hospital Management System =========================\n");
-                CommonView.pressEnterToContinue();
-                System.out.println("1. Login");
-                System.out.println("2. Shutdown");
+                System.out.println("Welcome to Hospital Management System");
+                System.out.println("(1) Login");
+                System.out.println("(2) Shutdown");
                 choice = scanner.nextInt();
                 switch(choice) {
                     case 1:

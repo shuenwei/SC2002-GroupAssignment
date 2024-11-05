@@ -5,6 +5,7 @@ import Entity.Nurse;
 import Entity.Patient;
 import Interface.IDisplayableView;
 import Repository.UserRepository;
+import View.CommonView;
 import View.PatientView;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
@@ -27,9 +28,12 @@ public class NurseUI {
         int option = -1;
 
         IDisplayableView<Patient> patientView = new PatientView();
+
         
         do {
             try {
+                CommonView.newPage();
+                System.out.println("Hello, " + nurse.getName());
                 System.out.println();
                 System.out.println("Select an option:");
                 System.out.println();
@@ -161,23 +165,6 @@ public class NurseUI {
         }
 
         }
-
-    // public void viewPatient(String hospitalID){
-    //     try{
-    //         System.out.println("Enter Hospital ID: ");
-    //         scanner.nextLine();
-    //         String hospID = scanner.nextLine();
-    //         if (hospID.isEmpty()) {
-    //             throw new IllegalArgumentException("Hospital ID cannot be empty.");
-    //         }
-
-    //         Patient patient = (Patient) nurseController.getPatient(hospID);
-    //         if (patient == null) {
-    //             System.out.println("Patient not found.");
-    //         } else {
-    //             System.out.println("Patient Name: " + patient.getName());
-    //             System.out.println("Patient
-
 
 }
 

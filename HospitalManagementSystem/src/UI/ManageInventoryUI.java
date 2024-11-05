@@ -1,9 +1,9 @@
 package UI;
 
-import java.util.InputMismatchException;
-
 import Controller.AdministratorController;
 import Entity.Inventory;
+import View.CommonView;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class ManageInventoryUI {
@@ -20,6 +20,7 @@ public class ManageInventoryUI {
         int choice = -1;
         do{
             try{
+                CommonView.newPage();
                 System.out.println();
                 System.out.println("Select an option:");
                 System.out.println();
@@ -57,7 +58,7 @@ public class ManageInventoryUI {
 
         do{
             try{
-
+            CommonView.newPage();
             System.out.println();
             System.out.println("Select an option:");
             System.out.println();
