@@ -10,6 +10,7 @@ import Controller.AppointmentOutcomeController;
 import Enums.AppointmentStatus;
 import Interface.IDisplayableView;
 import Interface.IListDisplayableView;
+import View.CommonView;
 
 public class AppointmentOutcomeUI {
 
@@ -131,6 +132,8 @@ public class AppointmentOutcomeUI {
                 }
 
                 patient.getMedicalRecord().addMedicalHistory(newMedicalHistory);
+                CommonView.newPage();
+                System.out.println("Added Medical History: ");
 
                 medicalHistoryView.display(newMedicalHistory);
                 break;
