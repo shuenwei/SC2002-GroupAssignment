@@ -5,6 +5,8 @@ import Repository.*;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DataStore {
     
@@ -54,22 +56,40 @@ public class DataStore {
     public static void saveAppointmentData() {
         String appointmentCsvFilePath = "data/appointmentCsv.csv";
         try (PrintWriter pw = new PrintWriter(new FileWriter(appointmentCsvFilePath))) {
-            pw.println("Patient ID,Doctor ID,Date,Time,Status");
+            pw.println("Patient ID,Doctor ID,Date,Time,Status,Type of Service,Consultation Notes,Prescribed Medications[0],Prescribed Medications[1],Prescribed Medications[2]");
             for (Patient patient : UserRepository.getAllPatients()) {
                 for (Appointment appointment : patient.getAppointments()) {
-                    String[] data = {
-                        appointment.getPatient().getHospitalId(),
-                        appointment.getDoctor().getHospitalId(),
-                        appointment.getDate().toString(),
-                        appointment.getTime().toString(),
-                        appointment.getStatus().toString()
-                    };
-                    pw.println(String.join(",", data));
+    
+                    List<String> data = new ArrayList<>();
+
+                    data.add(appointment.getPatient().getHospitalId());
+                    data.add(appointment.getDoctor().getHospitalId());
+                    data.add(appointment.getDate().toString());
+                    data.add(appointment.getTime().toString());
+                    data.add(appointment.getStatus().toString());
+
+                    if (appointment.getAppointmentOutcomeRecord() != null) {
+                        data.add(appointment.getAppointmentOutcomeRecord().getTypeOfService());
+                        data.add(appointment.getAppointmentOutcomeRecord().getConsultationNotes());
+                        for (PrescribedMedication j : appointment.getAppointmentOutcomeRecord().getPrescribedMedications()) {
+                            data.add(j.getMedicineName());
+                        }
+                    } else {
+                        data.add("");
+                        data.add(""); 
+                        data.add("");
+                        data.add("");
+                        data.add(""); 
+                    }
+
+                    String[] dataArray = data.toArray(new String[0]);
+                    pw.println(String.join(",", dataArray));
+                    }
                 }
+            }catch (IOException e) {
+                e.printStackTrace();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
     }
 
 }

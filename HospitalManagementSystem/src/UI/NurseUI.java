@@ -3,7 +3,9 @@ package UI;
 import Controller.NurseController;
 import Entity.Nurse;
 import Entity.Patient;
+import Interface.IDisplayableView;
 import Repository.UserRepository;
+import View.PatientView;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -23,6 +25,8 @@ public class NurseUI {
 
      public void displayMenu(){
         int option = -1;
+
+        IDisplayableView<Patient> patientView = new PatientView();
         
         do {
             try {
@@ -36,7 +40,21 @@ public class NurseUI {
                 option = scanner.nextInt();
 
                 switch (option) {
-                    case 1: //viewPatient();
+                    case 1: try{
+                                System.out.println("Enter Hospital ID: ");
+                                scanner.nextLine();
+                                String hospID = scanner.nextLine();
+                                if (hospID.isEmpty()) {
+                                    throw new IllegalArgumentException("Hospital ID cannot be empty.");
+                                }
+                    
+                                patient = (Patient) nurseController.getPatient(hospID);
+                                patientView.display(patient);
+                            } catch (IllegalArgumentException e) {
+                                System.out.println(e.getMessage());
+                            } catch (Exception e) {
+                                System.out.println("An unexpected error occurred: " + e.getMessage());
+                            }
                             break;
                     case 2: addPatient();
                             break;

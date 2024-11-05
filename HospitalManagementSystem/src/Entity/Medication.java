@@ -33,7 +33,7 @@ public class Medication {
 
     public boolean getIsLowStock() {
         
-        if(this.stock - getStockThreshold() < 0){
+        if(this.stock - getStockThreshold() <= 0){
             return true;
         }
         else return false;

@@ -1,6 +1,7 @@
 import UI.LoginUI;
 import Util.*;
 import View.CommonView;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
@@ -32,15 +33,14 @@ public class Main {
                         System.exit(0);
                         break;
                     default:
-                        System.out.println("Invalid choice. Please try again.");
+                        System.out.println("Invalid input. Please enter an integer of either 1 or 2!");
                         break;
                 }
             }while(true);
 
+        }catch(InputMismatchException e){
+            System.out.println("Invalid input. Please enter an integer of either 1 or 2!");
         }catch (Exception e) {
-            
-            // DataStore.saveStaffData();
-
             System.out.println("HMS crashed. Please restart the system.");
             System.out.println("Error: " + e.getMessage());
         }

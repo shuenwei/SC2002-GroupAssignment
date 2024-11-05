@@ -21,7 +21,7 @@ public class PendingMedicineView {
                 System.out.println("Type of Service Provided  : " + a.getAppointmentOutcomeRecord().getTypeOfService());
                 System.out.println("Consultation Notes        : " + a.getAppointmentOutcomeRecord().getConsultationNotes());
                 for( PrescribedMedication j:a.getAppointmentOutcomeRecord().getPrescribedMedications()){
-                    System.out.println("Prescribed medication : " + j.getMedicineName() + " " + j.getTick());
+                    System.out.println("Prescribed medication : " + j.getMedicineName() + " " + j.getStatus());
                 }
                 count++;
                 System.out.println();

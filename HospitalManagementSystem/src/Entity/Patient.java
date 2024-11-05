@@ -6,10 +6,6 @@ import java.util.*;
 
 public class Patient extends User {
 
-    private String dateOfBirth;
-	private String bloodType;
-    private String contactInformation;
-
 
 	private ArrayList<Appointment> appointments;
 	private MedicalRecord medicalRecord;
@@ -27,30 +23,6 @@ public class Patient extends User {
 
     public MedicalRecord getMedicalRecord() {
         return medicalRecord;
-    }
-
-    public String getDateOfBirth(){
-        return dateOfBirth;
-    }
-
-    public void setDateOfBirth(String dateOfBirth){
-        this.dateOfBirth = dateOfBirth;
-    }
-
-    public String getBloodType(){
-        return bloodType;
-    }
-
-    public void setBloodType(String bloodType){
-        this.bloodType = bloodType;
-    }
-
-    public String getContactInformation(){
-        return contactInformation;
-    }
-
-    public void setContactInformation(String contactInformation){
-        this.contactInformation = contactInformation;
     }
 
     public ArrayList<Appointment> getAppointments(){
