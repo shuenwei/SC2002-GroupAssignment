@@ -2,7 +2,12 @@ package UI;
 
 import Controller.AdministratorController;
 import Entity.Inventory;
+import Entity.Medication;
+import Interface.IDisplayableView;
+import Interface.IListDisplayableView;
 import View.CommonView;
+import View.ViewInventory;
+import View.ViewListInventory;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -17,6 +22,7 @@ public class ManageInventoryUI {
     }
 
     public void manageInventoryMenu() {
+        IListDisplayableView<Medication> inventoryView = new ViewListInventory();
         int choice = -1;
         do{
             try{
@@ -31,7 +37,7 @@ public class ManageInventoryUI {
                 choice = scanner.nextInt();
                 switch(choice) {
                     case 1:
-                        Inventory.viewInventory();
+                        inventoryView.display(Inventory.getAllMedicines());
                         break;
                     case 2:
                         manageInventory();
@@ -51,10 +57,13 @@ public class ManageInventoryUI {
     }
 
     public void manageInventory() {
+
         int choice = -1;
         String medicineName;
         int quantity;
         int threshold;
+
+        IDisplayableView<Medication> inventoryView = new ViewInventory();
 
         do{
             try{
@@ -65,7 +74,8 @@ public class ManageInventoryUI {
             System.out.println("(1) Add Stock");
             System.out.println("(2) Remove Stock");
             System.out.println("(3) Add New Medicine");
-            System.out.println("(4) Back");
+            System.out.println("(4) Set new stock threshold");
+            System.out.println("(5) Back");
             System.out.println();
 
             choice = scanner.nextInt();
@@ -75,11 +85,16 @@ public class ManageInventoryUI {
                         System.out.println("Input medicine name:");
                         scanner.nextLine();
                         medicineName = scanner.nextLine();
-                        
+                        if(Inventory.get(medicineName) == null){
+                            System.out.println("Please add a new medicine.");
+                            continue;
+                        }
                         System.out.println("Input quantity to add:");
                         quantity = scanner.nextInt();
 
                         administratorController.addStock(medicineName, quantity);
+                        System.out.println();
+                        inventoryView.display(Inventory.get(medicineName));
                     } catch (InputMismatchException e) {
                         System.out.println("Invalid input for quantity. Please enter a number.");
                         scanner.next();  
@@ -90,11 +105,15 @@ public class ManageInventoryUI {
                         System.out.println("Input medicine name:");
                         scanner.nextLine();
                         medicineName = scanner.nextLine();
-
+                        if(Inventory.get(medicineName) == null){
+                            System.out.println("Please add a new medicine.");
+                            continue;
+                        }
                         System.out.println("Input quantity to remove:");
                         quantity = scanner.nextInt();
-
+                        inventoryView.display(Inventory.get(medicineName));
                         administratorController.removeStock(medicineName, quantity);
+                        System.out.println();
                     } catch(InputMismatchException e) {
                         System.out.println("Invalid input for quantity. Please enter a number.");
                         scanner.next();  
@@ -113,21 +132,39 @@ public class ManageInventoryUI {
                         threshold = scanner.nextInt();
 
                         administratorController.addNewMedicine(medicineName, quantity, threshold);
+                        System.out.println();
+                        inventoryView.display(Inventory.get(medicineName));
                     } catch(InputMismatchException e) {
                         System.out.println("Invalid input for quantity. Please enter a number.");
                         scanner.next();  
                     }
                     break;
-                case 4: return;
+                case 4: 
+                        System.out.println("Input medicine name:");
+                        scanner.nextLine();
+                        medicineName = scanner.nextLine();
+                        if(Inventory.get(medicineName) == null){
+                            System.out.println("Please add a new medicine.");
+                            continue;
+                        }
+                        System.out.println("Input new stock threshold:");
+                        threshold = scanner.nextInt();
+
+                        administratorController.setThresholdStock(medicineName, threshold);
+                        System.out.println();
+                        inventoryView.display(Inventory.get(medicineName));
+                        
+                        break;
+                case 5: return;
                 default:
-                    System.out.println("Invalid input. Please enter an integer between 1 and 4!");
+                    System.out.println("Invalid input. Please enter an integer between 1 and 5!");
                 }
             }catch (InputMismatchException e) {
-                System.out.println("Invalid input. Please enter an integer between 1 and 4!.");
+                System.out.println("Invalid input. Please enter an integer between 1 and 5!.");
                 scanner.next(); 
             } catch (Exception e) {
                 System.out.println("An error occurred: " + e.getMessage());
             }
-        }while(choice != 4);
+        }while(choice != 5);
     }
 }
