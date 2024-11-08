@@ -25,13 +25,11 @@ import Controller.PatientController;
 public class PatientAppointmentUI extends AppointmentUI {
 
     private Patient patient;
-    private PatientController patientController;
     private Scanner scanner;
     private DateTimeFormatter formatter;
 
-    public PatientAppointmentUI(Patient patient,PatientController patientController) {
+    public PatientAppointmentUI(Patient patient) {
         this.patient = patient;
-        this.patientController = patientController;
         scanner = new Scanner(System.in);
         formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
     }
@@ -160,7 +158,7 @@ public class PatientAppointmentUI extends AppointmentUI {
     }
 
 
-    public void rescheduleAppointment(IDisplayableView<Appointment> appointmentView,IListDisplayableView<Appointment> appointmentListView){
+    public void rescheduleAppointment(IDisplayableView<Appointment> appointmentView,IListDisplayableView<Appointment> appointmentListView, PatientController patientController){
         
         ArrayList<Appointment> appointments = patientController.getAppointmentsByStatus(Enums.AppointmentStatus.CONFIRMED);
         ArrayList<Appointment> pendingAppointments = patientController.getAppointmentsByStatus(Enums.AppointmentStatus.PENDING);
@@ -266,7 +264,7 @@ public class PatientAppointmentUI extends AppointmentUI {
         appointmentView.display(selectedAppointment);
     } 
 
-    public void displayAppointments(IListDisplayableView<Appointment> appointmentListView){
+    public void displayAppointments(IListDisplayableView<Appointment> appointmentListView, PatientController patientController){
         
         ArrayList<Appointment> pendingAppointments = patientController.getAppointmentsByStatus(Enums.AppointmentStatus.PENDING);
         ArrayList<Appointment> confirmedAppointments = patientController.getAppointmentsByStatus(Enums.AppointmentStatus.CONFIRMED);
@@ -278,7 +276,7 @@ public class PatientAppointmentUI extends AppointmentUI {
     
     }
 
-    public void cancelAppointment(IListDisplayableView<Appointment> appointmentListView){
+    public void cancelAppointment(IListDisplayableView<Appointment> appointmentListView, PatientController patientController){
         
         ArrayList<Appointment> appointments = patientController.getAppointmentsByStatus(Enums.AppointmentStatus.CONFIRMED);
         ArrayList<Appointment> pendingAppointments = patientController.getAppointmentsByStatus(Enums.AppointmentStatus.PENDING);
