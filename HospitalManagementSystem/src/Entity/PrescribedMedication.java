@@ -30,6 +30,17 @@ public class PrescribedMedication {
     }
 
     /**
+     * Constructs a {@link PrescribedMedication} with the specified medicine name and prescription status.
+     * 
+     * @param medicineName the name of the prescribed medicine.
+     * @param prescriptionStatus the {@link PrescriptionStatus} indicating the status of the prescription.
+     */
+    public PrescribedMedication(String medicineName, PrescriptionStatus prescriptionStatus) {
+        this.medicineName = medicineName;
+        this.status = prescriptionStatus;
+    }
+
+    /**
      * Gets the name of the prescribed medication.
      *
      * @return The name of the medication.

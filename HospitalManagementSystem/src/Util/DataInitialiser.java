@@ -1,10 +1,18 @@
 package Util;
 
 import Entity.*;
+import Enums.AppointmentStatus;
+import Enums.PrescriptionStatus;
 import Repository.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DataInitialiser {
     
@@ -49,19 +57,19 @@ public class DataInitialiser {
                 String gender = staffCsv[4];
                 int age = Integer.valueOf(staffCsv[5]);
 
-                if (role.equals("Doctor")) {
+                if (role.equals("DOCTOR")) {
                     Doctor doctor = new Doctor(hospitalId,password,name,gender,Enums.Role.DOCTOR,age);
                     UserRepository.add(doctor);
                 }
-                else if (role.equals("Pharmacist")) {
+                else if (role.equals("PHARMACIST")) {
                     Pharmacist pharmacist = new Pharmacist(hospitalId,password,name,gender,Enums.Role.PHARMACIST,age);
                     UserRepository.add(pharmacist);
                 }
-                else if (role.equals("Administrator")) {
+                else if (role.equals("ADMINISTRATOR")) {
                     Administrator administrator = new Administrator(hospitalId,password,name,gender,Enums.Role.ADMINISTRATOR,age);
                     UserRepository.add(administrator);
                 }
-                else if (role.equals("Nurse")){
+                else if (role.equals("NURSE")){
                     Nurse nurse = new Nurse(hospitalId,password,name,gender,Enums.Role.NURSE,age);
                     UserRepository.add(nurse);
                 }
@@ -73,6 +81,44 @@ public class DataInitialiser {
             e.printStackTrace();
         }
     }
+
+    public static void initialiseAvailability() {
+    String availabilityCsvFilePath = "data/availabilityCsv.csv";
+    try (BufferedReader br = new BufferedReader(new FileReader(availabilityCsvFilePath))) {
+        String line = br.readLine();
+
+        while ((line = br.readLine()) != null) {
+            String[] data = line.split(",");
+            
+            // Get the Doctor ID and retrieve the Doctor object
+            String doctorId = data[0];
+            Doctor doctor = (Doctor) UserRepository.get(doctorId);
+
+            // Check if the doctor exists in the repository
+            if (doctor != null) {
+                // Iterate over each day's availability
+                for (int i = 1; i <= 7; i++) {
+                    String availabilityData = data[i];
+                    DayOfWeek dayOfWeek = DayOfWeek.of(i);
+
+                    if (!availabilityData.equals("Not Available")) {
+                        String[] times = availabilityData.split("-");
+                        LocalTime startTime = LocalTime.parse(times[0]);
+                        LocalTime endTime = LocalTime.parse(times[1]);
+
+                        Availability availability = new Availability(dayOfWeek, startTime, endTime);
+                        doctor.setAvailability(dayOfWeek, availability);
+                    }
+                }
+            } else {
+                System.err.println("Doctor with ID " + doctorId + " not found.");
+            }
+        }
+    } catch (IOException | DateTimeParseException e) {
+        e.printStackTrace();
+    }
+}
+
     
     public static void initialiseMedicine() {
         String medicineListCsvFilePath = "data/medicineListCsv.csv";
@@ -93,4 +139,56 @@ public class DataInitialiser {
             e.printStackTrace();
         }
     }
+
+    public static void initialiseAppointments() {
+    String appointmentCsvFilePath = "data/appointmentCsv.csv";
+    try (BufferedReader br = new BufferedReader(new FileReader(appointmentCsvFilePath))) {
+        String line = br.readLine();
+        while ((line = br.readLine()) != null) {
+            String[] data = line.split(",");
+
+            String patientId = data[0];
+            String doctorId = data[1];
+            LocalDate date = LocalDate.parse(data[2]);
+            LocalTime time = LocalTime.parse(data[3]);
+            Enums.AppointmentStatus status = Enums.AppointmentStatus.valueOf(data[4]);
+
+            Patient patient = (Patient) UserRepository.get(patientId);
+            Doctor doctor = (Doctor) UserRepository.get(doctorId);
+
+            AppointmentOutcomeRecord appointmentOutcomeRecord = null;
+
+            if (data.length > 5) {
+                String typeOfService = data[5];
+                String consultationNotes = data[6];
+
+                ArrayList<PrescribedMedication> prescribedMedications = new ArrayList<>();
+                if (data.length > 7) {
+                    String[] medications = data[7].split(";");
+                    for (String PrescribedMedication : medications) {
+                        String medicineName = PrescribedMedication.split("-")[0];
+                        PrescriptionStatus prescriptionStatus = PrescriptionStatus.valueOf(PrescribedMedication.split("-")[1]);
+                        PrescribedMedication prescribedMedication = new PrescribedMedication(medicineName,prescriptionStatus);
+                        prescribedMedications.add(prescribedMedication);
+                    }
+                }
+
+                appointmentOutcomeRecord = new AppointmentOutcomeRecord(typeOfService, consultationNotes, prescribedMedications, null);
+            }
+
+            Appointment appointment = new Appointment(doctor, patient, date, time, status, appointmentOutcomeRecord);
+
+            if (appointmentOutcomeRecord != null) {
+                appointmentOutcomeRecord.setAppointment(appointment);
+            }
+
+            AppointmentRepository.add(appointment);
+            patient.addAppointment(appointment);
+            doctor.addAppointment(appointment);
+        }
+    } catch (IOException | DateTimeParseException | IllegalArgumentException e) {
+        e.printStackTrace();
+    }
+}
+
 }

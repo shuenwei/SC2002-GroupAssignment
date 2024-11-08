@@ -54,6 +54,15 @@ public class AppointmentOutcomeRecord {
     }
 
     /**
+     * Sets the appointment for this object.
+     * 
+     * @param appointment the {@link Appointment} object to be associated with this instance.
+     */
+    public void setAppointment(Appointment appointment) {
+        this.appointment = appointment;
+    }
+
+    /**
      * Returns the date of the appointment associated with this outcome record.
      *
      * @return The date of the appointment.

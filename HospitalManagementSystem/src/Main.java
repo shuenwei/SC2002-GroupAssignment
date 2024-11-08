@@ -10,11 +10,16 @@ public class Main {
         int choice = 0;
         Scanner scanner = new Scanner(System.in);
 
-        try{
-            DataInitialiser.initialisePatient();
-            DataInitialiser.initialiseStaff();
-            DataInitialiser.initialiseMedicine();
-            do{
+
+        DataInitialiser.initialisePatient();
+        DataInitialiser.initialiseStaff();
+        DataInitialiser.initialiseMedicine();
+        DataInitialiser.initialiseAppointments();
+        DataInitialiser.initialiseAvailability();
+
+
+        while (true) {
+            try{
                 CommonView.newPage();
                 System.out.println("Welcome to Hospital Management System");
                 System.out.println("(1) Login");
@@ -29,19 +34,21 @@ public class Main {
                         DataStore.saveStaffData();
                         DataStore.savePatientData();
                         DataStore.saveAppointmentData();
+                        DataStore.saveDoctorAvailability();
                         System.exit(0);
                         break;
                     default:
                         System.out.println("Invalid input. Please enter an integer of either 1 or 2!");
                         break;
-                }
-            }while(true);
+                    }
 
-        }catch(InputMismatchException e){
-            System.out.println("Invalid input. Please enter an integer of either 1 or 2!");
-        }catch (Exception e) {
-            System.out.println("HMS crashed. Please restart the system.");
-            System.out.println("Error: " + e.getMessage());
+            }catch(InputMismatchException e){
+                System.out.println("Invalid input. Please enter an integer of either 1 or 2!");
+                scanner.next(); 
+            }catch (Exception e) {
+                System.out.println("HMS crashed. Please restart the system.");
+                System.out.println("Error: " + e.getMessage());
+            }
         }
     }
 }
