@@ -20,14 +20,12 @@ public class AppointmentOutcomeUI {
     private Scanner scanner;
     Scanner sc = new Scanner(System.in);
 
-    public AppointmentOutcomeUI(Doctor doctor,DoctorController doctorController) {
+    public AppointmentOutcomeUI(Doctor doctor) {
         this.doctor = doctor;
-        this.doctorController = doctorController;
         scanner = new Scanner(System.in);
-
     }
 
-    public void createAppointmentOutcome(IListDisplayableView<Appointment> appointmentListView, IDisplayableView<AppointmentOutcomeRecord> appointmentOutcomeRecordView, IDisplayableView<MedicalHistory> medicalHistoryView) {
+    public void createAppointmentOutcome(IListDisplayableView<Appointment> appointmentListView, IDisplayableView<AppointmentOutcomeRecord> appointmentOutcomeRecordView, IDisplayableView<MedicalHistory> medicalHistoryView, DoctorController doctorController) {
         ArrayList<Appointment> ConfirmedAppointments = doctorController.getAppointmentsByStatus(AppointmentStatus.CONFIRMED);
 
         if (ConfirmedAppointments.isEmpty()) {

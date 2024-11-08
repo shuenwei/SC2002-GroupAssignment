@@ -1,22 +1,13 @@
 package UI;
 
 import Entity.Appointment;
-import Entity.Availability;
 import Entity.Doctor;
-import Entity.Patient;
-import Enums.AppointmentStatus;
 import Interface.IDisplayableView;
 import Interface.IListDisplayableView;
-import Repository.UserRepository;
-import View.CommonView;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
-import java.util.List;
 import java.util.Scanner;
 
 import Controller.DoctorController;
@@ -28,14 +19,14 @@ public class DoctorAppointmentUI extends AppointmentUI {
     private DateTimeFormatter formatter;
     private DoctorController doctorController;
 
-    public DoctorAppointmentUI(Doctor doctor, DoctorController doctorController) {
+    public DoctorAppointmentUI(Doctor doctor) {
         this.doctor = doctor;
         scanner = new Scanner(System.in);
         formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        this.doctorController = doctorController;
+
     }
 
-    public void acceptDecline(IDisplayableView<Appointment> appointmentView,IListDisplayableView<Appointment> appointmentListView){
+    public void acceptDecline(IDisplayableView<Appointment> appointmentView, IListDisplayableView<Appointment> appointmentListView, DoctorController doctorController){
 
         ArrayList<Appointment> pendingAppointments = doctorController.getAppointmentsByStatus(Enums.AppointmentStatus.PENDING);
 
@@ -103,7 +94,7 @@ public class DoctorAppointmentUI extends AppointmentUI {
 
     }
 
-    public void displayAppointments(IListDisplayableView<Appointment> appointmentListView){
+    public void displayAppointments(IListDisplayableView<Appointment> appointmentListView,DoctorController doctorController){
     
         ArrayList<Appointment> pendingAppointments = doctorController.getAppointmentsByStatus(Enums.AppointmentStatus.PENDING);
         ArrayList<Appointment> confirmedAppointments = doctorController.getAppointmentsByStatus(Enums.AppointmentStatus.CONFIRMED);
