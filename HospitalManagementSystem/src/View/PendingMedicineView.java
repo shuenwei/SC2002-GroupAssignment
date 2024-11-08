@@ -4,10 +4,21 @@ import Entity.Appointment;
 import Entity.PrescribedMedication;
 import java.util.ArrayList;
 
-
+/**
+ * The PendingMedicineView class is responsible for displaying appointments 
+ * that have prescribed medications and their corresponding statuses.
+ * This class provides a view for appointments with pending medicine details.
+ */
 public class PendingMedicineView {
 
-
+    /**
+     * Displays the details of appointments with pending medications.
+     * It prints the appointment date, type of service, consultation notes,
+     * and the prescribed medications along with their status for each appointment.
+     * 
+     * @param appt A list of Appointment objects that contain information 
+     *             about the appointment outcome record, including prescribed medications.
+     */
     public void display(ArrayList<Appointment> appt){
     
         if (appt.isEmpty()) {

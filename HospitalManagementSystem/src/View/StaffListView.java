@@ -4,8 +4,19 @@ import Entity.Staff;
 import Interface.IListDisplayableView;
 import java.util.ArrayList;
 
+/**
+ * The StaffListView class is responsible for displaying a list of staff members.
+ * It presents details such as hospital ID, role, name, gender, and age in a formatted table.
+ */
 public class StaffListView implements IListDisplayableView<Staff> {
 
+    /**
+     * Displays a list of staff members in a formatted table.
+     * The table includes columns for hospital ID, password, role, name, gender, and age.
+     *
+     * @param staffList A list of Staff objects to be displayed.
+     *                  Each Staff object contains information like hospital ID, role, name, gender, and age.
+     */
     public void display(ArrayList<Staff> staffList) {
         String[] headers = new String[]{"Hospital ID", "Password", "Role", "Name", "Gender", "Age"};
         System.out.println();

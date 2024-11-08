@@ -3,8 +3,19 @@ package View;
 import Entity.Patient;
 import Interface.IDisplayableView;
 
+/**
+ * The PatientView class is responsible for displaying the details of a patient.
+ * It implements the IDisplayableView interface to provide a standardized way of presenting 
+ * patient information to the user.
+ */
 public class PatientView implements IDisplayableView<Patient>{
 
+    /**
+     * Displays the details of a patient, including their hospital ID, password, name, 
+     * date of birth, gender, blood type, email address, and phone number.
+     * 
+     * @param patient The Patient object whose details will be displayed.
+     */
     public void display(Patient patient){
 
         String[] headers = new String[]{"Hospital ID", "Password", "Name", "Date Of Birth", "Gender", "Blood Type", "Email Address", "Phone Number"};

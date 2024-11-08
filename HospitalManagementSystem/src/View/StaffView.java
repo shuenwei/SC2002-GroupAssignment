@@ -3,8 +3,19 @@ package View;
 import Entity.Staff;
 import Interface.IDisplayableView;
 
+/**
+ * The StaffListView class is responsible for displaying a list of staff members.
+ * It presents details such as hospital ID, role, name, gender, and age in a formatted table.
+ */
 public class StaffView implements IDisplayableView<Staff> {
 
+    /**
+     * Displays a list of staff members in a formatted table.
+     * The table includes columns for hospital ID, password, role, name, gender, and age.
+     *
+     * @param staffList A list of Staff objects to be displayed.
+     *                  Each Staff object contains information like hospital ID, role, name, gender, and age.
+     */
     public void display(Staff staff){
         
         String[] headers = new String[]{"Hospital ID", "Password", "Role", "Name", "Gender", "Age"};
