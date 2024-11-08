@@ -29,9 +29,9 @@ public class DoctorUI {
     public void displayMenu(){
         Scanner scanner = new Scanner(System.in);
         AvailabilityUI availabilityUI = new AvailabilityUI(this.doctor);
-        DoctorAppointmentUI doctorAppointmentUI = new DoctorAppointmentUI(this.doctor,doctorController);
+        DoctorAppointmentUI doctorAppointmentUI = new DoctorAppointmentUI(this.doctor);
         doctorMedicalRecordUI = new DoctorMedicalRecordUI();
-        appointmentOutcomeUI = new AppointmentOutcomeUI(doctor,doctorController);
+        appointmentOutcomeUI = new AppointmentOutcomeUI(doctor);
         IDisplayableView<Appointment> appointmentView = new AppointmentView();
         IListDisplayableView<Appointment> appointmentListView = new AppointmentListView();
         IListDisplayableView<MedicalHistory> medicalHistoryListView = new MedicalHistoryListView();
@@ -75,13 +75,13 @@ public class DoctorUI {
                         availabilityUI.setSchedule(availabilityController);
                         break;
                     case 5:
-                        doctorAppointmentUI.acceptDecline(appointmentView,appointmentListView);
+                        doctorAppointmentUI.acceptDecline(appointmentView,appointmentListView,doctorController);
                         break;
                     case 6:
-                        doctorAppointmentUI.displayAppointments(appointmentListView);
+                        doctorAppointmentUI.displayAppointments(appointmentListView,doctorController);
                         break;
                     case 7:
-                        appointmentOutcomeUI.createAppointmentOutcome(appointmentListView,appointmentOutcomeRecordView,medicalHistoryView);
+                        appointmentOutcomeUI.createAppointmentOutcome(appointmentListView,appointmentOutcomeRecordView,medicalHistoryView,doctorController);
                         break;
                     case 8:
                         System.out.println("You are now logged out.");
