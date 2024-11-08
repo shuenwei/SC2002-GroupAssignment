@@ -7,7 +7,7 @@ import Entity.Medication;
 import Entity.Request;
 import Enums.RequestStatus;
 
-public class Inventory {
+public class InventoryRepository {
     private static HashMap<String, Medication> medicineRepo = new HashMap<String, Medication>();
     private static HashMap<String, Request> requestRepo = new HashMap<String, Request>();
 
@@ -85,7 +85,7 @@ public class Inventory {
         }
     }
 
-    private static ArrayList<Request> getAllRequests() {
+    public static ArrayList<Request> getAllRequests() {
         ArrayList<Request> requests = new ArrayList<Request>();
             for (Request request : requestRepo.values()) {
                 requests.add(request);

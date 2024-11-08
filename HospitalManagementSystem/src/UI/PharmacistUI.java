@@ -6,7 +6,7 @@ import Entity.Medication;
 import Entity.Pharmacist;
 import Enums.AppointmentStatus;
 import Interface.IListDisplayableView;
-import Repository.Inventory;
+import Repository.InventoryRepository;
 import View.CommonView;
 import View.PendingMedicineView;
 import View.ViewListInventory;
@@ -86,7 +86,7 @@ public class PharmacistUI {
                         pharmacistController.updatePrescription(a);
                         break;
                     case 3:
-                        inventoryView.display(Inventory.getAllMedicines());
+                        inventoryView.display(InventoryRepository.getAllMedicines());
                         break;
                     case 4:
                         submitReplenishmentRequest();

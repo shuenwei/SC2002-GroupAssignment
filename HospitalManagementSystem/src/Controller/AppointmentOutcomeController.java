@@ -3,7 +3,7 @@ package Controller;
 import Entity.Appointment;
 import Entity.AppointmentOutcomeRecord;
 import Entity.PrescribedMedication;
-import Repository.Inventory;
+import Repository.InventoryRepository;
 
 import java.util.ArrayList;
 
@@ -16,7 +16,7 @@ public class AppointmentOutcomeController {
     }
 
     public static boolean checkMedicationExist(String medicationName) {
-        if(Inventory.get(medicationName) == null) {
+        if(InventoryRepository.get(medicationName) == null) {
             return false;
         }
         return true;

@@ -3,6 +3,7 @@ package Util;
 import Entity.*;
 import Enums.AppointmentStatus;
 import Enums.PrescriptionStatus;
+import Enums.RequestStatus;
 import Repository.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -15,6 +16,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DataInitialiser {
+
+    public static void initialiseAll(){
+        DataInitialiser.initialisePatient();
+        DataInitialiser.initialiseStaff();
+        DataInitialiser.initialiseMedicine();
+        DataInitialiser.initialiseAppointments();
+        DataInitialiser.initialiseAvailability();
+        DataInitialiser.initialiseRequest();
+        DataInitialiser.initialiseMedicalHistory();
+    }
     
     public static void initialisePatient() {
         String patientCsvFilePath = "data/patientCsv.csv";
@@ -133,12 +144,72 @@ public class DataInitialiser {
                 int lowStockLevel = Integer.valueOf(medicineListCsv[2]);
 
                 Medication medicine = new Medication(medicineName, stock, lowStockLevel);
-                Inventory.add(medicine);  
+                InventoryRepository.add(medicine);  
             }     
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+    public static void initialiseRequest() {
+        String requestCsvFilePath = "data/requestCsv.csv";
+        try (BufferedReader br = new BufferedReader(new FileReader(requestCsvFilePath))) {
+            // Skip the header line
+            String line = br.readLine();
+
+            while ((line = br.readLine()) != null) {
+                String[] data = line.split(",");
+
+                // Parse the medicine name and request status
+                String medicineName = data[0];
+                RequestStatus status = RequestStatus.valueOf(data[1]);
+
+                // Create a new Request object and set its status
+                Request request = new Request(medicineName);
+                request.setStatus(status);
+
+                // Add the request to the list
+                InventoryRepository.addRequest(request);
+            }
+        } catch (IOException | IllegalArgumentException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void initialiseMedicalHistory() {
+        String medicalHistoryCsvFilePath = "data/medicalHistoryCsv.csv";
+        try (BufferedReader br = new BufferedReader(new FileReader(medicalHistoryCsvFilePath))) {
+            String line = br.readLine(); // Skip header
+    
+            while ((line = br.readLine()) != null) {
+                String[] data = line.split(",");
+    
+                String patientId = data[0];
+                String diagnosisandType = data[1];
+                String treatmentPlan = data[2];
+                String[] medications = data[3].split(";");
+    
+                Patient patient = (Patient) UserRepository.get(patientId);
+    
+                if (patient != null) {
+                    MedicalHistory history = new MedicalHistory(diagnosisandType, treatmentPlan);
+    
+                    for (String medication : medications) {
+                        if (!medication.isEmpty()) {
+                            history.addPrescribedMedications(medication);
+                        }
+                    }
+    
+                    patient.getMedicalRecord().addMedicalHistory(history);
+                } else {
+                    System.err.println("Error: Patient with ID " + patientId + " not found.");
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
 
     public static void initialiseAppointments() {
     String appointmentCsvFilePath = "data/appointmentCsv.csv";

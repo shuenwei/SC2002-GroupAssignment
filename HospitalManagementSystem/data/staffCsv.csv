@@ -1,6 +1,6 @@
-﻿Staff ID,Password,Name,Role,Gender,Age
-D001,p,John Smith,Doctor,Male,45
-D002,,Emily Clarke,Doctor,Female,38
-P001,,Mark Lee,Pharmacist,Male,29
-A001,,Sarah Lee,Administrator,Female,40
-N001,,Jessica Brown,Nurse,Female,30
+Staff ID,Password,Name,Role,Gender,Age
+D002,,Emily Clarke,DOCTOR,Female,38
+D001,p,John Smith,DOCTOR,Male,45
+P001,p,Mark Lee,PHARMACIST,Male,29
+N001,,Jessica Brown,NURSE,Female,30
+A001,p,Sarah Lee,ADMINISTRATOR,Female,40
