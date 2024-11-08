@@ -89,9 +89,11 @@ public class PatientAppointmentUI extends AppointmentUI {
         if (selectedDoctor == null) {
             return;
         }
-        
+
+        AvailabilityController availabilityController = new AvailabilityController(selectedDoctor);
+
         AvailabilityUI availabilityUI = new AvailabilityUI(selectedDoctor);
-        availabilityUI.viewSchedule(doctorController);
+        availabilityUI.viewSchedule(availabilityController);
 
         LocalDate selectedDate = null;
         Availability availability = null;
@@ -192,9 +194,10 @@ public class PatientAppointmentUI extends AppointmentUI {
 
         Appointment selectedAppointment = appointments.get(index -1 );
         Doctor selectedDoctor = selectedAppointment.getDoctor();
+        AvailabilityController availabilityController = new AvailabilityController(selectedDoctor);
 
         AvailabilityUI availabilityUI = new AvailabilityUI(selectedDoctor);
-        availabilityUI.viewSchedule(doctorController);
+        availabilityUI.viewSchedule(availabilityController);
 
         LocalDate selectedDate = null;
         Availability availability = null;
