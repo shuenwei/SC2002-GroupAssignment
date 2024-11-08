@@ -1,10 +1,10 @@
 package View;
 
-import Entity.Inventory;
 import java.util.ArrayList;
 
 import Entity.Medication;
 import Interface.IListDisplayableView;
+import Repository.Inventory;
 
 public class ViewListInventory implements IListDisplayableView<Medication> {
 

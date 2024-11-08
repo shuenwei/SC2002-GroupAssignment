@@ -1,8 +1,10 @@
-package Entity;
+package Repository;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import Entity.Medication;
+import Entity.Request;
 import Enums.RequestStatus;
 
 public class Inventory {

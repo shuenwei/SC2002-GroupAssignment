@@ -1,10 +1,10 @@
 package UI;
 
 import Controller.AdministratorController;
-import Entity.Inventory;
 import Entity.Medication;
 import Interface.IDisplayableView;
 import Interface.IListDisplayableView;
+import Repository.Inventory;
 import View.CommonView;
 import View.ViewInventory;
 import View.ViewListInventory;

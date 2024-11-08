@@ -2,8 +2,8 @@ package Controller;
 
 import Entity.Appointment;
 import Entity.AppointmentOutcomeRecord;
-import Entity.Inventory;
 import Entity.PrescribedMedication;
+import Repository.Inventory;
 
 import java.util.ArrayList;
 
