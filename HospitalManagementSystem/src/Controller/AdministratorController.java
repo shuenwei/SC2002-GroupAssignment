@@ -13,7 +13,7 @@ import Entity.User;
 import Enums.RequestStatus;
 import Interface.IDisplayableView;
 import Repository.AppointmentRepository;
-import Repository.Inventory;
+import Repository.InventoryRepository;
 import Repository.UserRepository;
 import View.StaffView;
 import java.util.ArrayList;
@@ -57,7 +57,7 @@ public class AdministratorController extends StaffController{
 
 
     public void addStock(String medicineName, int quantity) {
-        Medication medicine = Inventory.get(medicineName);
+        Medication medicine = InventoryRepository.get(medicineName);
         if (medicine != null) {
             int newStock = medicine.getStock() + quantity;
             medicine.setStock(newStock);
@@ -67,7 +67,7 @@ public class AdministratorController extends StaffController{
     }
 
     public void removeStock(String medicineName, int quantity) {
-        Medication medicine = Inventory.get(medicineName);
+        Medication medicine = InventoryRepository.get(medicineName);
         if (medicine != null) {
             int newStock = medicine.getStock() - quantity;
             medicine.setStock(newStock);
@@ -77,7 +77,7 @@ public class AdministratorController extends StaffController{
     }
 
     private void replenishStock(String medicineName) {
-        Medication medicine = Inventory.get(medicineName);
+        Medication medicine = InventoryRepository.get(medicineName);
         int current_stock = medicine.getStock();
         if (medicine != null) {
             System.out.printf("How many %s would you like to replenish?%n", medicineName);
@@ -89,11 +89,11 @@ public class AdministratorController extends StaffController{
 
     public void addNewMedicine(String medicineName, int stock, int lowStockThreshold) {
         Medication newMedicine = new Medication(medicineName, stock, lowStockThreshold);
-        Inventory.add(newMedicine);
+        InventoryRepository.add(newMedicine);
     }
 
     public void setThresholdStock(String medicineName, int threshold) {
-        Medication medicine = Inventory.get(medicineName);
+        Medication medicine = InventoryRepository.get(medicineName);
         if (medicine != null) {
             medicine.setStockThreshold(threshold);
             System.out.println();
@@ -102,12 +102,12 @@ public class AdministratorController extends StaffController{
     }
 
     public void approveRequest(String requestedMedicine) {
-        Request request = Inventory.getRequest(requestedMedicine);
+        Request request = InventoryRepository.getRequest(requestedMedicine);
 
         if (request != null) {
             replenishStock(requestedMedicine);
             request.setStatus(RequestStatus.FULFILLED);
-            Inventory.removeRequest(requestedMedicine);
+            InventoryRepository.removeRequest(requestedMedicine);
 
             System.out.printf("%s has been successfully replenished.", requestedMedicine);
             System.out.println();

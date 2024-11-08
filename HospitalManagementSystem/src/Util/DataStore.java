@@ -10,6 +10,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DataStore {
+
+    public static void saveAll(){
+        DataStore.saveStaffData();
+        DataStore.savePatientData();
+        DataStore.saveAppointmentData();
+        DataStore.saveDoctorAvailability();
+        DataStore.saveMedicine();
+        DataStore.saveRequest();
+        DataStore.saveMedicalHistory();
+    }
     
     public static void saveStaffData() {
         String staffCsvFilePath = "data/staffCsv.csv";
@@ -83,7 +93,67 @@ public class DataStore {
             e.printStackTrace();
         }
     }
+
+    public static void saveMedicine() {
+        String medicineListCsvFilePath = "data/medicineListCsv.csv";
+        try (PrintWriter pw = new PrintWriter(new FileWriter(medicineListCsvFilePath))) {
+            // Write the header
+            pw.println("Medicine Name,Stock,Low Stock Level");
     
+            for (Medication medicine : InventoryRepository.getAllMedicines()) {
+                String[] data = {
+                    medicine.getMedicineName(),
+                    String.valueOf(medicine.getStock()),
+                    String.valueOf(medicine.getStockThreshold())
+                };
+                pw.println(String.join(",", data));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }   
+    
+    public static void saveRequest() {
+        String requestCsvFilePath = "data/requestCsv.csv";
+        try (PrintWriter pw = new PrintWriter(new FileWriter(requestCsvFilePath))) {
+            pw.println("Medicine Name,Status");
+
+            for (Request request : InventoryRepository.getAllRequests()) {
+                String[] data = {
+                    request.getRequestedMedicine(),
+                    request.getStatus().toString()
+                };
+                pw.println(String.join(",", data));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public static void saveMedicalHistory() {
+        String medicalHistoryCsvFilePath = "data/medicalHistoryCsv.csv";
+        try (PrintWriter pw = new PrintWriter(new FileWriter(medicalHistoryCsvFilePath))) {
+            pw.println("Patient ID,Diagnosis and Type,Treatment Plan,Prescribed Medications");
+
+            for (Patient patient : UserRepository.getAllPatients()) {
+                String patientId = patient.getHospitalId();
+
+                for (MedicalHistory history : patient.getMedicalRecord().getMedicalHistory()) {
+                    String prescribedMedications = String.join(";", history.getPrescribedMedications());
+                    String[] data = {
+                        patientId,
+                        history.getDiagnosisandType(),
+                        history.getTreatmentPlan(),
+                        prescribedMedications
+                    };
+                    pw.println(String.join(",", data));
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void saveAppointmentData() {
         String appointmentCsvFilePath = "data/appointmentCsv.csv";
         try (PrintWriter pw = new PrintWriter(new FileWriter(appointmentCsvFilePath))) {

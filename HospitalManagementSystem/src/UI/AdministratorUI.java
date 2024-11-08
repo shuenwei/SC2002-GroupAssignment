@@ -7,7 +7,7 @@ import Entity.Medication;
 import Entity.Staff;
 import Interface.IDisplayableView;
 import Interface.IListDisplayableView;
-import Repository.Inventory;
+import Repository.InventoryRepository;
 import Repository.UserRepository;
 import View.AppointmentView;
 import View.CommonView;
@@ -110,7 +110,7 @@ public class AdministratorUI {
                 choice = scanner.nextInt();
                 switch(choice) {
                     case 1:
-                        Inventory.viewRequests();
+                        InventoryRepository.viewRequests();
                         break;
                     case 2:
                         System.out.println();
@@ -118,7 +118,7 @@ public class AdministratorUI {
                         scanner.nextLine();
                         requestMedicine = scanner.nextLine();
                         administratorController.approveRequest(requestMedicine);
-                        inventoryView.display(Inventory.get(requestMedicine));
+                        inventoryView.display(InventoryRepository.get(requestMedicine));
                         break;
                     case 3: return;
                     default:
