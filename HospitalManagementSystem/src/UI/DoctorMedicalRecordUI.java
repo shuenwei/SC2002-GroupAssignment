@@ -6,25 +6,33 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import Controller.DoctorController;
-import View.MedicalHistoryListView;
+import Interface.IListDisplayableView;
 
-
+/**
+ * User interface for managing medical records, allowing doctors to view and edit
+ * patient medical histories, diagnoses, and treatment plans.
+ */
 public class DoctorMedicalRecordUI {
-    private DoctorController doctorController;
-    private MedicalHistoryListView medicalHistoryView;
 
-    public DoctorMedicalRecordUI(DoctorController doctorController) {
-        this.doctorController = doctorController;
+    /**
+     * Initializes a new instance of DoctorMedicalRecordUI.
+     */
+    public DoctorMedicalRecordUI() {
     }
 
-    public void displayMedicalRecord() {
+    /**
+     * Displays a patient's medical record based on their Patient ID.
+     * 
+     * @param doctorController The controller to manage doctor operations.
+     * @param medicalHistoryListView The view interface for displaying a list of medical history records.
+     */
+    public void displayMedicalRecord(DoctorController doctorController, IListDisplayableView<MedicalHistory> medicalHistoryListView) {
         System.out.println("Please enter the PatientID: ");
         Scanner scanner = new Scanner(System.in);
         String patientID = scanner.nextLine();
         System.out.println();
         MedicalRecord medicalRecord = doctorController.findMedicalRecordByID(patientID);
         if(medicalRecord != null) {
-            medicalHistoryView = new MedicalHistoryListView();
             System.out.println("MedicalRecord: ");
             System.out.println("PatientID: " + medicalRecord.getPatientID());
             System.out.println("Name: " + medicalRecord.getName());
@@ -33,14 +41,21 @@ public class DoctorMedicalRecordUI {
             System.out.println("Email Address: " + medicalRecord.getEmailAddress());
             System.out.println("Phone Number: " + medicalRecord.getPhoneNumber());
             System.out.println("BloodType: " + medicalRecord.getBloodType());
-            medicalHistoryView.display(medicalRecord.getMedicalHistory());
+            medicalHistoryListView.display(medicalRecord.getMedicalHistory());
         }
         else {
             System.out.println("Sorry Patient with ID: " + patientID + " is not under your care, MedicalRecord not accessible");
         }
     }
 
-    public void editMedicalRecord() {
+    /**
+     * Allows the doctor to edit a patient's medical record by creating a new diagnosis
+     * or editing an existing one. Provides options to update treatment plans and prescribed medications.
+     *
+     * @param doctorController The controller to manage doctor operations.
+     * @param medicalHistoryListView The view interface for displaying a list of medical history records.
+     */
+    public void editMedicalRecord(DoctorController doctorController, IListDisplayableView<MedicalHistory> medicalHistoryListView) {
         int choice = -1;
         System.out.println("Please enter the PatientID: ");
         Scanner scanner = new Scanner(System.in);
@@ -71,10 +86,24 @@ public class DoctorMedicalRecordUI {
             }
             switch (choice) {
                 case 1:
-                    System.out.println("Please enter the name of the new diagnosis: ");
-                    String name = scanner.nextLine();
-                    System.out.println("Please enter the Treatment Plan of the diagnosis: ");
-                    String treatmentPlan = scanner.nextLine();
+                    String name = "";
+                    while (name.isEmpty()) {
+                        System.out.println("Please enter the name of the new diagnosis ");
+                        name = scanner.nextLine();
+                        if (name.isEmpty()) {
+                            System.out.println("Input cannot be empty. Please try again.");
+                        }
+                    }
+
+                    String treatmentPlan = "";
+                    while (treatmentPlan.isEmpty()) {
+                        System.out.println("Enter Treatment Plan: ");
+                        treatmentPlan = scanner.nextLine();
+                        if (treatmentPlan.isEmpty()) {
+                            System.out.println("Input cannot be empty. Please try again.");
+                        }
+                    }
+
                     MedicalHistory newmedicalHistory = new MedicalHistory(name,treatmentPlan);
                     while(true) {
                         System.out.print("Enter names of medication to be prescribed (If no more prescriptions type 'Exit') : ");
@@ -96,8 +125,7 @@ public class DoctorMedicalRecordUI {
                         return;
                     }
 
-                    MedicalHistoryListView medicalHistoryView = new MedicalHistoryListView();
-                    medicalHistoryView.display(medicalHistoryArrayList);
+                    medicalHistoryListView.display(medicalHistoryArrayList);
 
                     int medicalHistoryChoice = -1;
 

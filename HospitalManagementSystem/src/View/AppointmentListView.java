@@ -5,9 +5,20 @@ import Interface.IListDisplayableView;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-
+/**
+ * The AppointmentListView class implements the IListDisplayableView interface for displaying
+ * a list of appointments in a formatted table.
+ */
 public class AppointmentListView implements IListDisplayableView<Appointment>{
 
+    /**
+     * Displays a list of appointments in a tabular format with the following columns:
+     * No., Patient Name, Doctor Name, Date, Time, and Status.
+     * The date is formatted using the pattern "dd-MM-yyyy".
+     *
+     * @param apptList the list of appointments to be displayed
+     */
+    @Override
     public void display(ArrayList<Appointment> apptList){
         
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");

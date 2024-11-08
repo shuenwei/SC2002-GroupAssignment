@@ -20,14 +20,12 @@ public class AppointmentOutcomeUI {
     private Scanner scanner;
     Scanner sc = new Scanner(System.in);
 
-    public AppointmentOutcomeUI(Doctor doctor,DoctorController doctorController) {
+    public AppointmentOutcomeUI(Doctor doctor) {
         this.doctor = doctor;
-        this.doctorController = doctorController;
         scanner = new Scanner(System.in);
-
     }
 
-    public void createAppointmentOutcome(IListDisplayableView<Appointment> appointmentListView, IDisplayableView<AppointmentOutcomeRecord> appointmentOutcomeRecordView, IDisplayableView<MedicalHistory> medicalHistoryView) {
+    public void createAppointmentOutcome(IListDisplayableView<Appointment> appointmentListView, IDisplayableView<AppointmentOutcomeRecord> appointmentOutcomeRecordView, IDisplayableView<MedicalHistory> medicalHistoryView, DoctorController doctorController) {
         ArrayList<Appointment> ConfirmedAppointments = doctorController.getAppointmentsByStatus(AppointmentStatus.CONFIRMED);
 
         if (ConfirmedAppointments.isEmpty()) {
@@ -63,10 +61,24 @@ public class AppointmentOutcomeUI {
         ArrayList<PrescribedMedication> prescribedMedicationsList = new ArrayList<>();
         System.out.println("Create Appointment Outcome");
         System.out.println();
-        System.out.println("Enter type of service administered: ");
-        String service = sc.nextLine();
-        System.out.println("Enter consultation notes: ");
-        String notes = sc.nextLine();
+        String service = "";
+        while (service.isEmpty()) {
+            System.out.println("Enter type of service administered: ");
+            service = sc.nextLine();
+            if (service.isEmpty()) {
+                System.out.println("Input cannot be empty. Please try again.");
+            }
+        }
+
+        String notes = "";
+        while (notes.isEmpty()) {
+            System.out.println("Enter consultation notes: ");
+            notes = sc.nextLine();
+            if (notes.isEmpty()) {
+                System.out.println("Input cannot be empty. Please try again.");
+            }
+        }
+
         while(true) {
             System.out.print("Enter names of medication to be prescribed (If no more prescriptions type 'Exit') : ");
             String name = sc.nextLine();
