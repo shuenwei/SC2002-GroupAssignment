@@ -10,13 +10,7 @@ public class Main {
         int choice = 0;
         Scanner scanner = new Scanner(System.in);
 
-
-        DataInitialiser.initialisePatient();
-        DataInitialiser.initialiseStaff();
-        DataInitialiser.initialiseMedicine();
-        DataInitialiser.initialiseAppointments();
-        DataInitialiser.initialiseAvailability();
-
+        DataInitialiser.initialiseAll();
 
         while (true) {
             try{
@@ -31,10 +25,7 @@ public class Main {
                         break;
                     case 2:
                         System.out.println("Exiting the system...");
-                        DataStore.saveStaffData();
-                        DataStore.savePatientData();
-                        DataStore.saveAppointmentData();
-                        DataStore.saveDoctorAvailability();
+                        DataStore.saveAll();
                         System.exit(0);
                         break;
                     default:

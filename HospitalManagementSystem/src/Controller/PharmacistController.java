@@ -8,7 +8,7 @@ import Entity.Request;
 import Enums.AppointmentStatus;
 import Enums.PrescriptionStatus;
 import Repository.AppointmentRepository;
-import Repository.Inventory;
+import Repository.InventoryRepository;
 
 import java.util.ArrayList;
 import java.util.InputMismatchException;
@@ -26,14 +26,14 @@ public class PharmacistController extends StaffController {
     }
 
     public void submitRequest(String requestMedicine) {
-        Medication medicine = Inventory.get(requestMedicine);
+        Medication medicine = InventoryRepository.get(requestMedicine);
         if (medicine != null) {
             if (medicine.getIsLowStock() != true) {
                 System.out.printf("%s is not low on stock%n", requestMedicine);
             }
             else {
                 Request newRequest = new Request(requestMedicine);
-                Inventory.addRequest(newRequest);
+                InventoryRepository.addRequest(newRequest);
                 System.out.printf("Successfully submitted replenishment request for %s%n", requestMedicine);
             }
         }
@@ -74,7 +74,7 @@ public class PharmacistController extends StaffController {
             }
 
         
-                Medication med = Inventory.get(a.getAppointmentOutcomeRecord().getPrescribedMedications().get(choice-1).getMedicineName());
+                Medication med = InventoryRepository.get(a.getAppointmentOutcomeRecord().getPrescribedMedications().get(choice-1).getMedicineName());
                 if(med.getStock() > 0 && (a.getAppointmentOutcomeRecord().getPrescribedMedications().get(choice-1).getStatus() == Enums.PrescriptionStatus.PENDING)){
                     med.setStock(med.getStock()-1);
                     a.getAppointmentOutcomeRecord().getPrescribedMedications().get(choice-1).setStatus(PrescriptionStatus.DISPENSED);

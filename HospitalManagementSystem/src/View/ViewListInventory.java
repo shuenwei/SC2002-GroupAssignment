@@ -4,12 +4,12 @@ import java.util.ArrayList;
 
 import Entity.Medication;
 import Interface.IListDisplayableView;
-import Repository.Inventory;
+import Repository.InventoryRepository;
 
 public class ViewListInventory implements IListDisplayableView<Medication> {
 
     public void display(ArrayList<Medication> medicines) {
-        medicines = Inventory.getAllMedicines();
+        medicines = InventoryRepository.getAllMedicines();
         String[] headers = new String[]{"Medicine Name", "Stock", "AlertLevel", "LowStock"};
         System.out.println();
         System.out.printf("| %-15s | %-7s | %-12s | %-7s |%n", headers[0], headers[1], headers[2], headers[3]);
