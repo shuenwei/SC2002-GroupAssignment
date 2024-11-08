@@ -8,11 +8,24 @@ import java.util.Scanner;
 import Controller.DoctorController;
 import Interface.IListDisplayableView;
 
+/**
+ * User interface for managing medical records, allowing doctors to view and edit
+ * patient medical histories, diagnoses, and treatment plans.
+ */
 public class DoctorMedicalRecordUI {
 
+    /**
+     * Initializes a new instance of DoctorMedicalRecordUI.
+     */
     public DoctorMedicalRecordUI() {
     }
 
+    /**
+     * Displays a patient's medical record based on their Patient ID.
+     * 
+     * @param doctorController The controller to manage doctor operations.
+     * @param medicalHistoryListView The view interface for displaying a list of medical history records.
+     */
     public void displayMedicalRecord(DoctorController doctorController, IListDisplayableView<MedicalHistory> medicalHistoryListView) {
         System.out.println("Please enter the PatientID: ");
         Scanner scanner = new Scanner(System.in);
@@ -35,6 +48,13 @@ public class DoctorMedicalRecordUI {
         }
     }
 
+    /**
+     * Allows the doctor to edit a patient's medical record by creating a new diagnosis
+     * or editing an existing one. Provides options to update treatment plans and prescribed medications.
+     *
+     * @param doctorController The controller to manage doctor operations.
+     * @param medicalHistoryListView The view interface for displaying a list of medical history records.
+     */
     public void editMedicalRecord(DoctorController doctorController, IListDisplayableView<MedicalHistory> medicalHistoryListView) {
         int choice = -1;
         System.out.println("Please enter the PatientID: ");

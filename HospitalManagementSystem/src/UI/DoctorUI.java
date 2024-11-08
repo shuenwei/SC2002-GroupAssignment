@@ -13,19 +13,51 @@ import View.*;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-
+/**
+ * Provides a user interface for doctors to manage their appointments, availability, 
+ * and patient medical records, including options for viewing schedules, setting availability, 
+ * and recording appointment outcomes.
+ */
 public class DoctorUI {
 
+    /**
+     * The doctor associated with this UI instance.
+     */
     private Doctor doctor;
+
+    /**
+     * The currently selected appointment.
+     */
     private Appointment appointment;
+
+    /**
+     * UI for managing doctor-specific medical records.
+     */
     private DoctorMedicalRecordUI doctorMedicalRecordUI;
+
+    /**
+     * UI for handling the outcome of an appointment.
+     */
     private AppointmentOutcomeUI appointmentOutcomeUI;
+
+    /**
+     * Controller for managing doctor-related operations.
+     */
     private DoctorController doctorController;
 
+    /**
+     * Initializes the UI for a specified doctor.
+     *
+     * @param doctor The doctor using this interface.
+     */
     public DoctorUI (Doctor doctor) {
         this.doctor = doctor;
     }
 
+    /**
+     * Displays the main menu for the doctor, providing options for viewing and updating medical records,
+     * managing schedules, setting availability, managing appointment requests, and recording appointment outcomes.
+     */
     public void displayMenu(){
         Scanner scanner = new Scanner(System.in);
         AvailabilityUI availabilityUI = new AvailabilityUI(this.doctor);
