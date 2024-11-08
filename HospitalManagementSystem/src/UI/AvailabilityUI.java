@@ -1,47 +1,34 @@
 package UI;
 
 import Controller.AvailabilityController;
-import Controller.DoctorController;
-import Controller.PatientController;
-import Entity.Appointment;
 import Entity.Doctor;
-import Entity.Patient;
-import Enums.AppointmentStatus;//
-import View.AppointmentListView;
-import View.AppointmentView;
 import View.CommonView;
-import Repository.UserRepository;
 import View.ScheduleView;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.InputMismatchException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class AvailabilityUI {
     private Doctor doctor;
     private Scanner scanner;
-    private DoctorController doctorController;
 
     public AvailabilityUI(Doctor doctor){
         this.doctor = doctor;
         scanner = new Scanner(System.in);
-        doctorController = new DoctorController(doctor);
     }
 
-    public void viewSchedule(){
+    public void viewSchedule(AvailabilityController availabilityController){
         CommonView.newPage();
-        AvailabilityController availabilityController = new AvailabilityController(doctor);
         System.out.println();
         System.out.println("Dr. " + doctor.getName() + "'s Availability for Appointments:");
         ScheduleView scheduleView = new ScheduleView();
         scheduleView.display(availabilityController.getSchedule());
     }
 
-    public void setSchedule(){
-        AvailabilityController availabilityController = new AvailabilityController(doctor);
+    public void setSchedule(AvailabilityController availabilityController){
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 
         int day = -1;

@@ -6,25 +6,21 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import Controller.DoctorController;
+import Interface.IListDisplayableView;
 import View.MedicalHistoryListView;
 
-
 public class DoctorMedicalRecordUI {
-    private DoctorController doctorController;
-    private MedicalHistoryListView medicalHistoryView;
 
-    public DoctorMedicalRecordUI(DoctorController doctorController) {
-        this.doctorController = doctorController;
+    public DoctorMedicalRecordUI() {
     }
 
-    public void displayMedicalRecord() {
+    public void displayMedicalRecord(DoctorController doctorController, IListDisplayableView<MedicalHistory> medicalHistoryListView) {
         System.out.println("Please enter the PatientID: ");
         Scanner scanner = new Scanner(System.in);
         String patientID = scanner.nextLine();
         System.out.println();
         MedicalRecord medicalRecord = doctorController.findMedicalRecordByID(patientID);
         if(medicalRecord != null) {
-            medicalHistoryView = new MedicalHistoryListView();
             System.out.println("MedicalRecord: ");
             System.out.println("PatientID: " + medicalRecord.getPatientID());
             System.out.println("Name: " + medicalRecord.getName());
@@ -33,14 +29,14 @@ public class DoctorMedicalRecordUI {
             System.out.println("Email Address: " + medicalRecord.getEmailAddress());
             System.out.println("Phone Number: " + medicalRecord.getPhoneNumber());
             System.out.println("BloodType: " + medicalRecord.getBloodType());
-            medicalHistoryView.display(medicalRecord.getMedicalHistory());
+            medicalHistoryListView.display(medicalRecord.getMedicalHistory());
         }
         else {
             System.out.println("Sorry Patient with ID: " + patientID + " is not under your care, MedicalRecord not accessible");
         }
     }
 
-    public void editMedicalRecord() {
+    public void editMedicalRecord(DoctorController doctorController, IListDisplayableView<MedicalHistory> medicalHistoryListView) {
         int choice = -1;
         System.out.println("Please enter the PatientID: ");
         Scanner scanner = new Scanner(System.in);
@@ -96,8 +92,7 @@ public class DoctorMedicalRecordUI {
                         return;
                     }
 
-                    MedicalHistoryListView medicalHistoryView = new MedicalHistoryListView();
-                    medicalHistoryView.display(medicalHistoryArrayList);
+                    medicalHistoryListView.display(medicalHistoryArrayList);
 
                     int medicalHistoryChoice = -1;
 

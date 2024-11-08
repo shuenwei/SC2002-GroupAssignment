@@ -13,18 +13,16 @@ import java.util.Scanner;
 
 public class PharmacistUI {
     private Pharmacist pharmacist;
-    private PharmacistController pharmacistController;
     Scanner sc = new Scanner(System.in);
 
     public PharmacistUI(Pharmacist pharmacist) {
         this.pharmacist = pharmacist;
-        this.pharmacistController= new PharmacistController(pharmacist);
     }
     
     public void displayMenu() {
         
         int option = -1;
-
+        PharmacistController pharmacistController = new PharmacistController(pharmacist);
         ArrayList<Appointment> appt = pharmacistController.getAllAppointmentsByStatus(AppointmentStatus.MEDICINE_PENDING);
         PendingMedicineView viewPending = new PendingMedicineView();
 
@@ -76,6 +74,7 @@ public class PharmacistUI {
     
     public void submitReplenishmentRequest() {
         String requestMedicine;
+        PharmacistController pharmacistController = new PharmacistController(pharmacist);
 
         System.out.println();
         System.out.println("Input medicine to be replenished:");
