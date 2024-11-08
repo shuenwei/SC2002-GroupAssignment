@@ -9,7 +9,6 @@ import Enums.AppointmentStatus;
 import Enums.PrescriptionStatus;
 import Repository.AppointmentRepository;
 import Repository.Inventory;
-
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -41,31 +40,30 @@ public class PharmacistController extends StaffController {
 
     public void updatePrescription(Appointment a){
 
-        int index = 1;
+        int index = 0;
         int choice = 0;
-
-    
-        for(PrescribedMedication m : a.getAppointmentOutcomeRecord().getPrescribedMedications()){
-
-            if (m.getStatus() == Enums.PrescriptionStatus.DISPENSED) {
-                System.out.println();
-                System.out.println("Prescription already dispensed!");
-                return; 
-            }
-
-            System.out.println(" " + index + ". " + m.getMedicineName() + " " + m.getStatus());
-            index++;
-        }
-        
-        System.out.println(" " + (index) + ". Exit");
 
         do {
             try{
+            
+            index = 1;
+
+            for(PrescribedMedication m : a.getAppointmentOutcomeRecord().getPrescribedMedications()){
+
+                System.out.println(" " + index + ". " + m.getMedicineName() + " " + m.getStatus());
+                index++;
+                
+            }
+            
+                
+            System.out.println(" " + (index) + ". Exit");
+
             System.out.println("Which Medicine number would you like to dispense?");
             choice = sc.nextInt();
             
             if (choice < 1 || choice > index) {
                 System.out.println("Invalid choice. Please try again.");
+                System.out.println();
                 continue;
             }
 
@@ -74,27 +72,19 @@ public class PharmacistController extends StaffController {
             }
 
         
-                Medication med = Inventory.get(a.getAppointmentOutcomeRecord().getPrescribedMedications().get(choice-1).getMedicineName());
-                if(med.getStock() > 0 && (a.getAppointmentOutcomeRecord().getPrescribedMedications().get(choice-1).getStatus() == Enums.PrescriptionStatus.PENDING)){
-                    med.setStock(med.getStock()-1);
-                    a.getAppointmentOutcomeRecord().getPrescribedMedications().get(choice-1).setStatus(PrescriptionStatus.DISPENSED);
-                    System.out.println(a.getAppointmentOutcomeRecord().getPrescribedMedications().get(choice-1).getMedicineName() + " has been dispensed!");
-                }
-                else if(med.getStock() < 0){
-                    System.out.println(a.getAppointmentOutcomeRecord().getPrescribedMedications().get(choice-1).getMedicineName() + " is not available!");
-                }
-                else{
-                    System.out.println(a.getAppointmentOutcomeRecord().getPrescribedMedications().get(choice-1).getMedicineName() + " has already been dispensed! Try another Medication!");
-                }
+            Medication med = Inventory.get(a.getAppointmentOutcomeRecord().getPrescribedMedications().get(choice-1).getMedicineName());
+            if(med.getStock() > 0 && (a.getAppointmentOutcomeRecord().getPrescribedMedications().get(choice-1).getStatus() == Enums.PrescriptionStatus.PENDING)){
+                med.setStock(med.getStock()-1);
+                a.getAppointmentOutcomeRecord().getPrescribedMedications().get(choice-1).setStatus(PrescriptionStatus.DISPENSED);
+                System.out.println(a.getAppointmentOutcomeRecord().getPrescribedMedications().get(choice-1).getMedicineName() + " has been dispensed!");
+            }
+            else if(med.getStock() < 0){
+                System.out.println(a.getAppointmentOutcomeRecord().getPrescribedMedications().get(choice-1).getMedicineName() + " is not available!");
+            }
+            else{
+                System.out.println(a.getAppointmentOutcomeRecord().getPrescribedMedications().get(choice-1).getMedicineName() + " has already been dispensed! Try another Medication!");
+            }
 
-                index = 1;
-
-                for(PrescribedMedication m : a.getAppointmentOutcomeRecord().getPrescribedMedications()){
-                    System.out.println(" " + index + ". " + m.getMedicineName() + " " + m.getStatus());
-                    index++;
-                }
-                
-                System.out.println(" " + (index) + ". Exit");
             
             } catch (InputMismatchException e) {
                 System.out.println("Invalid input. Please enter a number between 1 and " + index);
@@ -113,6 +103,7 @@ public class PharmacistController extends StaffController {
         }   
             System.out.println("Appointment Status updated to Completed!");
             a.setStatus(AppointmentStatus.COMPLETED);
+            
         
         } 
         
