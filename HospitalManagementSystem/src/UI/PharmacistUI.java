@@ -2,11 +2,11 @@ package UI;
 
 import Controller.PharmacistController;
 import Entity.Appointment;
-import Entity.Inventory;
 import Entity.Medication;
 import Entity.Pharmacist;
 import Enums.AppointmentStatus;
 import Interface.IListDisplayableView;
+import Repository.Inventory;
 import View.CommonView;
 import View.PendingMedicineView;
 import View.ViewListInventory;

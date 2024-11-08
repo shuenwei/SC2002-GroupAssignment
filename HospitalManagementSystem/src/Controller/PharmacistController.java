@@ -1,7 +1,6 @@
 package Controller;
 
 import Entity.Appointment;
-import Entity.Inventory;
 import Entity.Medication;
 import Entity.Pharmacist;
 import Entity.PrescribedMedication;
@@ -9,6 +8,8 @@ import Entity.Request;
 import Enums.AppointmentStatus;
 import Enums.PrescriptionStatus;
 import Repository.AppointmentRepository;
+import Repository.Inventory;
+
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
