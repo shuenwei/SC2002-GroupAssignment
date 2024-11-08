@@ -22,13 +22,40 @@ import java.util.Scanner;
 import Controller.AppointmentController;
 import Controller.PatientController;
 
+/**
+ * Provides a user interface for managing patient appointments, including viewing available slots, 
+ * scheduling, rescheduling, canceling, and displaying appointments for a specific patient.
+ * Extends the {@link AppointmentUI} class.
+ */
 public class PatientAppointmentUI extends AppointmentUI {
 
+    /**
+     * The current patient for whom the appointments are managed.
+     */
     private Patient patient;
+
+    /**
+     * Controller for managing patient-related operations.
+     */
     private PatientController patientController;
+
+    /**
+     * Scanner for reading user inputs.
+     */
     private Scanner scanner;
+
+    /**
+     * Formatter for parsing and formatting dates.
+     */
     private DateTimeFormatter formatter;
 
+
+    /**
+     * Initializes the UI with a patient and patient controller.
+     *
+     * @param patient          The patient for whom appointments are managed.
+     * @param patientController Controller for handling patient-related operations.
+     */
     public PatientAppointmentUI(Patient patient,PatientController patientController) {
         this.patient = patient;
         this.patientController = patientController;
@@ -36,6 +63,9 @@ public class PatientAppointmentUI extends AppointmentUI {
         formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
     }
 
+    /**
+     * Displays available time slots for the selected doctor on a specified date.
+     */
     public void viewSlots() {
         Doctor selectedDoctor = selectDoctor();
 
@@ -85,6 +115,11 @@ public class PatientAppointmentUI extends AppointmentUI {
         displaySlots(selectedDate ,startTime, endTime,existingAppointments,availableSlots);
     }
 
+    /**
+     * Schedules an appointment for the patient with a selected doctor on a chosen date and time slot.
+     *
+     * @param appointmentController The controller managing appointment creation.
+     */
     public void scheduleAppointment(AppointmentController appointmentController) {
         Doctor selectedDoctor = selectDoctor();
         
@@ -159,7 +194,13 @@ public class PatientAppointmentUI extends AppointmentUI {
         System.out.println("Appointment scheduled with Dr. " + selectedDoctor.getName() + " on " + selectedDate.format(formatter) + " at " + selectedTime);
     }
 
-
+    /**
+     * Reschedules an existing appointment for the patient, allowing the patient to choose a new 
+     * date and time slot.
+     *
+     * @param appointmentView      The view displaying the details of the appointment.
+     * @param appointmentListView  The view displaying a list of appointments.
+     */
     public void rescheduleAppointment(IDisplayableView<Appointment> appointmentView,IListDisplayableView<Appointment> appointmentListView){
         
         ArrayList<Appointment> appointments = patientController.getAppointmentsByStatus(Enums.AppointmentStatus.CONFIRMED);
@@ -266,6 +307,11 @@ public class PatientAppointmentUI extends AppointmentUI {
         appointmentView.display(selectedAppointment);
     } 
 
+    /**
+     * Displays all appointments for the patient, grouped by appointment status.
+     *
+     * @param appointmentListView The view displaying a list of appointments.
+     */
     public void displayAppointments(IListDisplayableView<Appointment> appointmentListView){
         
         ArrayList<Appointment> pendingAppointments = patientController.getAppointmentsByStatus(Enums.AppointmentStatus.PENDING);
@@ -278,6 +324,11 @@ public class PatientAppointmentUI extends AppointmentUI {
     
     }
 
+    /**
+     * Cancels an appointment by marking it with the status {@link AppointmentStatus#CANCELLED}.
+     *
+     * @param appointmentListView The view displaying a list of appointments.
+     */
     public void cancelAppointment(IListDisplayableView<Appointment> appointmentListView){
         
         ArrayList<Appointment> appointments = patientController.getAppointmentsByStatus(Enums.AppointmentStatus.CONFIRMED);
@@ -315,6 +366,15 @@ public class PatientAppointmentUI extends AppointmentUI {
         System.out.println("Appointment has been cancelled successfully.");
     }
 
+    /**
+     * Displays the available time slots for the selected date, ensuring no conflict with existing appointments.
+     *
+     * @param selectedDate       The date selected for the appointment.
+     * @param startTime          The starting time of availability.
+     * @param endTime            The ending time of availability.
+     * @param existingAppointments A list of existing appointments for the doctor.
+     * @param availableSlots     A list to store available time slots.
+     */
     public void displaySlots(LocalDate selectedDate ,LocalTime startTime, LocalTime endTime,ArrayList<Appointment> existingAppointments,ArrayList<LocalTime> availableSlots) {
         while (startTime.isBefore(endTime)) {
 
@@ -346,6 +406,11 @@ public class PatientAppointmentUI extends AppointmentUI {
         }
     }
 
+    /**
+     * Prompts the user to select a doctor from the available list.
+     *
+     * @return The selected doctor, or null if no doctors are available.
+     */
     public Doctor selectDoctor() {
     
         List<Doctor> doctors = UserRepository.getAllDoctors();
@@ -380,6 +445,11 @@ public class PatientAppointmentUI extends AppointmentUI {
         }
     }
 
+    /**
+     * Prompts the user to enter a date for scheduling or rescheduling an appointment.
+     *
+     * @return The selected date.
+     */
     public LocalDate selectDate() {
         LocalDate appointmentDate = null;
 

@@ -18,13 +18,38 @@ import java.util.Scanner;
 import Controller.AppointmentController;
 import Controller.PatientController;
 
+/**
+ * The PatientUI class provides a user interface for patients to interact with the system.
+ * It allows patients to manage their personal information, view medical records, schedule appointments,
+ * view past appointment records, and perform other actions related to appointments and medical records.
+ */
 public class PatientUI {
 
+    /**
+     * The patient associated with this UI.
+     */
     private Patient patient;
+
+    /**
+     * The controller for patient-related actions.
+     */
     private PatientController patientController;
+
+    /**
+     * User interface for managing patient appointments.
+     */
     private PatientAppointmentUI patientAppointmentUI;
+
+    /**
+     * User interface for managing patient medical records.
+     */
     private PatientMedicalRecordUI patientMedicalRecordUI;
 
+    /**
+     * Constructs a PatientUI instance for the specified patient.
+     *
+     * @param patient The patient associated with this UI.
+     */
     public PatientUI (Patient patient) {
         this.patient = patient;
         patientController = new PatientController(patient);
@@ -32,6 +57,10 @@ public class PatientUI {
         patientMedicalRecordUI = new PatientMedicalRecordUI(patient.getMedicalRecord(),patient);
     }
 
+    /**
+     * Displays the main menu for the patient to choose actions.
+     * Options include viewing and updating medical records, managing appointments, and logging out.
+     */
     public void displayMenu(){
         Scanner scanner = new Scanner(System.in);
         int option = -1;
