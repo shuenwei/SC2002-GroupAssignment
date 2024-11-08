@@ -10,6 +10,7 @@ import Enums.AppointmentStatus;
 import Enums.PrescriptionStatus;
 import Repository.AppointmentRepository;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class PharmacistController extends StaffController {
@@ -40,9 +41,9 @@ public class PharmacistController extends StaffController {
     public void updatePrescription(Appointment a){
 
         int index = 1;
+        int choice = 0;
 
-        System.out.println("Which Medicine number would you like to dispense?");
-
+    
         for(PrescribedMedication m : a.getAppointmentOutcomeRecord().getPrescribedMedications()){
 
             if (m.getStatus() == Enums.PrescriptionStatus.DISPENSED) {
@@ -56,9 +57,21 @@ public class PharmacistController extends StaffController {
         }
         
         System.out.println(" " + (index) + ". Exit");
-        int choice = sc.nextInt();
 
-        while(choice != index){
+        do {
+            try{
+            System.out.println("Which Medicine number would you like to dispense?");
+            choice = sc.nextInt();
+            
+            if (choice < 1 || choice > index) {
+                System.out.println("Invalid choice. Please try again.");
+                continue;
+            }
+
+            if(choice == index){
+                break;
+            }
+
         
                 Medication med = Inventory.get(a.getAppointmentOutcomeRecord().getPrescribedMedications().get(choice-1).getMedicineName());
                 if(med.getStock() > 0 && (a.getAppointmentOutcomeRecord().getPrescribedMedications().get(choice-1).getStatus() == Enums.PrescriptionStatus.PENDING)){
@@ -81,10 +94,14 @@ public class PharmacistController extends StaffController {
                 }
                 
                 System.out.println(" " + (index) + ". Exit");
-                
-                choice = sc.nextInt();
-                sc.nextLine();
-        } 
+            
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a number between 1 and " + index);
+                sc.next();
+            }
+            
+        } while (choice != index);
+    
            
         for(int i = 0; i < a.getAppointmentOutcomeRecord().getPrescribedMedications().size(); i++){
 

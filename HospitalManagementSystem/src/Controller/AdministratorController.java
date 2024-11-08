@@ -61,6 +61,7 @@ public class AdministratorController extends StaffController{
         if (medicine != null) {
             int newStock = medicine.getStock() + quantity;
             medicine.setStock(newStock);
+            System.out.println();
             System.out.printf("Successfully updated stock level for %s%n", medicineName);
         }
     }
@@ -70,22 +71,34 @@ public class AdministratorController extends StaffController{
         if (medicine != null) {
             int newStock = medicine.getStock() - quantity;
             medicine.setStock(newStock);
+            System.out.println();
             System.out.printf("Successfully updated stock level for %s%n", medicineName);
         }
     }
 
     private void replenishStock(String medicineName) {
         Medication medicine = Inventory.get(medicineName);
+        int current_stock = medicine.getStock();
         if (medicine != null) {
             System.out.printf("How many %s would you like to replenish?%n", medicineName);
             int num = scanner.nextInt();
-            medicine.setStock(num);
+            int total_stock = current_stock + num;
+            medicine.setStock(total_stock);
         }
     }
 
     public void addNewMedicine(String medicineName, int stock, int lowStockThreshold) {
         Medication newMedicine = new Medication(medicineName, stock, lowStockThreshold);
         Inventory.add(newMedicine);
+    }
+
+    public void setThresholdStock(String medicineName, int threshold) {
+        Medication medicine = Inventory.get(medicineName);
+        if (medicine != null) {
+            medicine.setStockThreshold(threshold);
+            System.out.println();
+            System.out.printf("Successfully updated stock threshold for %s%n", medicineName);
+        }
     }
 
     public void approveRequest(String requestedMedicine) {
@@ -138,13 +151,13 @@ public class AdministratorController extends StaffController{
 
     }
 
-    public ArrayList<Staff> filterBy(Enums.Role role) {
+    public ArrayList<Staff> filterBy(String role) {
         ArrayList<Staff> filteredStaff = new ArrayList<>();
 
         ArrayList<Staff> staffs = UserRepository.getAllStaff();
         
         for (Staff s : staffs) {
-            if (s.getRole() == role) {
+            if (s.getRole().toString().equalsIgnoreCase(role)) {
                 filteredStaff.add(s);
             }
         }
@@ -152,13 +165,13 @@ public class AdministratorController extends StaffController{
         return filteredStaff;
     }
 
-    public ArrayList<Staff> filterBy(String gender) {
+    public ArrayList<Staff> filterBy(Enums.Gender gender) {
         ArrayList<Staff> filteredStaff = new ArrayList<>();
 
         ArrayList<Staff> staffs = UserRepository.getAllStaff();
         
         for (Staff s : staffs) {
-            if (s.getGender().equalsIgnoreCase(gender)) {
+            if (s.getGender().equalsIgnoreCase(gender.toString())) {
                 filteredStaff.add(s);
             }
         }

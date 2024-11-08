@@ -4,6 +4,7 @@ import Controller.AdministratorController;
 import Entity.Administrator;
 import Entity.Appointment;
 import Entity.Inventory;
+import Entity.Medication;
 import Entity.Staff;
 import Interface.IDisplayableView;
 import Interface.IListDisplayableView;
@@ -11,6 +12,7 @@ import Repository.UserRepository;
 import View.AppointmentView;
 import View.CommonView;
 import View.StaffListView;
+import View.ViewInventory;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -91,6 +93,8 @@ public class AdministratorUI {
     public void requestMenu() {
         int choice = -1;
         String requestMedicine;
+
+        IDisplayableView<Medication> inventoryView = new ViewInventory();
         
         do{
             try{
@@ -114,6 +118,7 @@ public class AdministratorUI {
                         scanner.nextLine();
                         requestMedicine = scanner.nextLine();
                         administratorController.approveRequest(requestMedicine);
+                        inventoryView.display(Inventory.get(requestMedicine));
                         break;
                     case 3: return;
                     default:

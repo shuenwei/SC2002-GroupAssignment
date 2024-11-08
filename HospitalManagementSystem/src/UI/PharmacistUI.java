@@ -3,10 +3,13 @@ package UI;
 import Controller.PharmacistController;
 import Entity.Appointment;
 import Entity.Inventory;
+import Entity.Medication;
 import Entity.Pharmacist;
 import Enums.AppointmentStatus;
+import Interface.IListDisplayableView;
 import View.CommonView;
 import View.PendingMedicineView;
+import View.ViewListInventory;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -43,6 +46,10 @@ public class PharmacistUI {
     public void displayMenu() {
         
         int option = -1;
+        int choice =0;
+
+        IListDisplayableView<Medication> inventoryView = new ViewListInventory();
+        
         PharmacistController pharmacistController = new PharmacistController(pharmacist);
         ArrayList<Appointment> appt = pharmacistController.getAllAppointmentsByStatus(AppointmentStatus.MEDICINE_PENDING);
         PendingMedicineView viewPending = new PendingMedicineView();
@@ -67,14 +74,19 @@ public class PharmacistUI {
                         break;
                     case 2: 
                         viewPending.display(appt);
-                        System.out.println("Select which appointment to update prescription: ");
-                        int choice = sc.nextInt();
+                        do {
+                            System.out.println("Select which appointment to update prescription: ");
+                            choice = sc.nextInt();
+                            if (choice < 1 || choice > appt.size()) {
+                                System.out.println("Invalid choice. Please try again.");
+                            }
+                        } while (choice < 1 || choice > appt.size());
                         sc.nextLine();
                         Appointment a = appt.get(choice - 1);
                         pharmacistController.updatePrescription(a);
                         break;
                     case 3:
-                        Inventory.viewInventory();
+                        inventoryView.display(Inventory.getAllMedicines());
                         break;
                     case 4:
                         submitReplenishmentRequest();

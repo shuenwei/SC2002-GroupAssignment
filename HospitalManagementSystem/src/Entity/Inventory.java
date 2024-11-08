@@ -30,7 +30,7 @@ public class Inventory {
         }
     }
 
-    private static ArrayList<Medication> getAllMedicines() {
+    public static ArrayList<Medication> getAllMedicines() {
         ArrayList<Medication> medicines = new ArrayList<Medication>();
             for (Medication medicine : medicineRepo.values()) {
                 medicines.add(medicine);
@@ -38,23 +38,23 @@ public class Inventory {
         return medicines;
     }
 
-    public static void viewInventory() {
-        ArrayList<Medication> medicines = getAllMedicines();
-        String[] headers = new String[]{"Medicine Name", "Stock", "AlertLevel", "LowStock"};
-        System.out.println();
-        System.out.printf("| %-15s | %-7s | %-12s | %-7s |%n", headers[0], headers[1], headers[2], headers[3]);
-        System.out.println("-------------------------------------------------------");
-        for (Medication medicine : medicines) {
-            if (medicine != null) {
-                if(medicine.getIsLowStock()){
-                    System.out.printf("| %-15s | %-7d | %-12d | %-8s |%n", medicine.getMedicineName(), medicine.getStock(), medicine.getStockThreshold(), "YES");
-                }
-                else{
-                    System.out.printf("| %-15s | %-7d | %-12d | %-8s |%n", medicine.getMedicineName(), medicine.getStock(), medicine.getStockThreshold(), "NO");
-                }
-            }
-        }
-    }
+    // public static void viewInventory() {
+    //     ArrayList<Medication> medicines = getAllMedicines();
+    //     String[] headers = new String[]{"Medicine Name", "Stock", "AlertLevel", "LowStock"};
+    //     System.out.println();
+    //     System.out.printf("| %-15s | %-7s | %-12s | %-7s |%n", headers[0], headers[1], headers[2], headers[3]);
+    //     System.out.println("-------------------------------------------------------");
+    //     for (Medication medicine : medicines) {
+    //         if (medicine != null) {
+    //             if(medicine.getIsLowStock()){
+    //                 System.out.printf("| %-15s | %-7d | %-12d | %-8s |%n", medicine.getMedicineName(), medicine.getStock(), medicine.getStockThreshold(), "YES");
+    //             }
+    //             else{
+    //                 System.out.printf("| %-15s | %-7d | %-12d | %-8s |%n", medicine.getMedicineName(), medicine.getStock(), medicine.getStockThreshold(), "NO");
+    //             }
+    //         }
+    //     }
+    // }
 
     public static Request getRequest(String requestedMedicine) {
         Request request = requestRepo.get(requestedMedicine);
