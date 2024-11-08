@@ -5,13 +5,14 @@ import Repository.*;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DataStore {
     
     public static void saveStaffData() {
-        String staffCsvFilePath = "data/staffCsv_1.csv";
+        String staffCsvFilePath = "data/staffCsv.csv";
         try (PrintWriter pw = new PrintWriter(new FileWriter(staffCsvFilePath))) {
             pw.println("Staff ID,Password,Name,Role,Gender,Age"); // Writing header
             for (Staff staff : UserRepository.getAllStaff()) {
@@ -30,8 +31,38 @@ public class DataStore {
         }
     }
 
+    public static void saveDoctorAvailability() {
+        String doctorAvailabilityCsvFilePath = "data/availabilityCsv.csv";
+        try (PrintWriter pw = new PrintWriter(new FileWriter(doctorAvailabilityCsvFilePath))) {
+            pw.println("Doctor ID,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday");
+
+            for (Doctor doctor : UserRepository.getAllDoctors()) {
+                String[] data = new String[8];
+
+                data[0] = doctor.getHospitalId();
+            
+                for (int i = 1; i <= 7; i++) {
+                    Availability availability = doctor.getAvailability(DayOfWeek.of(i));
+                    
+                    if (availability != null) {
+                        String startTime = availability.getStartTime().toString();
+                        String endTime = availability.getEndTime().toString();
+                        data[i] = startTime + "-" + endTime;
+                    } else {
+                        data[i] = "Not Available";
+                    }
+
+                }
+
+                pw.println(String.join(",", data));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void savePatientData() {
-        String patientCsvFilePath = "data/patientCsv_1.csv";
+        String patientCsvFilePath = "data/patientCsv.csv";
         try (PrintWriter pw = new PrintWriter(new FileWriter(patientCsvFilePath))) {
             pw.println("Patient ID,Password,Name,Date of Birth,Gender,Blood Type,Email Address,Phone Number");
             for (Patient patient : UserRepository.getAllPatients()) {
@@ -56,40 +87,42 @@ public class DataStore {
     public static void saveAppointmentData() {
         String appointmentCsvFilePath = "data/appointmentCsv.csv";
         try (PrintWriter pw = new PrintWriter(new FileWriter(appointmentCsvFilePath))) {
-            pw.println("Patient ID,Doctor ID,Date,Time,Status,Type of Service,Consultation Notes,Prescribed Medications[0],Prescribed Medications[1],Prescribed Medications[2]");
-            for (Patient patient : UserRepository.getAllPatients()) {
-                for (Appointment appointment : patient.getAppointments()) {
-    
-                    List<String> data = new ArrayList<>();
+            pw.println("Patient ID,Doctor ID,Date,Time,Status,Type of Service,Consultation Notes,Prescribed Medications");
+            for (Appointment appointment : AppointmentRepository.getAllAppointments()) {
 
-                    data.add(appointment.getPatient().getHospitalId());
-                    data.add(appointment.getDoctor().getHospitalId());
-                    data.add(appointment.getDate().toString());
-                    data.add(appointment.getTime().toString());
-                    data.add(appointment.getStatus().toString());
+                List<String> data = new ArrayList<>();
 
-                    if (appointment.getAppointmentOutcomeRecord() != null) {
-                        data.add(appointment.getAppointmentOutcomeRecord().getTypeOfService());
-                        data.add(appointment.getAppointmentOutcomeRecord().getConsultationNotes());
-                        for (PrescribedMedication j : appointment.getAppointmentOutcomeRecord().getPrescribedMedications()) {
-                            data.add(j.getMedicineName());
-                        }
-                    } else {
-                        data.add("");
-                        data.add(""); 
-                        data.add("");
-                        data.add("");
-                        data.add(""); 
+                data.add(appointment.getPatient().getHospitalId());
+                data.add(appointment.getDoctor().getHospitalId());
+                data.add(appointment.getDate().toString());
+                data.add(appointment.getTime().toString());
+                data.add(appointment.getStatus().toString());
+
+                if (appointment.getAppointmentOutcomeRecord() != null) {
+                    data.add(appointment.getAppointmentOutcomeRecord().getTypeOfService());
+                    data.add(appointment.getAppointmentOutcomeRecord().getConsultationNotes());
+
+                    List<String> prescriptionData = new ArrayList<>();
+                    for (PrescribedMedication prescribedMedication : appointment.getAppointmentOutcomeRecord().getPrescribedMedications()) {
+                        List<String> prescriptionDetails = new ArrayList<>();
+                        prescriptionDetails.add(prescribedMedication.getMedicineName());
+                        prescriptionDetails.add(prescribedMedication.getStatus().toString());
+                        String prescription = String.join("-", prescriptionDetails);
+                        prescriptionData.add(prescription);
                     }
-
-                    String[] dataArray = data.toArray(new String[0]);
-                    pw.println(String.join(",", dataArray));
-                    }
+                    String joinedPrescribedMedications = String.join(";", prescriptionData);
+                    data.add(joinedPrescribedMedications );
                 }
-            }catch (IOException e) {
-                e.printStackTrace();
-            }
 
+                String[] dataArray = data.toArray(new String[0]);
+                pw.println(String.join(",", dataArray));
+            }
+            
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
+
 
 }

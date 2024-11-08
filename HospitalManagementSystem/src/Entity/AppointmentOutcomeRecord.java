@@ -20,6 +20,10 @@ public class AppointmentOutcomeRecord {
         return appointment;
     }
 
+    public void setAppointment(Appointment appointment) {
+        this.appointment = appointment;
+    }
+
     public LocalDate getAppointmentDate(){
         return appointment.getDate();
     }

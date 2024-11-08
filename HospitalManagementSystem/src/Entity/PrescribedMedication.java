@@ -11,6 +11,11 @@ public class PrescribedMedication {
         this.status = PrescriptionStatus.PENDING;
     }
 
+    public PrescribedMedication(String medicineName, PrescriptionStatus prescriptionStatus) {
+        this.medicineName = medicineName;
+        this.status = prescriptionStatus;
+    }
+
     public String getMedicineName() {
         return this.medicineName;
     }
