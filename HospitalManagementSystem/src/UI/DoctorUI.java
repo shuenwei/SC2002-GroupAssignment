@@ -1,5 +1,6 @@
 package UI;
 
+import Controller.AvailabilityController;
 import Controller.DoctorController;
 import Entity.Appointment;
 import Entity.AppointmentOutcomeRecord;
@@ -7,11 +8,8 @@ import Entity.Doctor;
 import Entity.MedicalHistory;
 import Interface.IDisplayableView;
 import Interface.IListDisplayableView;
-import View.MedicalHistoryView;
-import View.AppointmentView;
-import View.AppointmentListView;
-import View.AppointmentOutcomeRecordView;
-import View.CommonView;
+import View.*;
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -26,19 +24,22 @@ public class DoctorUI {
 
     public DoctorUI (Doctor doctor) {
         this.doctor = doctor;
-        doctorController = new DoctorController(this.doctor);
     }
 
     public void displayMenu(){
         Scanner scanner = new Scanner(System.in);
         AvailabilityUI availabilityUI = new AvailabilityUI(this.doctor);
         DoctorAppointmentUI doctorAppointmentUI = new DoctorAppointmentUI(this.doctor,doctorController);
-        doctorMedicalRecordUI = new DoctorMedicalRecordUI(doctorController);
+        doctorMedicalRecordUI = new DoctorMedicalRecordUI();
         appointmentOutcomeUI = new AppointmentOutcomeUI(doctor,doctorController);
         IDisplayableView<Appointment> appointmentView = new AppointmentView();
         IListDisplayableView<Appointment> appointmentListView = new AppointmentListView();
+        IListDisplayableView<MedicalHistory> medicalHistoryListView = new MedicalHistoryListView();
         IDisplayableView<AppointmentOutcomeRecord> appointmentOutcomeRecordView = new AppointmentOutcomeRecordView();
         IDisplayableView<MedicalHistory> medicalHistoryView = new MedicalHistoryView();
+        DoctorController doctorController = new DoctorController(doctor);
+        AvailabilityController availabilityController = new AvailabilityController(doctor);
+
 
         int option = -1;
 
@@ -62,16 +63,16 @@ public class DoctorUI {
 
                 switch (option) {
                     case 1:
-                        doctorMedicalRecordUI.displayMedicalRecord();
+                        doctorMedicalRecordUI.displayMedicalRecord(doctorController,medicalHistoryListView);
                         break;
                     case 2:
-                        doctorMedicalRecordUI.editMedicalRecord();
+                        doctorMedicalRecordUI.editMedicalRecord(doctorController,medicalHistoryListView);
                         break;
                     case 3:
-                        availabilityUI.viewSchedule();
+                        availabilityUI.viewSchedule(availabilityController);
                         break;
                     case 4:
-                        availabilityUI.setSchedule();
+                        availabilityUI.setSchedule(availabilityController);
                         break;
                     case 5:
                         doctorAppointmentUI.acceptDecline(appointmentView,appointmentListView);

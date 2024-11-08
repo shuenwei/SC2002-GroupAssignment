@@ -4,7 +4,6 @@ import Entity.Appointment;
 import Entity.Availability;
 import Entity.Doctor;
 import Entity.Patient;
-import Enums.AppointmentStatus;
 import Interface.IListDisplayableView;
 import Interface.IDisplayableView;
 import Repository.UserRepository;
@@ -93,7 +92,7 @@ public class PatientAppointmentUI extends AppointmentUI {
         }
         
         AvailabilityUI availabilityUI = new AvailabilityUI(selectedDoctor);
-        availabilityUI.viewSchedule();
+        availabilityUI.viewSchedule(doctorController);
 
         LocalDate selectedDate = null;
         Availability availability = null;
@@ -196,7 +195,7 @@ public class PatientAppointmentUI extends AppointmentUI {
         Doctor selectedDoctor = selectedAppointment.getDoctor();
 
         AvailabilityUI availabilityUI = new AvailabilityUI(selectedDoctor);
-        availabilityUI.viewSchedule();
+        availabilityUI.viewSchedule(doctorController);
 
         LocalDate selectedDate = null;
         Availability availability = null;
