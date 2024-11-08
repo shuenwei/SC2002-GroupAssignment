@@ -14,16 +14,35 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+/**
+ * The PharmacistUI class provides a user interface for a pharmacist to interact with the system.
+ * It allows pharmacists to view appointments, update prescription status, view medication inventory,
+ * submit replenishment requests, and log out.
+ */
+
 public class PharmacistUI {
+
+    /**
+     * The pharmacist associated with this UI.
+     */
     private Pharmacist pharmacist;
-    private PharmacistController pharmacistController;
     Scanner sc = new Scanner(System.in);
 
+
+    /**
+     * Constructs a PharmacistUI instance for the specified pharmacist.
+     *
+     * @param pharmacist The pharmacist associated with this UI.
+     */
     public PharmacistUI(Pharmacist pharmacist) {
         this.pharmacist = pharmacist;
-        this.pharmacistController= new PharmacistController(pharmacist);
     }
-    
+
+    /**
+     * Displays the main menu for the pharmacist to choose actions.
+     * Options include viewing appointment records, updating prescription status, viewing inventory,
+     * submitting replenishment requests, and logging out.
+     */    
     public void displayMenu() {
         
         int option = -1;
@@ -31,6 +50,7 @@ public class PharmacistUI {
 
         IListDisplayableView<Medication> inventoryView = new ViewListInventory();
         
+        PharmacistController pharmacistController = new PharmacistController(pharmacist);
         ArrayList<Appointment> appt = pharmacistController.getAllAppointmentsByStatus(AppointmentStatus.MEDICINE_PENDING);
         PendingMedicineView viewPending = new PendingMedicineView();
 
@@ -85,8 +105,14 @@ public class PharmacistUI {
         } while (option != 5);
     }
     
+
+    /**
+     * Submits a replenishment request for a specified medication.
+     * Prompts the user to input the medicine name and forwards the request to the pharmacist controller.
+     */
     public void submitReplenishmentRequest() {
         String requestMedicine;
+        PharmacistController pharmacistController = new PharmacistController(pharmacist);
 
         System.out.println();
         System.out.println("Input medicine to be replenished:");

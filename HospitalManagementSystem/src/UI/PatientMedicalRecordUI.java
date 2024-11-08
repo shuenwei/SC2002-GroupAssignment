@@ -7,17 +7,44 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+/**
+ * The PatientMedicalRecordUI class provides a user interface for managing and displaying
+ * a patient's medical record, allowing patients to view, edit, and interact with
+ * medical history and appointment outcome records.
+ */
 public class PatientMedicalRecordUI {
 
+    /**
+     * The medical record associated with the patient.
+     */
     private MedicalRecord medicalRecord;
+
+    /**
+     * The patient associated with this UI.
+     */
     private Patient patient;
+
+    /**
+     * Scanner for capturing user input.
+     */
     Scanner scanner = new Scanner(System.in);
 
+    /**
+     * Constructs a PatientMedicalRecordUI instance for the specified medical record and patient.
+     *
+     * @param medicalRecord The medical record of the patient.
+     * @param patient       The patient associated with this medical record.
+     */
     public PatientMedicalRecordUI(MedicalRecord medicalRecord, Patient patient) {
         this.medicalRecord = medicalRecord;
         this.patient = patient;
     }
 
+    /**
+     * Displays the patient's medical record details, including personal information and medical history.
+     *
+     * @param medicalHistoryView A view component to display the patient's medical history.
+     */
     public void displayMedicalRecord(IListDisplayableView<MedicalHistory> medicalHistoryView) {
         if(medicalRecord.getMedicalHistory() != null) {
             System.out.println("PatientID: " + medicalRecord.getPatientID());
@@ -42,6 +69,9 @@ public class PatientMedicalRecordUI {
 
     }
 
+    /**
+     * Allows the patient to edit specific fields in their medical record, such as email address and phone number.
+     */
     public void editMedicalRecord() {
         int choice = -1;
         Scanner input = new Scanner(System.in);
@@ -83,8 +113,13 @@ public class PatientMedicalRecordUI {
 
     }
 
-
-
+    /**
+     * Displays the appointment outcome records associated with the patient's appointments.
+     * Allows the user to select an appointment to view its outcome record.
+     *
+     * @param appointmentListView      A view component to display the list of appointments.
+     * @param appointmentOutcomeView   A view component to display the outcome record of a selected appointment.
+     */
     public void displayAppointmentOutcomeRecord(IListDisplayableView<Appointment> appointmentListView, IDisplayableView <AppointmentOutcomeRecord> appointmentOutcomeView) {
         if(patient.getAppointments().isEmpty()) {
             System.out.println("No Appointments Found");
@@ -120,7 +155,6 @@ public class PatientMedicalRecordUI {
             }
 
             Appointment selectedAppointment = appointments.get(appointmentChoice - 1);
-
             appointmentOutcomeView.display(selectedAppointment.getAppointmentOutcomeRecord());
         }
     }

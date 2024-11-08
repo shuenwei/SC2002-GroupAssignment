@@ -1,41 +1,64 @@
 package UI;
 
 import Entity.Appointment;
-import Entity.Availability;
 import Entity.Doctor;
-import Entity.Patient;
-import Enums.AppointmentStatus;
 import Interface.IDisplayableView;
 import Interface.IListDisplayableView;
-import Repository.UserRepository;
-import View.CommonView;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
-import java.util.List;
 import java.util.Scanner;
 
 import Controller.DoctorController;
 
+/**
+ * A user interface for managing a doctor's appointments, allowing the doctor to
+ * view, accept, or decline appointment requests. Extends the AppointmentUI class to
+ * include doctor-specific appointment functionalities.
+ */
 public class DoctorAppointmentUI extends AppointmentUI {
 
+    /**
+     * The doctor associated with this UI instance.
+     */
     private Doctor doctor;
+
+    /**
+     * The scanner used for reading user input.
+     */
     private Scanner scanner;
+
+    /**
+     * A formatter for displaying date in the format dd-MM-yyyy.
+     */
     private DateTimeFormatter formatter;
+
+    /**
+     * The controller responsible for managing doctor-related operations.
+     */
     private DoctorController doctorController;
 
-    public DoctorAppointmentUI(Doctor doctor, DoctorController doctorController) {
+    /**
+     * Initializes a new instance of DoctorAppointmentUI with the specified doctor.
+     * 
+     * @param doctor The doctor associated with this UI instance.
+     */
+    public DoctorAppointmentUI(Doctor doctor) {
         this.doctor = doctor;
         scanner = new Scanner(System.in);
         formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        this.doctorController = doctorController;
+
     }
 
-    public void acceptDecline(IDisplayableView<Appointment> appointmentView,IListDisplayableView<Appointment> appointmentListView){
+    /**
+     * Allows the doctor to accept or decline pending appointments.
+     * 
+     * @param appointmentView     The view interface for displaying individual appointments.
+     * @param appointmentListView The view interface for displaying a list of appointments.
+     * @param doctorController    The controller for handling doctor operations.
+     */
+    public void acceptDecline(IDisplayableView<Appointment> appointmentView, IListDisplayableView<Appointment> appointmentListView, DoctorController doctorController){
 
         ArrayList<Appointment> pendingAppointments = doctorController.getAppointmentsByStatus(Enums.AppointmentStatus.PENDING);
 
@@ -103,7 +126,14 @@ public class DoctorAppointmentUI extends AppointmentUI {
 
     }
 
-    public void displayAppointments(IListDisplayableView<Appointment> appointmentListView){
+    /**
+     * Displays a categorized list of appointments, showing pending, confirmed,
+     * medicine pending, completed, and cancelled appointments.
+     * 
+     * @param appointmentListView The view interface for displaying a list of appointments.
+     * @param doctorController    The controller for handling doctor operations.
+     */
+    public void displayAppointments(IListDisplayableView<Appointment> appointmentListView,DoctorController doctorController){
     
         ArrayList<Appointment> pendingAppointments = doctorController.getAppointmentsByStatus(Enums.AppointmentStatus.PENDING);
         ArrayList<Appointment> confirmedAppointments = doctorController.getAppointmentsByStatus(Enums.AppointmentStatus.CONFIRMED);
