@@ -61,10 +61,24 @@ public class AppointmentOutcomeUI {
         ArrayList<PrescribedMedication> prescribedMedicationsList = new ArrayList<>();
         System.out.println("Create Appointment Outcome");
         System.out.println();
-        System.out.println("Enter type of service administered: ");
-        String service = sc.nextLine();
-        System.out.println("Enter consultation notes: ");
-        String notes = sc.nextLine();
+        String service = "";
+        while (service.isEmpty()) {
+            System.out.println("Enter type of service administered: ");
+            service = sc.nextLine();
+            if (service.isEmpty()) {
+                System.out.println("Input cannot be empty. Please try again.");
+            }
+        }
+
+        String notes = "";
+        while (notes.isEmpty()) {
+            System.out.println("Enter consultation notes: ");
+            notes = sc.nextLine();
+            if (notes.isEmpty()) {
+                System.out.println("Input cannot be empty. Please try again.");
+            }
+        }
+
         while(true) {
             System.out.print("Enter names of medication to be prescribed (If no more prescriptions type 'Exit') : ");
             String name = sc.nextLine();

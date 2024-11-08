@@ -7,7 +7,6 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 import Controller.DoctorController;
 import Interface.IListDisplayableView;
-import View.MedicalHistoryListView;
 
 public class DoctorMedicalRecordUI {
 
@@ -67,10 +66,24 @@ public class DoctorMedicalRecordUI {
             }
             switch (choice) {
                 case 1:
-                    System.out.println("Please enter the name of the new diagnosis: ");
-                    String name = scanner.nextLine();
-                    System.out.println("Please enter the Treatment Plan of the diagnosis: ");
-                    String treatmentPlan = scanner.nextLine();
+                    String name = "";
+                    while (name.isEmpty()) {
+                        System.out.println("Please enter the name of the new diagnosis ");
+                        name = scanner.nextLine();
+                        if (name.isEmpty()) {
+                            System.out.println("Input cannot be empty. Please try again.");
+                        }
+                    }
+
+                    String treatmentPlan = "";
+                    while (treatmentPlan.isEmpty()) {
+                        System.out.println("Enter consultation treatmentPlan: ");
+                        treatmentPlan = scanner.nextLine();
+                        if (treatmentPlan.isEmpty()) {
+                            System.out.println("Input cannot be empty. Please try again.");
+                        }
+                    }
+
                     MedicalHistory newmedicalHistory = new MedicalHistory(name,treatmentPlan);
                     while(true) {
                         System.out.print("Enter names of medication to be prescribed (If no more prescriptions type 'Exit') : ");
