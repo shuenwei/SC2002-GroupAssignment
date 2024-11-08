@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import Controller.AppointmentController;
-import Controller.DoctorController;
+import Controller.AvailabilityController;
 import Controller.PatientController;
 
 public class PatientAppointmentUI extends AppointmentUI {
@@ -40,10 +40,10 @@ public class PatientAppointmentUI extends AppointmentUI {
         if (selectedDoctor == null) {
             return;
         }
-        DoctorController doctorController = new DoctorController(selectedDoctor);
+        AvailabilityController availabilityController = new AvailabilityController(selectedDoctor);
 
         AvailabilityUI availabilityUI = new AvailabilityUI(selectedDoctor);
-        availabilityUI.viewSchedule(doctorController);
+        availabilityUI.viewSchedule(availabilityController);
 
         LocalDate selectedDate = null;
         Availability availability = null;
