@@ -73,14 +73,23 @@ public class PharmacistUI {
                         viewPending.display(appt);
                         break;
                     case 2: 
-                        viewPending.display(appt);
                         do {
+                            if (appt.isEmpty()) {
+                                System.out.println("No appointments to update prescription.");
+                                break;
+                            }
+                            
+                            viewPending.display(appt);
+                            
                             System.out.println("Select which appointment to update prescription: ");
                             choice = sc.nextInt();
                             if (choice < 1 || choice > appt.size()) {
                                 System.out.println("Invalid choice. Please try again.");
                             }
                         } while (choice < 1 || choice > appt.size());
+                        if (appt.isEmpty()) {
+                            break;
+                        }
                         sc.nextLine();
                         Appointment a = appt.get(choice - 1);
                         pharmacistController.updatePrescription(a);

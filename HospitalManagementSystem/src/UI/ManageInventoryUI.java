@@ -113,6 +113,7 @@ public class ManageInventoryUI {
                         quantity = scanner.nextInt();
                         inventoryView.display(InventoryRepository.get(medicineName));
                         administratorController.removeStock(medicineName, quantity);
+                        inventoryView.display(InventoryRepository.get(medicineName));
                         System.out.println();
                     } catch(InputMismatchException e) {
                         System.out.println("Invalid input for quantity. Please enter a number.");
