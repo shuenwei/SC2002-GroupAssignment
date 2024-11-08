@@ -77,7 +77,7 @@ public class DoctorMedicalRecordUI {
 
                     String treatmentPlan = "";
                     while (treatmentPlan.isEmpty()) {
-                        System.out.println("Enter consultation treatmentPlan: ");
+                        System.out.println("Enter Treatment Plan: ");
                         treatmentPlan = scanner.nextLine();
                         if (treatmentPlan.isEmpty()) {
                             System.out.println("Input cannot be empty. Please try again.");
