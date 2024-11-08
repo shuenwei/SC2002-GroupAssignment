@@ -11,14 +11,35 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+/**
+ * The PharmacistUI class provides a user interface for a pharmacist to interact with the system.
+ * It allows pharmacists to view appointments, update prescription status, view medication inventory,
+ * submit replenishment requests, and log out.
+ */
+
 public class PharmacistUI {
+
+    /**
+     * The pharmacist associated with this UI.
+     */
     private Pharmacist pharmacist;
     Scanner sc = new Scanner(System.in);
 
+
+    /**
+     * Constructs a PharmacistUI instance for the specified pharmacist.
+     *
+     * @param pharmacist The pharmacist associated with this UI.
+     */
     public PharmacistUI(Pharmacist pharmacist) {
         this.pharmacist = pharmacist;
     }
-    
+
+    /**
+     * Displays the main menu for the pharmacist to choose actions.
+     * Options include viewing appointment records, updating prescription status, viewing inventory,
+     * submitting replenishment requests, and logging out.
+     */    
     public void displayMenu() {
         
         int option = -1;
@@ -72,6 +93,11 @@ public class PharmacistUI {
         } while (option != 5);
     }
     
+
+    /**
+     * Submits a replenishment request for a specified medication.
+     * Prompts the user to input the medicine name and forwards the request to the pharmacist controller.
+     */
     public void submitReplenishmentRequest() {
         String requestMedicine;
         PharmacistController pharmacistController = new PharmacistController(pharmacist);
