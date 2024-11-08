@@ -23,15 +23,6 @@ public class PharmacistUI {
      * The pharmacist associated with this UI.
      */
     private Pharmacist pharmacist;
-
-    /**
-     * The controller for pharmacist-related actions.
-     */
-    private PharmacistController pharmacistController;
-
-    /**
-     * Scanner for reading user input.
-     */
     Scanner sc = new Scanner(System.in);
 
 
@@ -42,7 +33,6 @@ public class PharmacistUI {
      */
     public PharmacistUI(Pharmacist pharmacist) {
         this.pharmacist = pharmacist;
-        this.pharmacistController= new PharmacistController(pharmacist);
     }
 
     /**
@@ -53,7 +43,7 @@ public class PharmacistUI {
     public void displayMenu() {
         
         int option = -1;
-
+        PharmacistController pharmacistController = new PharmacistController(pharmacist);
         ArrayList<Appointment> appt = pharmacistController.getAllAppointmentsByStatus(AppointmentStatus.MEDICINE_PENDING);
         PendingMedicineView viewPending = new PendingMedicineView();
 
@@ -110,6 +100,7 @@ public class PharmacistUI {
      */
     public void submitReplenishmentRequest() {
         String requestMedicine;
+        PharmacistController pharmacistController = new PharmacistController(pharmacist);
 
         System.out.println();
         System.out.println("Input medicine to be replenished:");

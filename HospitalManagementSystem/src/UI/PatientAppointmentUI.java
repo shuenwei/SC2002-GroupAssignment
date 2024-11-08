@@ -4,7 +4,6 @@ import Entity.Appointment;
 import Entity.Availability;
 import Entity.Doctor;
 import Entity.Patient;
-import Enums.AppointmentStatus;
 import Interface.IListDisplayableView;
 import Interface.IDisplayableView;
 import Repository.UserRepository;
@@ -20,6 +19,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import Controller.AppointmentController;
+import Controller.AvailabilityController;
 import Controller.PatientController;
 
 /**
@@ -37,7 +37,6 @@ public class PatientAppointmentUI extends AppointmentUI {
     /**
      * Controller for managing patient-related operations.
      */
-    private PatientController patientController;
 
     /**
      * Scanner for reading user inputs.
@@ -56,9 +55,8 @@ public class PatientAppointmentUI extends AppointmentUI {
      * @param patient          The patient for whom appointments are managed.
      * @param patientController Controller for handling patient-related operations.
      */
-    public PatientAppointmentUI(Patient patient,PatientController patientController) {
+    public PatientAppointmentUI(Patient patient) {
         this.patient = patient;
-        this.patientController = patientController;
         scanner = new Scanner(System.in);
         formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
     }
@@ -68,13 +66,13 @@ public class PatientAppointmentUI extends AppointmentUI {
      */
     public void viewSlots() {
         Doctor selectedDoctor = selectDoctor();
-
         if (selectedDoctor == null) {
             return;
         }
+        AvailabilityController availabilityController = new AvailabilityController(selectedDoctor);
 
         AvailabilityUI availabilityUI = new AvailabilityUI(selectedDoctor);
-        availabilityUI.viewSchedule();
+        availabilityUI.viewSchedule(availabilityController);
 
         LocalDate selectedDate = null;
         Availability availability = null;
@@ -126,9 +124,11 @@ public class PatientAppointmentUI extends AppointmentUI {
         if (selectedDoctor == null) {
             return;
         }
-        
+
+        AvailabilityController availabilityController = new AvailabilityController(selectedDoctor);
+
         AvailabilityUI availabilityUI = new AvailabilityUI(selectedDoctor);
-        availabilityUI.viewSchedule();
+        availabilityUI.viewSchedule(availabilityController);
 
         LocalDate selectedDate = null;
         Availability availability = null;
@@ -201,7 +201,7 @@ public class PatientAppointmentUI extends AppointmentUI {
      * @param appointmentView      The view displaying the details of the appointment.
      * @param appointmentListView  The view displaying a list of appointments.
      */
-    public void rescheduleAppointment(IDisplayableView<Appointment> appointmentView,IListDisplayableView<Appointment> appointmentListView){
+    public void rescheduleAppointment(IDisplayableView<Appointment> appointmentView,IListDisplayableView<Appointment> appointmentListView, PatientController patientController){
         
         ArrayList<Appointment> appointments = patientController.getAppointmentsByStatus(Enums.AppointmentStatus.CONFIRMED);
         ArrayList<Appointment> pendingAppointments = patientController.getAppointmentsByStatus(Enums.AppointmentStatus.PENDING);
@@ -235,9 +235,10 @@ public class PatientAppointmentUI extends AppointmentUI {
 
         Appointment selectedAppointment = appointments.get(index -1 );
         Doctor selectedDoctor = selectedAppointment.getDoctor();
+        AvailabilityController availabilityController = new AvailabilityController(selectedDoctor);
 
         AvailabilityUI availabilityUI = new AvailabilityUI(selectedDoctor);
-        availabilityUI.viewSchedule();
+        availabilityUI.viewSchedule(availabilityController);
 
         LocalDate selectedDate = null;
         Availability availability = null;
@@ -312,7 +313,7 @@ public class PatientAppointmentUI extends AppointmentUI {
      *
      * @param appointmentListView The view displaying a list of appointments.
      */
-    public void displayAppointments(IListDisplayableView<Appointment> appointmentListView){
+    public void displayAppointments(IListDisplayableView<Appointment> appointmentListView, PatientController patientController){
         
         ArrayList<Appointment> pendingAppointments = patientController.getAppointmentsByStatus(Enums.AppointmentStatus.PENDING);
         ArrayList<Appointment> confirmedAppointments = patientController.getAppointmentsByStatus(Enums.AppointmentStatus.CONFIRMED);
@@ -329,7 +330,7 @@ public class PatientAppointmentUI extends AppointmentUI {
      *
      * @param appointmentListView The view displaying a list of appointments.
      */
-    public void cancelAppointment(IListDisplayableView<Appointment> appointmentListView){
+    public void cancelAppointment(IListDisplayableView<Appointment> appointmentListView, PatientController patientController){
         
         ArrayList<Appointment> appointments = patientController.getAppointmentsByStatus(Enums.AppointmentStatus.CONFIRMED);
         ArrayList<Appointment> pendingAppointments = patientController.getAppointmentsByStatus(Enums.AppointmentStatus.PENDING);

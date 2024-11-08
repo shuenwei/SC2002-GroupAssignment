@@ -18,8 +18,9 @@ public class AppointmentOutcomeRecordView implements IDisplayableView<Appointmen
                 System.out.println("Date of appointment       : " + a.getappointment().getDate());
                 System.out.println("Type of Service Provided  : " + a.getTypeOfService());
                 System.out.println("Consultation Notes        : " + a.getConsultationNotes());
+                System.out.println("Prescribed Medications: ");
                 for (PrescribedMedication j : a.getPrescribedMedications()) {
-                    System.out.println("Prescribed medication : " + j.getMedicineName());
+                    System.out.println("- " + j.getMedicineName());
                 }
             }
     }

@@ -29,15 +29,6 @@ public class PatientUI {
      * The patient associated with this UI.
      */
     private Patient patient;
-
-    /**
-     * The controller for patient-related actions.
-     */
-    private PatientController patientController;
-
-    /**
-     * User interface for managing patient appointments.
-     */
     private PatientAppointmentUI patientAppointmentUI;
 
     /**
@@ -52,8 +43,7 @@ public class PatientUI {
      */
     public PatientUI (Patient patient) {
         this.patient = patient;
-        patientController = new PatientController(patient);
-        patientAppointmentUI = new PatientAppointmentUI(this.patient,this.patientController);
+        patientAppointmentUI = new PatientAppointmentUI(this.patient);
         patientMedicalRecordUI = new PatientMedicalRecordUI(patient.getMedicalRecord(),patient);
     }
 
@@ -65,6 +55,7 @@ public class PatientUI {
         Scanner scanner = new Scanner(System.in);
         int option = -1;
 
+        PatientController patientController = new PatientController(patient);
         AppointmentController appointmentController = new AppointmentController();
         IDisplayableView<Appointment> appointmentView = new AppointmentView();
         IDisplayableView<AppointmentOutcomeRecord> appointmentOutcomeView = new AppointmentOutcomeRecordView();
@@ -103,13 +94,13 @@ public class PatientUI {
                         patientAppointmentUI.scheduleAppointment(appointmentController);
                         break;
                     case 5:
-                        patientAppointmentUI.rescheduleAppointment(appointmentView,appointmentListView);
+                        patientAppointmentUI.rescheduleAppointment(appointmentView,appointmentListView, patientController);
                         break;
                     case 6:
-                        patientAppointmentUI.cancelAppointment(appointmentListView);
+                        patientAppointmentUI.cancelAppointment(appointmentListView, patientController);
                         break;
                     case 7:
-                        patientAppointmentUI.displayAppointments(appointmentListView);
+                        patientAppointmentUI.displayAppointments(appointmentListView, patientController);
                         break;
                     case 8:
                         patientMedicalRecordUI.displayAppointmentOutcomeRecord(appointmentListView, appointmentOutcomeView);
