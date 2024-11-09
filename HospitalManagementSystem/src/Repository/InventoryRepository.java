@@ -95,15 +95,15 @@ public class InventoryRepository {
 
     public static void viewRequests() {
         ArrayList<Request> requests = getAllRequests();
-        String header = "Requests";
+        String[] headers = new String[]{"Request", "Status"};
 
         System.out.println();
-        System.out.printf("| %-15s |%n", header);
-        System.out.println("-------------------");
+        System.out.printf("| %-15s | %-10s |%n", headers[0], headers[1]);
+        System.out.println("--------------------------------");
         
         for (Request request : requests) {
             if (request != null) {
-                System.out.printf("| %-15s |%n", request.getRequestedMedicine());
+                System.out.printf("| %-15s | %-10s |%n", request.getRequestedMedicine(), request.getStatus().toString());
             }
         }
     }

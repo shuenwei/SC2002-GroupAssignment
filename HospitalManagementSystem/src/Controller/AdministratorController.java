@@ -107,7 +107,6 @@ public class AdministratorController extends StaffController{
         if (request != null) {
             replenishStock(requestedMedicine);
             request.setStatus(RequestStatus.FULFILLED);
-            InventoryRepository.removeRequest(requestedMedicine);
 
             System.out.printf("%s has been successfully replenished.", requestedMedicine);
             System.out.println();
