@@ -16,17 +16,18 @@ public class NurseUI {
     private Nurse nurse;
     private Patient patient;
     private NurseController nurseController;
-
-    Scanner scanner = new Scanner(System.in);
+    private Scanner scanner;
+     
     
     public NurseUI(Nurse nurse) {
         this.nurse = nurse;
-        this.nurseController = new NurseController(nurse);
+        scanner = new Scanner(System.in);
     }
 
      public void displayMenu(){
         int option = -1;
 
+        this.nurseController = new NurseController(nurse);
         IDisplayableView<Patient> patientView = new PatientView();
 
         

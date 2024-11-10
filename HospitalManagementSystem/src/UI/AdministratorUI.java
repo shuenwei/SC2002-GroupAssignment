@@ -29,16 +29,17 @@ public class AdministratorUI {
 
     public AdministratorUI(Administrator administrator) {
         this.administrator = administrator;
-        this.administratorController = new AdministratorController(administrator);
-        this.appointmentView = new AppointmentView();
-        this.scanner = new Scanner(System.in);
-        this.manageInventoryUI = new ManageInventoryUI(administratorController);
-        this.manageStaffUI = new ManageStaffUI(administratorController);
+        scanner = new Scanner(System.in);
+        
     }
 
     public void displayMenu(){
         int option = -1;
-        
+
+        this.appointmentView = new AppointmentView();
+        this.administratorController = new AdministratorController(administrator);
+        this.manageInventoryUI = new ManageInventoryUI();
+        this.manageStaffUI = new ManageStaffUI();
         IDisplayableView<Appointment> appointmentView = new AppointmentView();
         
         

@@ -1,6 +1,7 @@
 package UI;
 
 import Controller.AdministratorController;
+import Entity.Administrator;
 import Entity.Staff;
 import Interface.IListDisplayableView;
 import View.CommonView;
@@ -15,14 +16,18 @@ public class ManageStaffUI {
     private Scanner scanner;
     private AdministratorController administratorController;
     private Staff staff;
+    private Administrator administrator;
 
-    public ManageStaffUI(AdministratorController administratorController){
+    public ManageStaffUI(){
         scanner = new Scanner(System.in);
-        this.administratorController = administratorController;
     }
     
     public void manageUserMenu(){
+
         int options=0;
+        
+        this.administratorController = new AdministratorController(administrator);
+
         do{
             try{
                 CommonView.newPage();

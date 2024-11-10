@@ -1,6 +1,7 @@
 package UI;
 
 import Controller.AdministratorController;
+import Entity.Administrator;
 import Entity.Medication;
 import Interface.IDisplayableView;
 import Interface.IListDisplayableView;
@@ -15,13 +16,16 @@ public class ManageInventoryUI {
 
     private AdministratorController administratorController;
     private Scanner scanner;
+    private Administrator administrator;
 
-    public ManageInventoryUI(AdministratorController administratorController){
-        this.administratorController = administratorController;
+    public ManageInventoryUI(){
         scanner = new Scanner(System.in);
     }
 
     public void manageInventoryMenu() {
+
+        
+        this.administratorController = new AdministratorController(administrator);
         IListDisplayableView<Medication> inventoryView = new ViewListInventory();
         int choice = -1;
         do{

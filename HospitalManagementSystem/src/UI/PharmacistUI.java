@@ -25,10 +25,9 @@ public class PharmacistUI {
     /**
      * The pharmacist associated with this UI.
      */
+    private Scanner sc;
     private Pharmacist pharmacist;
-    Scanner sc = new Scanner(System.in);
-
-
+    
     /**
      * Constructs a PharmacistUI instance for the specified pharmacist.
      *
@@ -36,6 +35,7 @@ public class PharmacistUI {
      */
     public PharmacistUI(Pharmacist pharmacist) {
         this.pharmacist = pharmacist;
+        sc = new Scanner(System.in);
     }
 
     /**
