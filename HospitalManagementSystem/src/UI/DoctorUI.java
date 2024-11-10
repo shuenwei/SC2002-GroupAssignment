@@ -9,7 +9,6 @@ import Entity.MedicalHistory;
 import Interface.IDisplayableView;
 import Interface.IListDisplayableView;
 import View.*;
-
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -44,6 +43,7 @@ public class DoctorUI {
      * Controller for managing doctor-related operations.
      */
     private DoctorController doctorController;
+    private Scanner scanner;
 
     /**
      * Initializes the UI for a specified doctor.
@@ -52,6 +52,7 @@ public class DoctorUI {
      */
     public DoctorUI (Doctor doctor) {
         this.doctor = doctor;
+        scanner = new Scanner(System.in);
     }
 
     /**
@@ -59,7 +60,6 @@ public class DoctorUI {
      * managing schedules, setting availability, managing appointment requests, and recording appointment outcomes.
      */
     public void displayMenu(){
-        Scanner scanner = new Scanner(System.in);
         AvailabilityUI availabilityUI = new AvailabilityUI(this.doctor);
         DoctorAppointmentUI doctorAppointmentUI = new DoctorAppointmentUI(this.doctor);
         doctorMedicalRecordUI = new DoctorMedicalRecordUI();

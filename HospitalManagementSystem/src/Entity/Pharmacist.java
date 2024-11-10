@@ -28,7 +28,7 @@ public class Pharmacist extends Staff {
      * @param currentUser The current user, which is assumed to be of type Pharmacist.
      */
     public void displayMenu(User currentUser) {
-    PharmacistUI pharmacistUi = new PharmacistUI((Pharmacist) currentUser);
+        PharmacistUI pharmacistUi = new PharmacistUI((Pharmacist) currentUser);
         pharmacistUi.displayMenu();
     }
 }

@@ -15,7 +15,6 @@ import Interface.IDisplayableView;
 import Repository.AppointmentRepository;
 import Repository.InventoryRepository;
 import Repository.UserRepository;
-import View.StaffView;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -243,7 +242,7 @@ public class AdministratorController extends StaffController{
         return null;
     }
 
-    public void addStaff(){
+    public void addStaff(IDisplayableView<Staff> staffView) {
 
         try{
             System.out.println("Enter Name: ");
@@ -331,7 +330,6 @@ public class AdministratorController extends StaffController{
 
             addStaff((Staff) staff);
             System.out.println("The following staff has been added: ");
-            StaffView staffView = new StaffView();
             staffView.display((Staff) staff);
 
         } catch (InputMismatchException e) {
@@ -345,11 +343,9 @@ public class AdministratorController extends StaffController{
         }
     }
 
-    public void updateStaff(){
+    public void updateStaff(IDisplayableView<Staff> staffView) {
 
         int select;
-
-        IDisplayableView<Staff> staffView = new StaffView();
 
         try{
             System.out.println("Enter Hospital ID: ");
@@ -441,9 +437,7 @@ public class AdministratorController extends StaffController{
         }
     }
 
-    public void removeStaff(){
-
-        IDisplayableView<Staff> staffView = new StaffView();
+    public void removeStaff(IDisplayableView<Staff> staffView) {
 
         try{
             System.out.println("Enter Hospital ID: ");
