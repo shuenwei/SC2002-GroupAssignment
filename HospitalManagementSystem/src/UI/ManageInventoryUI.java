@@ -1,32 +1,24 @@
 package UI;
 
 import Controller.AdministratorController;
-import Entity.Administrator;
 import Entity.Medication;
 import Interface.IDisplayableView;
 import Interface.IListDisplayableView;
 import Repository.InventoryRepository;
 import View.CommonView;
-import View.ViewInventory;
-import View.ViewListInventory;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class ManageInventoryUI {
 
-    private AdministratorController administratorController;
     private Scanner scanner;
-    private Administrator administrator;
 
     public ManageInventoryUI(){
         scanner = new Scanner(System.in);
     }
 
-    public void manageInventoryMenu() {
+    public void manageInventoryMenu(AdministratorController administratorController, IListDisplayableView<Medication> inventoryView, IDisplayableView<Medication> medicationView) { 
 
-        
-        this.administratorController = new AdministratorController(administrator);
-        IListDisplayableView<Medication> inventoryView = new ViewListInventory();
         int choice = -1;
         do{
             try{
@@ -44,7 +36,7 @@ public class ManageInventoryUI {
                         inventoryView.display(InventoryRepository.getAllMedicines());
                         break;
                     case 2:
-                        manageInventory();
+                        manageInventory(administratorController, medicationView);
                         break;
                     case 3:
                         return;
@@ -60,14 +52,12 @@ public class ManageInventoryUI {
         }while(choice != 3);
     }
 
-    public void manageInventory() {
+    public void manageInventory(AdministratorController administratorController, IDisplayableView<Medication> medicationView) {
 
         int choice = -1;
         String medicineName;
         int quantity;
         int threshold;
-
-        IDisplayableView<Medication> inventoryView = new ViewInventory();
 
         do{
             try{
@@ -98,7 +88,7 @@ public class ManageInventoryUI {
 
                         administratorController.addStock(medicineName, quantity);
                         System.out.println();
-                        inventoryView.display(InventoryRepository.get(medicineName));
+                        medicationView.display(InventoryRepository.get(medicineName));
                     } catch (InputMismatchException e) {
                         System.out.println("Invalid input for quantity. Please enter a number.");
                         scanner.next();  
@@ -115,9 +105,9 @@ public class ManageInventoryUI {
                         }
                         System.out.println("Input quantity to remove:");
                         quantity = scanner.nextInt();
-                        inventoryView.display(InventoryRepository.get(medicineName));
+                        medicationView.display(InventoryRepository.get(medicineName));
                         administratorController.removeStock(medicineName, quantity);
-                        inventoryView.display(InventoryRepository.get(medicineName));
+                        medicationView.display(InventoryRepository.get(medicineName));
                         System.out.println();
                     } catch(InputMismatchException e) {
                         System.out.println("Invalid input for quantity. Please enter a number.");
@@ -138,7 +128,7 @@ public class ManageInventoryUI {
 
                         administratorController.addNewMedicine(medicineName, quantity, threshold);
                         System.out.println();
-                        inventoryView.display(InventoryRepository.get(medicineName));
+                        medicationView.display(InventoryRepository.get(medicineName));
                     } catch(InputMismatchException e) {
                         System.out.println("Invalid input for quantity. Please enter a number.");
                         scanner.next();  
@@ -157,7 +147,7 @@ public class ManageInventoryUI {
 
                         administratorController.setThresholdStock(medicineName, threshold);
                         System.out.println();
-                        inventoryView.display(InventoryRepository.get(medicineName));
+                        medicationView.display(InventoryRepository.get(medicineName));
                         
                         break;
                 case 5: return;

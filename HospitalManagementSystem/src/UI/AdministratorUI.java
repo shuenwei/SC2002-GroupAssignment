@@ -8,20 +8,18 @@ import Entity.Staff;
 import Interface.IDisplayableView;
 import Interface.IListDisplayableView;
 import Repository.InventoryRepository;
-import Repository.UserRepository;
 import View.AppointmentView;
 import View.CommonView;
 import View.StaffListView;
+import View.StaffView;
 import View.ViewInventory;
-import java.util.ArrayList;
+import View.ViewListInventory;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class AdministratorUI {
 
     private Administrator administrator;
-    private AdministratorController administratorController;
-    private AppointmentView appointmentView;
     private ManageStaffUI manageStaffUI;
     private ManageInventoryUI manageInventoryUI;
     private Scanner scanner;
@@ -36,13 +34,17 @@ public class AdministratorUI {
     public void displayMenu(){
         int option = -1;
 
-        this.appointmentView = new AppointmentView();
-        this.administratorController = new AdministratorController(administrator);
-        this.manageInventoryUI = new ManageInventoryUI();
-        this.manageStaffUI = new ManageStaffUI();
+
+        AdministratorController administratorController = new AdministratorController(administrator);
+        manageInventoryUI = new ManageInventoryUI();
+        manageStaffUI = new ManageStaffUI();
+        IListDisplayableView<Staff> staffListView = new StaffListView();
+        IDisplayableView<Staff> staffView = new StaffView();
         IDisplayableView<Appointment> appointmentView = new AppointmentView();
-        
-        
+        IListDisplayableView<Medication> inventoryView = new ViewListInventory();
+        IDisplayableView<Medication> medicationView = new ViewInventory();
+
+
         do {
             try {
                 CommonView.newPage();
@@ -59,14 +61,14 @@ public class AdministratorUI {
                 option = scanner.nextInt();
 
                 switch (option) {
-                    case 1: manageStaffUI.manageUserMenu();
+                    case 1: manageStaffUI.manageUserMenu(administratorController,staffView,staffListView);
                             break;
                     case 2: administratorController.showAllAppointments(appointmentView); 
                             break;
-                    case 3: manageInventoryUI.manageInventoryMenu();
+                    case 3: manageInventoryUI.manageInventoryMenu(administratorController,inventoryView, medicationView);
                         break;
                     case 4:
-                        requestMenu();
+                        requestMenu(administratorController, medicationView);
                         break;
                     case 5:
                         System.out.println("You are now logged out.");
@@ -82,20 +84,10 @@ public class AdministratorUI {
         } while (option != 5);
     }
 
-    public void showStaffs(){
 
-        ArrayList <Staff> staffs = UserRepository.getAllStaff();
-        IListDisplayableView<Staff> staffListView = new StaffListView();
-        staffListView.display(staffs);
-
-    }
-
-
-    public void requestMenu() {
+    public void requestMenu(AdministratorController administratorController, IDisplayableView<Medication> medicationView){ 
         int choice = -1;
         String requestMedicine;
-
-        IDisplayableView<Medication> inventoryView = new ViewInventory();
         
         do{
             try{
@@ -119,7 +111,7 @@ public class AdministratorUI {
                         scanner.nextLine();
                         requestMedicine = scanner.nextLine();
                         administratorController.approveRequest(requestMedicine);
-                        inventoryView.display(InventoryRepository.get(requestMedicine));
+                        medicationView.display(InventoryRepository.get(requestMedicine));
                         break;
                     case 3: return;
                     default:
@@ -135,6 +127,7 @@ public class AdministratorUI {
     }
 
 }
+
 
 
 

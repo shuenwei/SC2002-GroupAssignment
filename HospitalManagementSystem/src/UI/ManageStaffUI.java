@@ -3,9 +3,9 @@ package UI;
 import Controller.AdministratorController;
 import Entity.Administrator;
 import Entity.Staff;
+import Interface.IDisplayableView;
 import Interface.IListDisplayableView;
 import View.CommonView;
-import View.StaffListView;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -14,7 +14,6 @@ import java.util.Scanner;
 
 public class ManageStaffUI {
     private Scanner scanner;
-    private AdministratorController administratorController;
     private Staff staff;
     private Administrator administrator;
 
@@ -22,11 +21,9 @@ public class ManageStaffUI {
         scanner = new Scanner(System.in);
     }
     
-    public void manageUserMenu(){
+    public void manageUserMenu(AdministratorController administratorController, IDisplayableView<Staff> staffView, IListDisplayableView<Staff> staffListView){
 
         int options=0;
-        
-        this.administratorController = new AdministratorController(administrator);
 
         do{
             try{
@@ -43,16 +40,16 @@ public class ManageStaffUI {
                 options = scanner.nextInt();
 
                 switch(options){
-                    case 1: filterStaff();
+                    case 1: filterStaff(administratorController, staffListView);
                             System.out.println();
                             break;
-                    case 2: administratorController.addStaff();
+                    case 2: administratorController.addStaff(staffView);
                             System.out.println();
                             break;
-                    case 3: administratorController.updateStaff();
+                    case 3: administratorController.updateStaff(staffView);
                             System.out.println();
                             break;
-                    case 4: administratorController.removeStaff();
+                    case 4: administratorController.removeStaff(staffView);
                             System.out.println();
                             break;
                     case 5: return;
@@ -73,15 +70,13 @@ public class ManageStaffUI {
 
 
 
-    public void filterStaff(){
+    public void filterStaff(AdministratorController administratorController, IListDisplayableView<Staff> staffListView){
         int options=0;
         int age_range = 0;
         String gender;
         boolean isValidGender;
         boolean isValidInput = true;
         String role;
-
-        IListDisplayableView<Staff> staffListView = new StaffListView();
 
         do{
             try{

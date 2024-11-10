@@ -98,7 +98,7 @@ public class PharmacistUI {
                         inventoryView.display(InventoryRepository.getAllMedicines());
                         break;
                     case 4:
-                        submitReplenishmentRequest();
+                        submitReplenishmentRequest(pharmacistController);
                         break;
                     case 5:
                         System.out.println("You are now logged out.");
@@ -119,9 +119,8 @@ public class PharmacistUI {
      * Submits a replenishment request for a specified medication.
      * Prompts the user to input the medicine name and forwards the request to the pharmacist controller.
      */
-    public void submitReplenishmentRequest() {
+    public void submitReplenishmentRequest(PharmacistController pharmacistController) {
         String requestMedicine;
-        PharmacistController pharmacistController = new PharmacistController(pharmacist);
 
         System.out.println();
         System.out.println("Input medicine to be replenished:");

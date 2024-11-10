@@ -15,7 +15,6 @@ public class NurseUI {
 
     private Nurse nurse;
     private Patient patient;
-    private NurseController nurseController;
     private Scanner scanner;
      
     
@@ -27,7 +26,7 @@ public class NurseUI {
      public void displayMenu(){
         int option = -1;
 
-        this.nurseController = new NurseController(nurse);
+        NurseController nurseController = new NurseController(nurse);
         IDisplayableView<Patient> patientView = new PatientView();
 
         
@@ -61,9 +60,9 @@ public class NurseUI {
                                 System.out.println("An unexpected error occurred: " + e.getMessage());
                             }
                             break;
-                    case 2: addPatient();
+                    case 2: addPatient(nurseController);
                             break;
-                    case 3: removePatient();
+                    case 3: removePatient(nurseController);
                             break;
                     case 4: System.out.println("You are now logged out.");
                             return;
@@ -78,7 +77,7 @@ public class NurseUI {
         } while (option != 4);
     }
 
-    public void addPatient(){
+    public void addPatient(NurseController nurseController) {
 
         try{
             System.out.println("Enter Name: ");
@@ -141,7 +140,7 @@ public class NurseUI {
 
     }
 
-    public void removePatient(){
+    public void removePatient(NurseController nurseController) {
 
         try{
             System.out.println("Enter Hospital ID: ");
