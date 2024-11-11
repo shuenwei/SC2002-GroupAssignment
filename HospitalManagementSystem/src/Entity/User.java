@@ -26,7 +26,7 @@ public abstract class User {
     /**
      * The gender of the user.
      */
-	private String gender;
+	private Enums.Gender gender;
 
     /**
      * Constructs a User object with the specified hospital ID, password, name, and gender.
@@ -36,7 +36,7 @@ public abstract class User {
      * @param name The name of the user.
      * @param gender The gender of the user.
      */
-    public User(String hospitalId,String password, String name, String gender) {
+    public User(String hospitalId,String password, String name, Enums.Gender gender) {
 		this.hospitalId = hospitalId;
 		this.password = password;
 		this.name = name;
@@ -111,7 +111,7 @@ public abstract class User {
      *
      * @return The gender of the user.
      */
-	public String getGender() {
+	public Enums.Gender getGender() {
 		return this.gender;
 	}
 
@@ -120,7 +120,7 @@ public abstract class User {
      *
      * @param gender The new gender of the user.
      */
-	public void setGender(String gender) {
+	public void setGender(Enums.Gender gender) {
 		this.gender = gender;
 	}
 

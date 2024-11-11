@@ -84,7 +84,7 @@ public class AdministratorController extends StaffController{
      * @param staff  The staff member whose gender is to be updated.
      * @param gender The new gender to set for the staff member.
      */
-    public void updateStaffGender(Staff staff, String gender){
+    public void updateStaffGender(Staff staff, Enums.Gender gender){
         staff.setGender(gender);
     }
 
@@ -253,7 +253,7 @@ public class AdministratorController extends StaffController{
         ArrayList<Staff> staffs = UserRepository.getAllStaff();
 
         for (Staff s : staffs) {
-            if (s.getGender().equalsIgnoreCase(gender.toString())) {
+            if (s.getGender().toString().equalsIgnoreCase(gender.toString())) {
                 filteredStaff.add(s);
             }
         }
@@ -355,6 +355,7 @@ public class AdministratorController extends StaffController{
             if (hospGender.isEmpty()) {
                 throw new IllegalArgumentException("Gender cannot be empty.");
             }
+            Enums.Gender gender = Enums.Gender.valueOf(hospGender.toUpperCase());
             System.out.println("Enter Role: ");
             String hospRole = scanner.nextLine().toUpperCase();
             if (hospRole.isEmpty()) {
@@ -377,6 +378,7 @@ public class AdministratorController extends StaffController{
                     }
                 }
                 max_d++;
+
                 staff = new Doctor("D" + String.format("%03d", max_d), "", hospName, hospGender, Role.DOCTOR, hospAge);
     
             } else if(hospRole.equals("PHARMACIST")) {
@@ -388,6 +390,7 @@ public class AdministratorController extends StaffController{
                     }
                 }
                 max_p++;
+
                 staff = new Pharmacist("P" + String.format("%03d", max_p), "", hospName, hospGender, Role.PHARMACIST, hospAge);
 
             } else if(hospRole.equals("ADMINISTRATOR")) {
@@ -399,6 +402,7 @@ public class AdministratorController extends StaffController{
                     }
                 }
                 max_a++;
+
                 staff = new Administrator("A" + String.format("%03d", max_a), "", hospName, hospGender, Role.ADMINISTRATOR, hospAge);
 
             } else if(hospRole.equals("NURSE")) {
@@ -410,7 +414,9 @@ public class AdministratorController extends StaffController{
                     }
                 }
                 max_n++;
+
                 staff = new Nurse("N" + String.format("%03d", max_n), "", hospName, hospGender, Role.NURSE, hospAge);
+
             } else {
                 throw new IllegalArgumentException("Error: Invalid Role. Must be either Doctor, Pharmacist, Administrator, or Nurse.");
             }
@@ -491,10 +497,11 @@ public class AdministratorController extends StaffController{
                     System.out.println("Enter Gender: ");
                     scanner.nextLine();
                     String hospGender = scanner.nextLine();
+                    Enums.Gender gender = Enums.Gender.valueOf(hospGender.toUpperCase());
                     if (hospGender.isEmpty()) {
                         throw new IllegalArgumentException("Gender cannot be empty.");
                     }
-                    updateStaffGender(staff_det, hospGender);
+                    updateStaffGender(staff_det, gender);
                     System.out.println("Your updated details are as follows: "); 
                     staffView.display(staff_det);
                     break;
@@ -538,7 +545,16 @@ public class AdministratorController extends StaffController{
             if(UserRepository.get(hospID) instanceof Administrator || UserRepository.get(hospID) instanceof Doctor || UserRepository.get(hospID) instanceof Pharmacist || UserRepository.get(hospID) instanceof Nurse) {
                 User removedStaff = UserRepository.get(hospID);
                 System.out.println("The following staff is removed: ");
-                staffView.display((Staff) removedStaff);    
+                staffView.display((Staff) removedStaff); 
+                if(removedStaff instanceof Doctor){
+                    for(Appointment a : ((Doctor) removedStaff).getAppointments()){
+                        
+                        if(a.getStatus().equals(Enums.AppointmentStatus.PENDING) || a.getStatus().equals(Enums.AppointmentStatus.CONFIRMED)){
+                            a.setStatus(Enums.AppointmentStatus.CANCELLED);
+                        }
+                        
+                    }
+                }
                 removeStaff(hospID);
             } else {
                 throw new IllegalArgumentException("Error: Invalid Removal. Staff not found!");

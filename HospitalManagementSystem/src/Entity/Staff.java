@@ -29,7 +29,9 @@ public abstract class Staff extends User {
      * @param role The role of the staff member (e.g., Doctor, Nurse).
      * @param age The age of the staff member.
      */
+
 	public Staff(String hospitalId,String password, String name, String gender,Role role, int age) {
+
 		super(hospitalId,password,name,gender);
 		this.age = age;
 		this.role = role;

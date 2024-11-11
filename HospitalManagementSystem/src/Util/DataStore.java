@@ -43,7 +43,7 @@ public class DataStore {
                         staff.getPassword(),
                         staff.getName(),
                         staff.getRole().toString(),
-                        staff.getGender(),
+                        staff.getGender().toString(),
                         String.valueOf(staff.getAge())
                 };
                 pw.println(String.join(",", data));
@@ -96,7 +96,7 @@ public class DataStore {
                         patient.getPassword(),
                         patient.getName(),
                         medicalRecord.getDateOfBirth(),
-                        patient.getGender(),
+                        patient.getGender().toString(),
                         medicalRecord.getBloodType(),
                         medicalRecord.getEmailAddress(),
                         medicalRecord.getPhoneNumber()

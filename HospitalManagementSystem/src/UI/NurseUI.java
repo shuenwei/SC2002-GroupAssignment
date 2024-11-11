@@ -7,6 +7,7 @@ import src.Interface.IDisplayableView;
 import src.Repository.UserRepository;
 import src.View.CommonView;
 import src.View.PatientView;
+
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -67,7 +68,7 @@ public class NurseUI {
                                 System.out.println("An unexpected error occurred: " + e.getMessage());
                             }
                             break;
-                    case 2: addPatient(nurseController);
+                    case 2: addPatient(nurseController, patientView);
                             break;
                     case 3: removePatient(nurseController);
                             break;
@@ -90,42 +91,90 @@ public class NurseUI {
      *
      * @param nurseController The controller responsible for managing patient operations.
      */
-    public void addPatient(NurseController nurseController) {
-
+    public void addPatient(NurseController nurseController, IDisplayableView<Patient> patientView) {
+        String hospName;
+        String hospEmailAddress;
+        String hospBlood;
+        String hospPhoneNumber;
+        String hospDate;
+        Enums.Gender gender = null;
         try{
             System.out.println("Enter Name: ");
             scanner.nextLine();
-            String hospName = scanner.nextLine();
+            hospName = scanner.nextLine();
             if (hospName.isEmpty()) {
                 throw new IllegalArgumentException("Name cannot be empty.");
             }
+            boolean validGender = false;
+            do{
             System.out.println("Enter Gender: ");
             String hospGender = scanner.nextLine();
             if (hospGender.isEmpty()) {
-                throw new IllegalArgumentException("Gender cannot be empty.");
+                System.out.println("Gender cannot be empty.");
             }
+            else {
+                try {
+                    gender = Gender.valueOf(hospGender);
+                    validGender = true;  
+                } catch (IllegalArgumentException e) {
+                    
+                    System.out.println("Invalid gender. Please enter either MALE or FEMALE or OTHERS.");
+                }
+            }
+            }while(!validGender);
+            boolean dateOfBirth = false;
+            do{
             System.out.println("Date Of Birth (DD/MM/YYYY): ");
-            String hospDate = scanner.nextLine();
+            hospDate = scanner.nextLine();
             if (hospDate.isEmpty()) {
-                throw new IllegalArgumentException("Date of Birth cannot be empty.");
+                System.out.println("Date of Birth cannot be empty.");
             }
+            else if (!hospDate.matches("\\d{2}/\\d{2}/\\d{4}")) {
+                System.out.println("Date of Birth must be in the format DD/MM/YYYY.");
+            }
+            else{
+                dateOfBirth = true;
+            }
+            }while(!dateOfBirth);
+            boolean validBloodType = false;
+            do{
             System.out.println("Blood Type: ");
-            String hospBlood = scanner.nextLine();
+            hospBlood = scanner.nextLine();
             if (hospBlood.isEmpty()) {
-                throw new IllegalArgumentException("Blood Type cannot be empty.");
+                System.out.print("Blood Type cannot be empty.");
             }
+            else{
+                validBloodType = true;
+            }
+            }while(!validBloodType);
+            boolean validEmailAddress = false;
+            do{
             System.out.println("Email Address: ");
-            String hospEmailAddress = scanner.nextLine();
-            System.out.println();
+            hospEmailAddress = scanner.nextLine();
             if (hospEmailAddress.isEmpty()) {
-                throw new IllegalArgumentException("Contact Information cannot be empty.");
+                System.out.println("Contact information cannot be empty.");
+            } 
+            else if (!hospEmailAddress.contains("@")) {
+                System.out.println("Email must contain '@' symbol.");
+            } 
+            else if (!hospEmailAddress.contains(".")) {
+                System.out.println("Email must contain '.' symbol.");
             }
+            else{
+                validEmailAddress = true;
+            }
+            }while(!validEmailAddress);
+            boolean validPhoneNumber = false;
+            do{
             System.out.println("Phone Number: ");
-            String hospPhoneNumber = scanner.nextLine();
-            System.out.println();
-            if (hospPhoneNumber.isEmpty()) {
-                throw new IllegalArgumentException("Contact Information cannot be empty.");
+            hospPhoneNumber = scanner.nextLine();
+            if (hospPhoneNumber.length() != 8 || !hospPhoneNumber.matches("\\d{8}")) {
+                System.out.println("Phone number must be exactly 8 digits long and contain only numbers.");
+            } else {
+                validPhoneNumber = true;
             }
+            }while(!validPhoneNumber);
+            System.out.println();
         
             ArrayList<Patient> patients = UserRepository.getAllPatients();
     
@@ -137,9 +186,11 @@ public class NurseUI {
             }
 
             max_p++;
-            patient = new Patient("P" + String.format("%04d", max_p), "",hospName, hospGender, hospDate, hospBlood, hospEmailAddress,hospPhoneNumber );
+            patient = new Patient("P" + String.format("%04d", max_p), "",hospName, gender, hospDate, hospBlood, hospEmailAddress,hospPhoneNumber );
 
             nurseController.addPatient((Patient) patient);
+            patientView.display(patient);
+
 
         } catch (InputMismatchException e) {
             System.out.println("Error: Invalid input type. Age must be an integer.");

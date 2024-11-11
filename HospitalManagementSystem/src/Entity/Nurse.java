@@ -19,7 +19,9 @@ public class Nurse extends Staff{
      * @param role       The role of the nurse in the system.
      * @param age        The age of the nurse.
      */
+
     public Nurse(String hospitalId,String password, String name, String gender,Role role, int age) {
+
         super(hospitalId,password,name,gender,role,age);
     }
 

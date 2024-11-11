@@ -33,7 +33,9 @@ public class Doctor extends Staff {
      * @param role       The role of the doctor.
      * @param age        The age of the doctor.
      */
+
     public Doctor(String hospitalId,String password, String name, String gender, Role role, int age) {
+
         super(hospitalId,password,name,gender,role,age);
         appointments = new ArrayList<Appointment>();
     }
