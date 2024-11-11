@@ -34,6 +34,7 @@ public class NurseUI {
      */
     public void displayMenu(){
         int option = -1;
+        String hospID;
 
         NurseController nurseController = new NurseController(nurse);
         IDisplayableView<Patient> patientView = new PatientView();
@@ -52,21 +53,25 @@ public class NurseUI {
                 option = scanner.nextInt();
 
                 switch (option) {
-                    case 1: try{
+                    case 1: scanner.nextLine();
+                            boolean validID = false;
+                            do{   
                                 System.out.println("Enter Hospital ID: ");
-                                scanner.nextLine();
-                                String hospID = scanner.nextLine();
+                                hospID = scanner.nextLine();
                                 if (hospID.isEmpty()) {
-                                    throw new IllegalArgumentException("Hospital ID cannot be empty.");
+                                    System.out.println("Hospital ID cannot be empty.");
                                 }
+                                else if(!(UserRepository.get(hospID) instanceof Patient) || UserRepository.get(hospID) == null){
+                                    System.out.println("Patient not found.");
+                                }
+                                else{
+                                    validID = true;
+                                }
+                            }while(!validID);
                     
-                                patient = (Patient) nurseController.getPatient(hospID);
-                                patientView.display(patient);
-                            } catch (IllegalArgumentException e) {
-                                System.out.println(e.getMessage());
-                            } catch (Exception e) {
-                                System.out.println("An unexpected error occurred: " + e.getMessage());
-                            }
+                            patient = (Patient) nurseController.getPatient(hospID);
+                            patientView.display(patient);
+                            
                             break;
                     case 2: addPatient(nurseController, patientView);
                             break;
@@ -99,12 +104,18 @@ public class NurseUI {
         String hospDate;
         Enums.Gender gender = null;
         try{
-            System.out.println("Enter Name: ");
+            boolean validName = false;
             scanner.nextLine();
+            do{
+            System.out.println("Enter Name: ");
+            
             hospName = scanner.nextLine();
             if (hospName.isEmpty()) {
-                throw new IllegalArgumentException("Name cannot be empty.");
+                System.out.println("Name cannot be empty.");
+            } else {
+                validName = true;
             }
+            }while(!validName);
             boolean validGender = false;
             do{
             System.out.println("Enter Gender: ");
@@ -189,6 +200,8 @@ public class NurseUI {
             patient = new Patient("P" + String.format("%04d", max_p), "",hospName, gender, hospDate, hospBlood, hospEmailAddress,hospPhoneNumber );
 
             nurseController.addPatient((Patient) patient);
+            System.out.println("The patient has been added successfully.");
+            System.out.println();
             patientView.display(patient);
 
 
