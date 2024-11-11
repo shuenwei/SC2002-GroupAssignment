@@ -1,7 +1,7 @@
-package Controller;
+package src.Controller;
 
-import Entity.Availability;
-import Entity.Doctor;
+import src.Entity.Availability;
+import src.Entity.Doctor;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 

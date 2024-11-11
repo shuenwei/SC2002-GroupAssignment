@@ -1,11 +1,12 @@
-package UI;
+package src.UI;
 
-import Controller.AdministratorController;
-import Entity.Administrator;
-import Entity.Staff;
-import Interface.IDisplayableView;
-import Interface.IListDisplayableView;
-import View.CommonView;
+import src.Controller.AdministratorController;
+import src.Entity.Administrator;
+import src.Entity.Staff;
+import src.Enums.*;
+import src.Interface.IDisplayableView;
+import src.Interface.IListDisplayableView;
+import src.View.CommonView;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -129,7 +130,7 @@ public class ManageStaffUI {
                             System.out.println("Enter Gender: ");
                             gender = scanner.nextLine().trim().toUpperCase();
                             isValidGender = false;
-                            for (Enums.Gender g : Enums.Gender.values()) {
+                            for (Gender g : Gender.values()) {
                                 if (g.name().equals(gender)) {
                                     isValidGender = true;
                                     break;
@@ -140,7 +141,7 @@ public class ManageStaffUI {
                             }
                         } while(!isValidGender);
 
-                        Enums.Gender gender_ = Enums.Gender.valueOf(gender);
+                        Gender gender_ = Gender.valueOf(gender);
                         ArrayList<Staff> filteredStaffByGender = administratorController.filterBy(gender_);
                         staffListView.display(filteredStaffByGender);
                         break;

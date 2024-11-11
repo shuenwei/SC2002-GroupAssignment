@@ -1,20 +1,20 @@
-package Controller;
+package src.Controller;
 
-import Entity.Administrator;
-import Entity.Appointment;
-import Entity.Doctor;
-import Entity.Medication;
-import Entity.Nurse;
-import Entity.Pharmacist;
-import Entity.PrescribedMedication;
-import Entity.Request;
-import Entity.Staff;
-import Entity.User;
-import Enums.RequestStatus;
-import Interface.IDisplayableView;
-import Repository.AppointmentRepository;
-import Repository.InventoryRepository;
-import Repository.UserRepository;
+import src.Entity.Administrator;
+import src.Entity.Appointment;
+import src.Entity.Doctor;
+import src.Entity.Medication;
+import src.Entity.Nurse;
+import src.Entity.Pharmacist;
+import src.Entity.PrescribedMedication;
+import src.Entity.Request;
+import src.Entity.Staff;
+import src.Entity.User;
+import src.Enums.*;
+import src.Interface.IDisplayableView;
+import src.Repository.AppointmentRepository;
+import src.Repository.InventoryRepository;
+import src.Repository.UserRepository;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -248,7 +248,7 @@ public class AdministratorController extends StaffController{
      * @param gender The gender to filter staff by.
      * @return A list of staff members matching the specified gender.
      */
-    public ArrayList<Staff> filterBy(Enums.Gender gender) {
+    public ArrayList<Staff> filterBy(Gender gender) {
         ArrayList<Staff> filteredStaff = new ArrayList<>();
         ArrayList<Staff> staffs = UserRepository.getAllStaff();
 
@@ -378,7 +378,8 @@ public class AdministratorController extends StaffController{
                     }
                 }
                 max_d++;
-                staff = new Doctor("D" + String.format("%03d", max_d), "", hospName, gender, Enums.Role.DOCTOR, hospAge);
+
+                staff = new Doctor("D" + String.format("%03d", max_d), "", hospName, hospGender, Role.DOCTOR, hospAge);
     
             } else if(hospRole.equals("PHARMACIST")) {
                 ArrayList<Pharmacist> pharmacists = UserRepository.getAllPharmacists();
@@ -389,7 +390,8 @@ public class AdministratorController extends StaffController{
                     }
                 }
                 max_p++;
-                staff = new Pharmacist("P" + String.format("%03d", max_p), "", hospName, gender, Enums.Role.PHARMACIST, hospAge);
+
+                staff = new Pharmacist("P" + String.format("%03d", max_p), "", hospName, hospGender, Role.PHARMACIST, hospAge);
 
             } else if(hospRole.equals("ADMINISTRATOR")) {
                 ArrayList<Administrator> administrators = UserRepository.getAllAdministrators();
@@ -400,7 +402,8 @@ public class AdministratorController extends StaffController{
                     }
                 }
                 max_a++;
-                staff = new Administrator("A" + String.format("%03d", max_a), "", hospName, gender, Enums.Role.ADMINISTRATOR, hospAge);
+
+                staff = new Administrator("A" + String.format("%03d", max_a), "", hospName, hospGender, Role.ADMINISTRATOR, hospAge);
 
             } else if(hospRole.equals("NURSE")) {
                 ArrayList<Nurse> nurses = UserRepository.getAllNurses();
@@ -411,7 +414,9 @@ public class AdministratorController extends StaffController{
                     }
                 }
                 max_n++;
-                staff = new Nurse("N" + String.format("%03d", max_n), "", hospName, gender, Enums.Role.NURSE, hospAge);
+
+                staff = new Nurse("N" + String.format("%03d", max_n), "", hospName, hospGender, Role.NURSE, hospAge);
+
             } else {
                 throw new IllegalArgumentException("Error: Invalid Role. Must be either Doctor, Pharmacist, Administrator, or Nurse.");
             }

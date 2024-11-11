@@ -1,6 +1,7 @@
-package Controller;
+package src.Controller;
 
-import Entity.*;
+import src.Entity.*;
+import src.Enums.*;
 import java.util.ArrayList;
 
 /**
@@ -72,7 +73,7 @@ public class DoctorController extends StaffController {
      * @param status The status of the appointments to filter by.
      * @return A list of Appointments with the specified status.
      */
-    public ArrayList<Appointment> getAppointmentsByStatus(Enums.AppointmentStatus status) {
+    public ArrayList<Appointment> getAppointmentsByStatus(AppointmentStatus status) {
         ArrayList<Appointment> filteredAppointments = new ArrayList<>();
         ArrayList<Appointment> appointments = doctor.getAppointments();
         

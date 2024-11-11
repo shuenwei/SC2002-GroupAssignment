@@ -1,11 +1,11 @@
-package UI;
+package src.UI;
 
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-import Entity.Appointment;
-import Interface.IListDisplayableView;
+import src.Entity.Appointment;
+import src.Interface.IListDisplayableView;
 
 /**
  * The {@code AppointmentUI} class provides a user interface to display appointments categorized by their status.

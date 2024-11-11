@@ -1,6 +1,6 @@
-package View;
+package src.View;
 
-import Entity.Availability;
+import src.Entity.Availability;
 import java.time.DayOfWeek;
 
 /**

@@ -1,7 +1,7 @@
-package View;
+package src.View;
 
-import Entity.Medication;
-import Interface.IDisplayableView;
+import src.Entity.Medication;
+import src.Interface.IDisplayableView;
 
 /**
  * The ViewInventory class implements IDisplayableView to display detailed information about a specific medication,

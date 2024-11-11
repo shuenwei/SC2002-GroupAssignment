@@ -1,8 +1,8 @@
-package View;
+package src.View;
 
-import Entity.AppointmentOutcomeRecord;
-import Entity.PrescribedMedication;
-import Interface.IDisplayableView;
+import src.Entity.AppointmentOutcomeRecord;
+import src.Entity.PrescribedMedication;
+import src.Interface.IDisplayableView;
 
 /**
  * The AppointmentOutcomeRecordView class implements the IDisplayableView interface for displaying

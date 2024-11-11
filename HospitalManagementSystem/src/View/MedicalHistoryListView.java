@@ -1,7 +1,7 @@
-package View;
+package src.View;
 
-import Entity.MedicalHistory;
-import Interface.IListDisplayableView;
+import src.Entity.MedicalHistory;
+import src.Interface.IListDisplayableView;
 import java.util.ArrayList;
 
 /**

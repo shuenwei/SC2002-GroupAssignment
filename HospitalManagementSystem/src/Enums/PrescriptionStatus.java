@@ -1,4 +1,4 @@
-package Enums;
+package src.Enums;
 
 /**
  * The {@code PrescriptionStatus} enum represents the status of a prescription.

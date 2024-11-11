@@ -1,6 +1,6 @@
-package Entity;
+package src.Entity;
 
-import Enums.AppointmentStatus;
+import src.Enums.AppointmentStatus;
 import java.time.LocalDate;
 import java.time.LocalTime;
 

@@ -1,10 +1,10 @@
-package Controller;
+package src.Controller;
 
-import Entity.Appointment;
-import Entity.Doctor;
-import Entity.Patient;
-import Enums.AppointmentStatus;
-import Repository.AppointmentRepository;
+import src.Entity.Appointment;
+import src.Entity.Doctor;
+import src.Entity.Patient;
+import src.Enums.AppointmentStatus;
+import src.Repository.AppointmentRepository;
 import java.time.LocalDate;
 import java.time.LocalTime;
 

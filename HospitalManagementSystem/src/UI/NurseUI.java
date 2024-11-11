@@ -1,13 +1,13 @@
-package UI;
+package src.UI;
 
-import Controller.NurseController;
-import Entity.Nurse;
-import Entity.Patient;
-import Enums.Gender;
-import Interface.IDisplayableView;
-import Repository.UserRepository;
-import View.CommonView;
-import View.PatientView;
+import src.Controller.NurseController;
+import src.Entity.Nurse;
+import src.Entity.Patient;
+import src.Interface.IDisplayableView;
+import src.Repository.UserRepository;
+import src.View.CommonView;
+import src.View.PatientView;
+
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;

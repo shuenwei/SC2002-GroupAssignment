@@ -1,7 +1,7 @@
-package View;
+package src.View;
 
-import Entity.Appointment;
-import Interface.IDisplayableView;
+import src.Entity.Appointment;
+import src.Interface.IDisplayableView;
 import java.time.format.DateTimeFormatter;
 
 /**

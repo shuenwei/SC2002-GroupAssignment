@@ -1,7 +1,8 @@
-package Controller;
+package src.Controller;
 
-import Entity.Appointment;
-import Entity.Patient;
+import src.Entity.Appointment;
+import src.Enums.*;
+import src.Entity.Patient;
 import java.util.ArrayList;
 
 /**
@@ -26,7 +27,7 @@ public class PatientController extends UserController {
      * @param status the status to filter appointments by
      * @return a list of {@code Appointment} objects that have the specified status
      */
-    public ArrayList<Appointment> getAppointmentsByStatus(Enums.AppointmentStatus status) {
+    public ArrayList<Appointment> getAppointmentsByStatus(AppointmentStatus status) {
         ArrayList<Appointment> filteredAppointments = new ArrayList<>();
         ArrayList<Appointment> appointments = patient.getAppointments();
 

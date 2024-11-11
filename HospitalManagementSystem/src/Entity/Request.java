@@ -1,6 +1,6 @@
-package Entity;
+package src.Entity;
 
-import Enums.RequestStatus;
+import src.Enums.RequestStatus;
 
 /**
  * The Request class represents a request for a medication made by a pharmacist or any authorized staff member.

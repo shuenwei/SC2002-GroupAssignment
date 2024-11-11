@@ -1,4 +1,4 @@
-package Entity;
+package src.Entity;
 
 /**
  * The {@code Medication} class represents a medication with attributes such as name, stock level,
