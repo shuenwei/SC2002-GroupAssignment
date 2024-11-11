@@ -67,7 +67,7 @@ public class NurseUI {
                                 System.out.println("An unexpected error occurred: " + e.getMessage());
                             }
                             break;
-                    case 2: addPatient(nurseController);
+                    case 2: addPatient(nurseController, patientView);
                             break;
                     case 3: removePatient(nurseController);
                             break;
@@ -90,7 +90,7 @@ public class NurseUI {
      *
      * @param nurseController The controller responsible for managing patient operations.
      */
-    public void addPatient(NurseController nurseController) {
+    public void addPatient(NurseController nurseController, IDisplayableView<Patient> patientView) {
 
         try{
             System.out.println("Enter Name: ");
@@ -141,6 +141,8 @@ public class NurseUI {
             patient = new Patient("P" + String.format("%04d", max_p), "",hospName, gender, hospDate, hospBlood, hospEmailAddress,hospPhoneNumber );
 
             nurseController.addPatient((Patient) patient);
+            patientView.display(patient);
+
 
         } catch (InputMismatchException e) {
             System.out.println("Error: Invalid input type. Age must be an integer.");
