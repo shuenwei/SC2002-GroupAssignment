@@ -62,13 +62,14 @@ public class AdministratorUI {
                 System.out.println("Select an option:");
                 System.out.println();
                 System.out.println("(1) View and Manage Hospital Staff");
-                System.out.println("(2) View Appointment Details"); 
-                System.out.println("(3) View and Manage Medication Inventory"); 
-                System.out.println("(4) Approve Replenishment Requests"); 
-                System.out.println("(5) Logout"); 
+                System.out.println("(2) View Appointment Details");
+                System.out.println("(3) View and Manage Medication Inventory");
+                System.out.println("(4) Approve Replenishment Requests");
+                System.out.println("(5) Logout");
                 option = scanner.nextInt();
 
                 switch (option) {
+
                     case 1:
                         manageStaffUI.manageUserMenu(administratorController, staffView, staffListView);
                         break;
@@ -136,7 +137,7 @@ public class AdministratorUI {
                 }
             } catch (InputMismatchException e) {
                 System.out.println("Invalid input. Please enter an integer 1 and 3!.");
-                scanner.next(); 
+                scanner.next();
             } catch (Exception e) {
                 System.out.println("An error occurred: " + e.getMessage());
             }
