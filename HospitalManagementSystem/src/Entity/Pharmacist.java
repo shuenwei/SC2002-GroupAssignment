@@ -18,7 +18,7 @@ public class Pharmacist extends Staff {
      * @param role       The role of the pharmacist.
      * @param age        The age of the pharmacist.
      */
-    public Pharmacist(String hospitalId,String password, String name, String gender,Enums.Role role, int age) {
+    public Pharmacist(String hospitalId,String password, String name, Enums.Gender gender,Enums.Role role, int age) {
         super(hospitalId,password,name,gender,role,age);
     }
 

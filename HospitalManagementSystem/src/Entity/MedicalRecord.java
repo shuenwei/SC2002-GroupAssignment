@@ -26,7 +26,7 @@ public class MedicalRecord {
     /**
      * The gender of the patient.
      */
-    private String gender;
+    private Enums.Gender gender;
 
     /**
      * The blood type of the patient.
@@ -60,7 +60,7 @@ public class MedicalRecord {
      * @param phoneNumber  The phone number of the patient.
      * @param emailAddress The email address of the patient.
      */
-    public MedicalRecord(String PatientID, String name, String gender, String dateOfBirth, String bloodType, String phoneNumber, String emailAddress) {
+    public MedicalRecord(String PatientID, String name, Enums.Gender gender, String dateOfBirth, String bloodType, String phoneNumber, String emailAddress) {
         this.PatientID = PatientID;
         this.name = name;
         this.dateOfBirth = dateOfBirth;
@@ -103,7 +103,7 @@ public class MedicalRecord {
      *
      * @return The patient's gender.
      */
-    public String getGender(){
+    public Enums.Gender getGender(){
         return gender;
     }
 
