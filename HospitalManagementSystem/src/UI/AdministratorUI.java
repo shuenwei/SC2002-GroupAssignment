@@ -1,19 +1,19 @@
-package UI;
+package src.UI;
 
-import Controller.AdministratorController;
-import Entity.Administrator;
-import Entity.Appointment;
-import Entity.Medication;
-import Entity.Staff;
-import Interface.IDisplayableView;
-import Interface.IListDisplayableView;
-import Repository.InventoryRepository;
-import View.AppointmentView;
-import View.CommonView;
-import View.StaffListView;
-import View.StaffView;
-import View.ViewInventory;
-import View.ViewListInventory;
+import src.Controller.AdministratorController;
+import src.Entity.Administrator;
+import src.Entity.Appointment;
+import src.Entity.Medication;
+import src.Entity.Staff;
+import src.Interface.IDisplayableView;
+import src.Interface.IListDisplayableView;
+import src.Repository.InventoryRepository;
+import src.View.AppointmentView;
+import src.View.CommonView;
+import src.View.StaffListView;
+import src.View.StaffView;
+import src.View.ViewInventory;
+import src.View.ViewListInventory;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 

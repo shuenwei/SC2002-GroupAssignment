@@ -1,7 +1,7 @@
-package Util;
+package src.Util;
 
-import Entity.*;
-import Repository.*;
+import src.Entity.*;
+import src.Repository.*;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;

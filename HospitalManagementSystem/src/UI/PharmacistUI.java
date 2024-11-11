@@ -1,15 +1,15 @@
-package UI;
+package src.UI;
 
-import Controller.PharmacistController;
-import Entity.Appointment;
-import Entity.Medication;
-import Entity.Pharmacist;
-import Enums.AppointmentStatus;
-import Interface.IListDisplayableView;
-import Repository.InventoryRepository;
-import View.CommonView;
-import View.PendingMedicineView;
-import View.ViewListInventory;
+import src.Controller.PharmacistController;
+import src.Entity.Appointment;
+import src.Entity.Medication;
+import src.Entity.Pharmacist;
+import src.Enums.AppointmentStatus;
+import src.Interface.IListDisplayableView;
+import src.Repository.InventoryRepository;
+import src.View.CommonView;
+import src.View.PendingMedicineView;
+import src.View.ViewListInventory;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;

@@ -1,4 +1,4 @@
-package Enums;
+package src.Enums;
 
 /**
  * The {@code Role} enum represents the various roles within the healthcare system.

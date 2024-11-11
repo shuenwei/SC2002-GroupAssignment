@@ -1,14 +1,14 @@
-package UI;
+package src.UI;
 
-import Controller.AvailabilityController;
-import Controller.DoctorController;
-import Entity.Appointment;
-import Entity.AppointmentOutcomeRecord;
-import Entity.Doctor;
-import Entity.MedicalHistory;
-import Interface.IDisplayableView;
-import Interface.IListDisplayableView;
-import View.*;
+import src.Controller.AvailabilityController;
+import src.Controller.DoctorController;
+import src.Entity.Appointment;
+import src.Entity.AppointmentOutcomeRecord;
+import src.Entity.Doctor;
+import src.Entity.MedicalHistory;
+import src.Interface.IDisplayableView;
+import src.Interface.IListDisplayableView;
+import src.View.*;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 

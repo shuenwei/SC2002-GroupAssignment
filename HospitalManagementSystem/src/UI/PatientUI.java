@@ -1,22 +1,22 @@
-package UI;
+package src.UI;
 
-import Entity.Appointment;
-import Entity.AppointmentOutcomeRecord;
-import Entity.MedicalHistory;
-import Entity.Patient;
-import Interface.IDisplayableView;
-import Interface.IListDisplayableView;
-import View.AppointmentListView;
-import View.AppointmentOutcomeRecordView;
-import View.AppointmentView;
-import View.MedicalHistoryListView;
-import View.CommonView;
+import src.Entity.Appointment;
+import src.Entity.AppointmentOutcomeRecord;
+import src.Entity.MedicalHistory;
+import src.Entity.Patient;
+import src.Interface.IDisplayableView;
+import src.Interface.IListDisplayableView;
+import src.View.AppointmentListView;
+import src.View.AppointmentOutcomeRecordView;
+import src.View.AppointmentView;
+import src.View.MedicalHistoryListView;
+import src.View.CommonView;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-import Controller.AppointmentController;
-import Controller.PatientController;
+import src.Controller.AppointmentController;
+import src.Controller.PatientController;
 
 /**
  * The PatientUI class provides a user interface for patients to interact with the system.

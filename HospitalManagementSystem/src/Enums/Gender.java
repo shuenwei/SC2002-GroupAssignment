@@ -1,4 +1,4 @@
-package Enums;
+package src.Enums;
 
 /**
  * The {@code Gender} enum represents the possible gender identities.

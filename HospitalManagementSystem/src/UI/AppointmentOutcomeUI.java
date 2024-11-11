@@ -1,16 +1,16 @@
-package UI;
+package src.UI;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.ArrayList;
 
-import Controller.DoctorController;
-import Entity.*;
-import Controller.AppointmentOutcomeController;
-import Enums.AppointmentStatus;
-import Interface.IDisplayableView;
-import Interface.IListDisplayableView;
-import View.CommonView;
+import src.Controller.DoctorController;
+import src.Entity.*;
+import src.Controller.AppointmentOutcomeController;
+import src.Enums.AppointmentStatus;
+import src.Interface.IDisplayableView;
+import src.Interface.IListDisplayableView;
+import src.View.CommonView;
 
 /**
  * The {@code AppointmentOutcomeUI} class provides a user interface for creating appointment outcomes,

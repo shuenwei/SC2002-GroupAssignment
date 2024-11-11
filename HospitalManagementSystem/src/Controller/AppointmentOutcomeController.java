@@ -1,9 +1,9 @@
-package Controller;
+package src.Controller;
 
-import Entity.Appointment;
-import Entity.AppointmentOutcomeRecord;
-import Entity.PrescribedMedication;
-import Repository.InventoryRepository;
+import src.Entity.Appointment;
+import src.Entity.AppointmentOutcomeRecord;
+import src.Entity.PrescribedMedication;
+import src.Repository.InventoryRepository;
 
 import java.util.ArrayList;
 

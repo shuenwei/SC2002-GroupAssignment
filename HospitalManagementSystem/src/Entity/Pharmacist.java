@@ -1,6 +1,7 @@
-package Entity;
+package src.Entity;
 
-import UI.PharmacistUI;
+import src.UI.PharmacistUI;
+import src.Enums.*;
 
 /**
  * The Pharmacist class represents a pharmacist in the system, inheriting from the Staff class.
@@ -18,7 +19,7 @@ public class Pharmacist extends Staff {
      * @param role       The role of the pharmacist.
      * @param age        The age of the pharmacist.
      */
-    public Pharmacist(String hospitalId,String password, String name, String gender,Enums.Role role, int age) {
+    public Pharmacist(String hospitalId,String password, String name, String gender,Role role, int age) {
         super(hospitalId,password,name,gender,role,age);
     }
 

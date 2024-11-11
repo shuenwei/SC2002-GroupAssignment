@@ -1,4 +1,4 @@
-package Enums;
+package src.Enums;
 
 /**
  * The {@code AppointmentStatus} enum represents the various statuses that an appointment can have.

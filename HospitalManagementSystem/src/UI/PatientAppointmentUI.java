@@ -1,13 +1,14 @@
-package UI;
+package src.UI;
 
-import Entity.Appointment;
-import Entity.Availability;
-import Entity.Doctor;
-import Entity.Patient;
-import Interface.IListDisplayableView;
-import Interface.IDisplayableView;
-import Repository.UserRepository;
-import View.CommonView;
+import src.Entity.Appointment;
+import src.Entity.Availability;
+import src.Entity.Doctor;
+import src.Entity.Patient;
+import src.Enums.*;
+import src.Interface.IListDisplayableView;
+import src.Interface.IDisplayableView;
+import src.Repository.UserRepository;
+import src.View.CommonView;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -18,9 +19,9 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
-import Controller.AppointmentController;
-import Controller.AvailabilityController;
-import Controller.PatientController;
+import src.Controller.AppointmentController;
+import src.Controller.AvailabilityController;
+import src.Controller.PatientController;
 
 /**
  * Provides a user interface for managing patient appointments, including viewing available slots, 
@@ -203,8 +204,8 @@ public class PatientAppointmentUI extends AppointmentUI {
      */
     public void rescheduleAppointment(IDisplayableView<Appointment> appointmentView,IListDisplayableView<Appointment> appointmentListView, PatientController patientController){
         
-        ArrayList<Appointment> appointments = patientController.getAppointmentsByStatus(Enums.AppointmentStatus.CONFIRMED);
-        ArrayList<Appointment> pendingAppointments = patientController.getAppointmentsByStatus(Enums.AppointmentStatus.PENDING);
+        ArrayList<Appointment> appointments = patientController.getAppointmentsByStatus(AppointmentStatus.CONFIRMED);
+        ArrayList<Appointment> pendingAppointments = patientController.getAppointmentsByStatus(AppointmentStatus.PENDING);
         appointments.addAll(pendingAppointments);
 
         if (appointments.isEmpty()) {
@@ -301,7 +302,7 @@ public class PatientAppointmentUI extends AppointmentUI {
         LocalTime selectedTime = availableSlots.get(slotChoice - 1);
         selectedAppointment.setDate(selectedDate);
         selectedAppointment.setTime(selectedTime);
-        selectedAppointment.setStatus(Enums.AppointmentStatus.PENDING);
+        selectedAppointment.setStatus(AppointmentStatus.PENDING);
         System.out.println("Appointment has been rescheduled successfully.");
         System.out.println();
         System.out.println("Here are your new appointment details:");
@@ -315,11 +316,11 @@ public class PatientAppointmentUI extends AppointmentUI {
      */
     public void displayAppointments(IListDisplayableView<Appointment> appointmentListView, PatientController patientController){
         
-        ArrayList<Appointment> pendingAppointments = patientController.getAppointmentsByStatus(Enums.AppointmentStatus.PENDING);
-        ArrayList<Appointment> confirmedAppointments = patientController.getAppointmentsByStatus(Enums.AppointmentStatus.CONFIRMED);
-        ArrayList<Appointment> medicinePendingAppointments = patientController.getAppointmentsByStatus(Enums.AppointmentStatus.MEDICINE_PENDING);
-        ArrayList<Appointment> completedAppointments = patientController.getAppointmentsByStatus(Enums.AppointmentStatus.COMPLETED);
-        ArrayList<Appointment> cancelledAppointments = patientController.getAppointmentsByStatus(Enums.AppointmentStatus.CANCELLED);
+        ArrayList<Appointment> pendingAppointments = patientController.getAppointmentsByStatus(AppointmentStatus.PENDING);
+        ArrayList<Appointment> confirmedAppointments = patientController.getAppointmentsByStatus(AppointmentStatus.CONFIRMED);
+        ArrayList<Appointment> medicinePendingAppointments = patientController.getAppointmentsByStatus(AppointmentStatus.MEDICINE_PENDING);
+        ArrayList<Appointment> completedAppointments = patientController.getAppointmentsByStatus(AppointmentStatus.COMPLETED);
+        ArrayList<Appointment> cancelledAppointments = patientController.getAppointmentsByStatus(AppointmentStatus.CANCELLED);
 
         super.displayAppointments(appointmentListView, pendingAppointments, confirmedAppointments, medicinePendingAppointments, completedAppointments, cancelledAppointments);
     
@@ -332,8 +333,8 @@ public class PatientAppointmentUI extends AppointmentUI {
      */
     public void cancelAppointment(IListDisplayableView<Appointment> appointmentListView, PatientController patientController){
         
-        ArrayList<Appointment> appointments = patientController.getAppointmentsByStatus(Enums.AppointmentStatus.CONFIRMED);
-        ArrayList<Appointment> pendingAppointments = patientController.getAppointmentsByStatus(Enums.AppointmentStatus.PENDING);
+        ArrayList<Appointment> appointments = patientController.getAppointmentsByStatus(AppointmentStatus.CONFIRMED);
+        ArrayList<Appointment> pendingAppointments = patientController.getAppointmentsByStatus(AppointmentStatus.PENDING);
         appointments.addAll(pendingAppointments);
 
         if (appointments.isEmpty()) {
@@ -363,7 +364,7 @@ public class PatientAppointmentUI extends AppointmentUI {
         }
 
         Appointment selectedAppointment = appointments.get(choice-1);
-        selectedAppointment.setStatus(Enums.AppointmentStatus.CANCELLED);
+        selectedAppointment.setStatus(AppointmentStatus.CANCELLED);
         System.out.println("Appointment has been cancelled successfully.");
     }
 
@@ -383,7 +384,7 @@ public class PatientAppointmentUI extends AppointmentUI {
 
             for (int i = 0; i < existingAppointments.size(); i++) {
                 Appointment appointment = existingAppointments.get(i);
-                if (appointment.getDate().equals(selectedDate) && appointment.getTime().equals(startTime) && !appointment.getStatus().equals(Enums.AppointmentStatus.CANCELLED)) {
+                if (appointment.getDate().equals(selectedDate) && appointment.getTime().equals(startTime) && !appointment.getStatus().equals(AppointmentStatus.CANCELLED)) {
                     slotOccupied++;
                     break;
                 }

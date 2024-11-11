@@ -1,6 +1,6 @@
-package Entity;
+package src.Entity;
 
-import Enums.PrescriptionStatus;
+import src.Enums.PrescriptionStatus;
 
 /**
  * The PrescribedMedication class represents a medication that has been prescribed to a patient.

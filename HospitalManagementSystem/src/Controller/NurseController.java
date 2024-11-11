@@ -1,9 +1,9 @@
-package Controller;
+package src.Controller;
 
-import Entity.Nurse;
-import Entity.Patient;
-import Entity.User;
-import Repository.UserRepository;
+import src.Entity.Nurse;
+import src.Entity.Patient;
+import src.Entity.User;
+import src.Repository.UserRepository;
 
 /**
  * The NurseController class provides methods for nurses to manage patient data,

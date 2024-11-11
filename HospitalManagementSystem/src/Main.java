@@ -1,6 +1,8 @@
-import UI.LoginUI;
-import Util.*;
-import View.CommonView;
+package src;
+
+import src.UI.LoginUI;
+import src.Util.*;
+import src.View.CommonView;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 

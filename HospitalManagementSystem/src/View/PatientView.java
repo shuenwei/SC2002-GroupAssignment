@@ -1,7 +1,7 @@
-package View;
+package src.View;
 
-import Entity.Patient;
-import Interface.IDisplayableView;
+import src.Entity.Patient;
+import src.Interface.IDisplayableView;
 
 /**
  * The PatientView class is responsible for displaying the details of a patient.

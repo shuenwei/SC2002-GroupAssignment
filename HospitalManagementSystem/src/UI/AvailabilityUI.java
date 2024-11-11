@@ -1,9 +1,9 @@
-package UI;
+package src.UI;
 
-import Controller.AvailabilityController;
-import Entity.Doctor;
-import View.CommonView;
-import View.ScheduleView;
+import src.Controller.AvailabilityController;
+import src.Entity.Doctor;
+import src.View.CommonView;
+import src.View.ScheduleView;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;

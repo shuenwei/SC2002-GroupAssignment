@@ -1,4 +1,4 @@
-package Entity;
+package src.Entity;
 
 /**
  * The User class represents a generic user in the hospital system.

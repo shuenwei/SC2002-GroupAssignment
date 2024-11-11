@@ -1,7 +1,7 @@
-package View;
+package src.View;
 
-import Entity.Staff;
-import Interface.IDisplayableView;
+import src.Entity.Staff;
+import src.Interface.IDisplayableView;
 
 /**
  * The StaffListView class is responsible for displaying a list of staff members.

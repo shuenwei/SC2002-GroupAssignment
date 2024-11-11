@@ -1,8 +1,8 @@
-package Repository;
+package src.Repository;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import Entity.*;
+import src.Entity.*;
 
 /**
  * The UserRepository class provides methods for managing user entities in a static repository.

@@ -1,4 +1,6 @@
-package Entity;
+package src.Entity;
+
+import src.Enums.*;
 
 /**
  * The Staff class is an abstract class that represents a staff member in the hospital system.
@@ -10,7 +12,7 @@ public abstract class Staff extends User {
 	/**
      * The role of the staff member, indicating their job title (e.g., Doctor, Nurse, etc.).
      */
-	private Enums.Role role;
+	private Role role;
 
     /**
      * The age of the staff member.
@@ -27,7 +29,7 @@ public abstract class Staff extends User {
      * @param role The role of the staff member (e.g., Doctor, Nurse).
      * @param age The age of the staff member.
      */
-	public Staff(String hospitalId,String password, String name, String gender,Enums.Role role, int age) {
+	public Staff(String hospitalId,String password, String name, String gender,Role role, int age) {
 		super(hospitalId,password,name,gender);
 		this.age = age;
 		this.role = role;
@@ -38,7 +40,7 @@ public abstract class Staff extends User {
      *
      * @return The role of the staff member.
      */
-	public Enums.Role getRole() {
+	public Role getRole() {
 		return role;
 	}
 
@@ -47,7 +49,7 @@ public abstract class Staff extends User {
      *
      * @param role The new role of the staff member.
      */
-	public void setRole(Enums.Role role) {
+	public void setRole(Role role) {
 		this.role = role;
 	}
 

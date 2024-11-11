@@ -1,8 +1,8 @@
-package UI;
+package src.UI;
 
-import Entity.*;
-import Interface.IDisplayableView;
-import Interface.IListDisplayableView;
+import src.Entity.*;
+import src.Interface.IDisplayableView;
+import src.Interface.IListDisplayableView;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;

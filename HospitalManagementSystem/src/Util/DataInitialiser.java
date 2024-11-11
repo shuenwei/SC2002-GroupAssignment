@@ -1,10 +1,8 @@
-package Util;
+package src.Util;
 
-import Entity.*;
-import Enums.AppointmentStatus;
-import Enums.PrescriptionStatus;
-import Enums.RequestStatus;
-import Repository.*;
+import src.Entity.*;
+import src.Enums.*;
+import src.Repository.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -82,16 +80,16 @@ public class DataInitialiser {
                 int age = Integer.parseInt(staffCsv[5]);
 
                 if (role.equals("DOCTOR")) {
-                    Doctor doctor = new Doctor(hospitalId, password, name, gender, Enums.Role.DOCTOR, age);
+                    Doctor doctor = new Doctor(hospitalId, password, name, gender, Role.DOCTOR, age);
                     UserRepository.add(doctor);
                 } else if (role.equals("PHARMACIST")) {
-                    Pharmacist pharmacist = new Pharmacist(hospitalId, password, name, gender, Enums.Role.PHARMACIST, age);
+                    Pharmacist pharmacist = new Pharmacist(hospitalId, password, name, gender, Role.PHARMACIST, age);
                     UserRepository.add(pharmacist);
                 } else if (role.equals("ADMINISTRATOR")) {
-                    Administrator administrator = new Administrator(hospitalId, password, name, gender, Enums.Role.ADMINISTRATOR, age);
+                    Administrator administrator = new Administrator(hospitalId, password, name, gender, Role.ADMINISTRATOR, age);
                     UserRepository.add(administrator);
                 } else if (role.equals("NURSE")) {
-                    Nurse nurse = new Nurse(hospitalId, password, name, gender, Enums.Role.NURSE, age);
+                    Nurse nurse = new Nurse(hospitalId, password, name, gender, Role.NURSE, age);
                     UserRepository.add(nurse);
                 } else {
                     throw new IllegalArgumentException("Invalid role: " + role);

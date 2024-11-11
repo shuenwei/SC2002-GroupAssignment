@@ -1,7 +1,7 @@
-package View;
+package src.View;
 
-import Entity.Staff;
-import Interface.IListDisplayableView;
+import src.Entity.Staff;
+import src.Interface.IListDisplayableView;
 import java.util.ArrayList;
 
 /**

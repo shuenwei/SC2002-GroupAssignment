@@ -1,14 +1,14 @@
-package Controller;
+package src.Controller;
 
-import Entity.Appointment;
-import Entity.Medication;
-import Entity.Pharmacist;
-import Entity.PrescribedMedication;
-import Entity.Request;
-import Enums.AppointmentStatus;
-import Enums.PrescriptionStatus;
-import Repository.AppointmentRepository;
-import Repository.InventoryRepository;
+import src.Entity.Appointment;
+import src.Entity.Medication;
+import src.Entity.Pharmacist;
+import src.Entity.PrescribedMedication;
+import src.Entity.Request;
+import src.Enums.AppointmentStatus;
+import src.Enums.PrescriptionStatus;
+import src.Repository.AppointmentRepository;
+import src.Repository.InventoryRepository;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -89,7 +89,7 @@ public class PharmacistController extends StaffController {
 
                 Medication med = InventoryRepository.get(a.getAppointmentOutcomeRecord().getPrescribedMedications().get(choice - 1).getMedicineName());
                 
-                if (med.getStock() > 0 && a.getAppointmentOutcomeRecord().getPrescribedMedications().get(choice - 1).getStatus() == Enums.PrescriptionStatus.PENDING) {
+                if (med.getStock() > 0 && a.getAppointmentOutcomeRecord().getPrescribedMedications().get(choice - 1).getStatus() == PrescriptionStatus.PENDING) {
                     med.setStock(med.getStock() - 1);
                     a.getAppointmentOutcomeRecord().getPrescribedMedications().get(choice - 1).setStatus(PrescriptionStatus.DISPENSED);
                     System.out.println(a.getAppointmentOutcomeRecord().getPrescribedMedications().get(choice - 1).getMedicineName() + " has been dispensed!");
@@ -108,7 +108,7 @@ public class PharmacistController extends StaffController {
 
         // Check if all prescribed medications have been dispensed to update appointment status
         for (int i = 0; i < a.getAppointmentOutcomeRecord().getPrescribedMedications().size(); i++) {
-            if (a.getAppointmentOutcomeRecord().getPrescribedMedications().get(i).getStatus() != Enums.PrescriptionStatus.DISPENSED) {
+            if (a.getAppointmentOutcomeRecord().getPrescribedMedications().get(i).getStatus() != PrescriptionStatus.DISPENSED) {
                 System.out.println("Appointment Status not Completed!");
                 return;
             }
@@ -123,7 +123,7 @@ public class PharmacistController extends StaffController {
      * @param status The status of the appointments to retrieve.
      * @return A list of appointments matching the specified status.
      */
-    public ArrayList<Appointment> getAllAppointmentsByStatus(Enums.AppointmentStatus status) {
+    public ArrayList<Appointment> getAllAppointmentsByStatus(AppointmentStatus status) {
         ArrayList<Appointment> filteredAppointments = new ArrayList<>();
         ArrayList<Appointment> appointments = AppointmentRepository.getAllAppointments();
         

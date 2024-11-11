@@ -1,12 +1,12 @@
-package UI;
+package src.UI;
 
-import Entity.MedicalHistory;
-import Entity.MedicalRecord;
+import src.Entity.MedicalHistory;
+import src.Entity.MedicalRecord;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-import Controller.DoctorController;
-import Interface.IListDisplayableView;
+import src.Controller.DoctorController;
+import src.Interface.IListDisplayableView;
 
 /**
  * User interface for managing medical records, allowing doctors to view and edit

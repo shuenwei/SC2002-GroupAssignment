@@ -1,8 +1,8 @@
-package View;
+package src.View;
 
-import Entity.Medication;
-import Interface.IListDisplayableView;
-import Repository.InventoryRepository;
+import src.Entity.Medication;
+import src.Interface.IListDisplayableView;
+import src.Repository.InventoryRepository;
 import java.util.ArrayList;
 
 /**

@@ -1,16 +1,17 @@
-package UI;
+package src.UI;
 
-import Entity.Appointment;
-import Entity.Doctor;
-import Interface.IDisplayableView;
-import Interface.IListDisplayableView;
+import src.Entity.Appointment;
+import src.Entity.Doctor;
+import src.Interface.IDisplayableView;
+import src.Interface.IListDisplayableView;
+import src.Enums.*;
 
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-import Controller.DoctorController;
+import src.Controller.DoctorController;
 
 /**
  * A user interface for managing a doctor's appointments, allowing the doctor to
@@ -60,7 +61,7 @@ public class DoctorAppointmentUI extends AppointmentUI {
      */
     public void acceptDecline(IDisplayableView<Appointment> appointmentView, IListDisplayableView<Appointment> appointmentListView, DoctorController doctorController){
 
-        ArrayList<Appointment> pendingAppointments = doctorController.getAppointmentsByStatus(Enums.AppointmentStatus.PENDING);
+        ArrayList<Appointment> pendingAppointments = doctorController.getAppointmentsByStatus(AppointmentStatus.PENDING);
 
         if (pendingAppointments.isEmpty()) {
             System.out.println("You have no Pending Appointments.");
@@ -116,11 +117,11 @@ public class DoctorAppointmentUI extends AppointmentUI {
         }
 
         if (statusChoice == 1) {
-            selectedAppointment.setStatus(Enums.AppointmentStatus.CONFIRMED);
+            selectedAppointment.setStatus(AppointmentStatus.CONFIRMED);
             System.out.println("Appointment Status updated to CONFIRMED");
         }
         else if (statusChoice == 2) {
-            selectedAppointment.setStatus(Enums.AppointmentStatus.CANCELLED);
+            selectedAppointment.setStatus(AppointmentStatus.CANCELLED);
             System.out.println("Appointment Status updated to CANCELLED");
         }
 
@@ -135,11 +136,11 @@ public class DoctorAppointmentUI extends AppointmentUI {
      */
     public void displayAppointments(IListDisplayableView<Appointment> appointmentListView,DoctorController doctorController){
     
-        ArrayList<Appointment> pendingAppointments = doctorController.getAppointmentsByStatus(Enums.AppointmentStatus.PENDING);
-        ArrayList<Appointment> confirmedAppointments = doctorController.getAppointmentsByStatus(Enums.AppointmentStatus.CONFIRMED);
-        ArrayList<Appointment> medicinePendingAppointments = doctorController.getAppointmentsByStatus(Enums.AppointmentStatus.MEDICINE_PENDING);
-        ArrayList<Appointment> completedAppointments = doctorController.getAppointmentsByStatus(Enums.AppointmentStatus.COMPLETED);
-        ArrayList<Appointment> cancelledAppointments = doctorController.getAppointmentsByStatus(Enums.AppointmentStatus.CANCELLED);
+        ArrayList<Appointment> pendingAppointments = doctorController.getAppointmentsByStatus(AppointmentStatus.PENDING);
+        ArrayList<Appointment> confirmedAppointments = doctorController.getAppointmentsByStatus(AppointmentStatus.CONFIRMED);
+        ArrayList<Appointment> medicinePendingAppointments = doctorController.getAppointmentsByStatus(AppointmentStatus.MEDICINE_PENDING);
+        ArrayList<Appointment> completedAppointments = doctorController.getAppointmentsByStatus(AppointmentStatus.COMPLETED);
+        ArrayList<Appointment> cancelledAppointments = doctorController.getAppointmentsByStatus(AppointmentStatus.CANCELLED);
 
         super.displayAppointments(appointmentListView, pendingAppointments, confirmedAppointments, medicinePendingAppointments, completedAppointments, cancelledAppointments);
 

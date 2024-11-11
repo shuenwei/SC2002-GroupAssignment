@@ -1,7 +1,7 @@
-package Controller;
+package src.Controller;
 
-import Entity.*;
-import Repository.*;
+import src.Entity.*;
+import src.Repository.*;
 
 /**
  * The {@code AuthController} class handles user authentication and password management.

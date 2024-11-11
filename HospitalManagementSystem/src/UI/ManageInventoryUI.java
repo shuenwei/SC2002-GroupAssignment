@@ -1,11 +1,11 @@
-package UI;
+package src.UI;
 
-import Controller.AdministratorController;
-import Entity.Medication;
-import Interface.IDisplayableView;
-import Interface.IListDisplayableView;
-import Repository.InventoryRepository;
-import View.CommonView;
+import src.Controller.AdministratorController;
+import src.Entity.Medication;
+import src.Interface.IDisplayableView;
+import src.Interface.IListDisplayableView;
+import src.Repository.InventoryRepository;
+import src.View.CommonView;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 

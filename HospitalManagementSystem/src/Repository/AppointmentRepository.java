@@ -1,6 +1,6 @@
-package Repository;
+package src.Repository;
 
-import Entity.*;
+import src.Entity.*;
 import java.util.ArrayList;
 
 /**

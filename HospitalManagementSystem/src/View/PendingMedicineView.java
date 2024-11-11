@@ -1,7 +1,7 @@
-package View;
+package src.View;
 
-import Entity.Appointment;
-import Entity.PrescribedMedication;
+import src.Entity.Appointment;
+import src.Entity.PrescribedMedication;
 import java.util.ArrayList;
 
 /**

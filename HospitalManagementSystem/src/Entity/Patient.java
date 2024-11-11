@@ -1,7 +1,7 @@
-package Entity;
+package src.Entity;
 
 
-import UI.PatientUI;
+import src.UI.PatientUI;
 import java.util.*;
 
 /**

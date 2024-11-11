@@ -1,8 +1,8 @@
-package UI;
+package src.UI;
 
-import Controller.AuthController;
-import Entity.*;
-import View.CommonView;
+import src.Controller.AuthController;
+import src.Entity.*;
+import src.View.CommonView;
 import java.util.Scanner;
 
 /**

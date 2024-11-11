@@ -1,6 +1,7 @@
-package Entity;
+package src.Entity;
 
-import UI.NurseUI;
+import src.UI.NurseUI;
+import src.Enums.*;
 
 /**
  * The Nurse class represents a nurse in the system, extending the Staff class.
@@ -18,7 +19,7 @@ public class Nurse extends Staff{
      * @param role       The role of the nurse in the system.
      * @param age        The age of the nurse.
      */
-    public Nurse(String hospitalId,String password, String name, String gender,Enums.Role role, int age) {
+    public Nurse(String hospitalId,String password, String name, String gender,Role role, int age) {
         super(hospitalId,password,name,gender,role,age);
     }
 

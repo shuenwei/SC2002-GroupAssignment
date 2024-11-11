@@ -1,4 +1,4 @@
-package Interface;
+package src.Interface;
 
 /**
  * The IDisplayableView interface provides a method for displaying a specific object of type T.

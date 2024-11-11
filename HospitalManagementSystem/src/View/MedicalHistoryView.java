@@ -1,7 +1,7 @@
-package View;
+package src.View;
 
-import Entity.MedicalHistory;
-import Interface.IDisplayableView;
+import src.Entity.MedicalHistory;
+import src.Interface.IDisplayableView;
 
 /**
  * The MedicalHistoryView class is responsible for displaying the details of a single medical history record.
