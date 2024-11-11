@@ -17,19 +17,26 @@ public class NurseUI {
     private Patient patient;
     private Scanner scanner;
      
-    
+    /**
+     * Constructs a NurseUI with the specified nurse and initializes a scanner for input.
+     *
+     * @param nurse The nurse associated with this user interface.
+     */
     public NurseUI(Nurse nurse) {
         this.nurse = nurse;
         scanner = new Scanner(System.in);
     }
 
-     public void displayMenu(){
+    /**
+     * Displays the main menu for the nurse, providing options to view, add, and remove patients,
+     * as well as to log out of the system.
+     */
+    public void displayMenu(){
         int option = -1;
 
         NurseController nurseController = new NurseController(nurse);
         IDisplayableView<Patient> patientView = new PatientView();
 
-        
         do {
             try {
                 CommonView.newPage();
@@ -77,6 +84,12 @@ public class NurseUI {
         } while (option != 4);
     }
 
+    /**
+     * Adds a new patient to the system by prompting the nurse to enter the patient's information.
+     * Validates input fields and assigns a unique hospital ID to the new patient.
+     *
+     * @param nurseController The controller responsible for managing patient operations.
+     */
     public void addPatient(NurseController nurseController) {
 
         try{
@@ -140,6 +153,12 @@ public class NurseUI {
 
     }
 
+    /**
+     * Removes a patient from the system based on their hospital ID.
+     * Prompts the nurse for the patient's ID and confirms removal if the patient is found.
+     *
+     * @param nurseController The controller responsible for managing patient operations.
+     */
     public void removePatient(NurseController nurseController) {
 
         try{
@@ -164,8 +183,6 @@ public class NurseUI {
         System.out.println("An unexpected error occurred: " + e.getMessage());
         }
 
-        }
+    }
 
 }
-
-

@@ -17,6 +17,10 @@ import View.ViewListInventory;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+/**
+ * The AdministratorUI class provides a user interface for administrators to manage
+ * hospital staff, appointments, and medication inventory, and approve replenishment requests.
+ */
 public class AdministratorUI {
 
     private Administrator administrator;
@@ -24,16 +28,22 @@ public class AdministratorUI {
     private ManageInventoryUI manageInventoryUI;
     private Scanner scanner;
 
-
+    /**
+     * Constructs an AdministratorUI for a specific administrator, initializing the input scanner.
+     *
+     * @param administrator The administrator associated with this UI.
+     */
     public AdministratorUI(Administrator administrator) {
         this.administrator = administrator;
         scanner = new Scanner(System.in);
-        
     }
 
+    /**
+     * Displays the main menu for the administrator, providing options to manage staff,
+     * view appointments, manage inventory, approve requests, or log out.
+     */
     public void displayMenu(){
         int option = -1;
-
 
         AdministratorController administratorController = new AdministratorController(administrator);
         manageInventoryUI = new ManageInventoryUI();
@@ -44,12 +54,10 @@ public class AdministratorUI {
         IListDisplayableView<Medication> inventoryView = new ViewListInventory();
         IDisplayableView<Medication> medicationView = new ViewInventory();
 
-
         do {
             try {
                 CommonView.newPage();
                 System.out.println("Hello, " + administrator.getName());
-                System.out.println();
                 System.out.println();
                 System.out.println("Select an option:");
                 System.out.println();
@@ -61,11 +69,14 @@ public class AdministratorUI {
                 option = scanner.nextInt();
 
                 switch (option) {
-                    case 1: manageStaffUI.manageUserMenu(administratorController,staffView,staffListView);
-                            break;
-                    case 2: administratorController.showAllAppointments(appointmentView); 
-                            break;
-                    case 3: manageInventoryUI.manageInventoryMenu(administratorController,inventoryView, medicationView);
+                    case 1:
+                        manageStaffUI.manageUserMenu(administratorController, staffView, staffListView);
+                        break;
+                    case 2:
+                        administratorController.showAllAppointments(appointmentView); 
+                        break;
+                    case 3:
+                        manageInventoryUI.manageInventoryMenu(administratorController, inventoryView, medicationView);
                         break;
                     case 4:
                         requestMenu(administratorController, medicationView);
@@ -84,13 +95,19 @@ public class AdministratorUI {
         } while (option != 5);
     }
 
-
+    /**
+     * Displays the request menu for managing replenishment requests, allowing the administrator to
+     * view or approve requests or return to the previous menu.
+     *
+     * @param administratorController The controller responsible for handling administrator actions.
+     * @param medicationView          The view interface for displaying medication details.
+     */
     public void requestMenu(AdministratorController administratorController, IDisplayableView<Medication> medicationView){ 
         int choice = -1;
         String requestMedicine;
         
-        do{
-            try{
+        do {
+            try {
                 CommonView.newPage();
                 System.out.println();
                 System.out.println("Select an option:");
@@ -98,7 +115,6 @@ public class AdministratorUI {
                 System.out.println("(1) View Requests");
                 System.out.println("(2) Approve Request");
                 System.out.println("(3) Back");
-
 
                 choice = scanner.nextInt();
                 switch(choice) {
@@ -113,21 +129,17 @@ public class AdministratorUI {
                         administratorController.approveRequest(requestMedicine);
                         medicationView.display(InventoryRepository.get(requestMedicine));
                         break;
-                    case 3: return;
+                    case 3:
+                        return;
                     default:
                         System.out.println("Invalid input. Please enter an integer between 1 and 3!");
                 }
-            }catch (InputMismatchException e) {
+            } catch (InputMismatchException e) {
                 System.out.println("Invalid input. Please enter an integer 1 and 3!.");
                 scanner.next(); 
             } catch (Exception e) {
                 System.out.println("An error occurred: " + e.getMessage());
             }
-        }while(choice != 3);
+        } while (choice != 3);
     }
-
 }
-
-
-
-

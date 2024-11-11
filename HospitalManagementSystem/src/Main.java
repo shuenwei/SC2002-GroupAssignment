@@ -4,7 +4,19 @@ import View.CommonView;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+/**
+ * The Main class serves as the entry point for the Hospital Management System (HMS).
+ * It displays the main menu, allowing the user to log in or shut down the system.
+ */
 public class Main {
+
+    /**
+     * The main method initializes the system data and presents a menu to the user
+     * for logging in or shutting down the system. It handles user input errors
+     * and ensures data is saved upon shutdown.
+     *
+     * @param args Command-line arguments (not used).
+     */
     public static void main(String args[]) {
 
         int choice = 0;
@@ -13,7 +25,7 @@ public class Main {
         DataInitialiser.initialiseAll();
 
         while (true) {
-            try{
+            try {
                 CommonView.newPage();
                 System.out.println("Welcome to Hospital Management System");
                 System.out.println("(1) Login");
@@ -31,17 +43,15 @@ public class Main {
                     default:
                         System.out.println("Invalid input. Please enter an integer of either 1 or 2!");
                         break;
-                    }
+                }
 
-            }catch(InputMismatchException e){
+            } catch(InputMismatchException e) {
                 System.out.println("Invalid input. Please enter an integer of either 1 or 2!");
                 scanner.next(); 
-            }catch (Exception e) {
+            } catch (Exception e) {
                 System.out.println("HMS crashed. Please restart the system.");
                 System.out.println("Error: " + e.getMessage());
             }
         }
     }
 }
-
-
