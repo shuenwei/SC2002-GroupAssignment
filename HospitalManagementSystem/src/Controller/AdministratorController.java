@@ -538,7 +538,16 @@ public class AdministratorController extends StaffController{
             if(UserRepository.get(hospID) instanceof Administrator || UserRepository.get(hospID) instanceof Doctor || UserRepository.get(hospID) instanceof Pharmacist || UserRepository.get(hospID) instanceof Nurse) {
                 User removedStaff = UserRepository.get(hospID);
                 System.out.println("The following staff is removed: ");
-                staffView.display((Staff) removedStaff);    
+                staffView.display((Staff) removedStaff); 
+                if(removedStaff instanceof Doctor){
+                    for(Appointment a : ((Doctor) removedStaff).getAppointments()){
+                        
+                        if(a.getStatus().equals(Enums.AppointmentStatus.PENDING) || a.getStatus().equals(Enums.AppointmentStatus.CONFIRMED)){
+                            a.setStatus(Enums.AppointmentStatus.CANCELLED);
+                        }
+                        
+                    }
+                }
                 removeStaff(hospID);
             } else {
                 throw new IllegalArgumentException("Error: Invalid Removal. Staff not found!");
