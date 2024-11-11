@@ -12,20 +12,46 @@ import Interface.IDisplayableView;
 import Interface.IListDisplayableView;
 import View.CommonView;
 
+/**
+ * The {@code AppointmentOutcomeUI} class provides a user interface for creating appointment outcomes,
+ * enabling doctors to record services, consultation notes, and prescribed medications for a selected appointment.
+ * It allows doctors to update the appointment status and optionally add the outcome record to the patient's medical history.
+ */
 public class AppointmentOutcomeUI {
 
-    private AppointmentOutcomeController appointment;
     private Doctor doctor;
-    private DoctorController doctorController;
     private Scanner scanner;
     Scanner sc = new Scanner(System.in);
 
+    /**
+     * Constructs an {@code AppointmentOutcomeUI} with the specified doctor.
+     *
+     * @param doctor the doctor associated with this appointment outcome UI
+     */
     public AppointmentOutcomeUI(Doctor doctor) {
         this.doctor = doctor;
         scanner = new Scanner(System.in);
     }
 
-    public void createAppointmentOutcome(IListDisplayableView<Appointment> appointmentListView, IDisplayableView<AppointmentOutcomeRecord> appointmentOutcomeRecordView, IDisplayableView<MedicalHistory> medicalHistoryView, DoctorController doctorController) {
+    /**
+     * Creates an appointment outcome record for a confirmed appointment.
+     * This method:
+     * <ul>
+     * <li>Displays confirmed appointments and prompts the user to select one.</li>
+     * <li>Records details such as the type of service provided, consultation notes, and prescribed medications.</li>
+     * <li>Sets the appointment status to "COMPLETED" or "MEDICINE_PENDING" based on prescribed medications.</li>
+     * <li>Provides an option to add the outcome record to the patient's medical history.</li>
+     * </ul>
+     *
+     * @param appointmentListView         the view to display the list of appointments
+     * @param appointmentOutcomeRecordView the view to display the created appointment outcome record
+     * @param medicalHistoryView          the view to display the patient's medical history
+     * @param doctorController            the controller for retrieving confirmed appointments
+     */
+    public void createAppointmentOutcome(IListDisplayableView<Appointment> appointmentListView,
+                                         IDisplayableView<AppointmentOutcomeRecord> appointmentOutcomeRecordView,
+                                         IDisplayableView<MedicalHistory> medicalHistoryView,
+                                         DoctorController doctorController) {
         ArrayList<Appointment> ConfirmedAppointments = doctorController.getAppointmentsByStatus(AppointmentStatus.CONFIRMED);
 
         if (ConfirmedAppointments.isEmpty()) {
@@ -61,6 +87,7 @@ public class AppointmentOutcomeUI {
         ArrayList<PrescribedMedication> prescribedMedicationsList = new ArrayList<>();
         System.out.println("Create Appointment Outcome");
         System.out.println();
+
         String service = "";
         while (service.isEmpty()) {
             System.out.println("Enter type of service administered: ");
@@ -79,32 +106,32 @@ public class AppointmentOutcomeUI {
             }
         }
 
-        while(true) {
+        while (true) {
             System.out.print("Enter names of medication to be prescribed (If no more prescriptions type 'Exit') : ");
             String name = sc.nextLine();
-            if(name.equals("Exit")) {
+            if (name.equals("Exit")) {
                 break;
             }
 
             boolean exist = AppointmentOutcomeController.checkMedicationExist(name);
 
-            if(exist) {
+            if (exist) {
                 prescribedMedications.add(name);
                 System.out.println("Medication added: " + name);
             }
         }
 
-        for(String medication : prescribedMedications){
+        for (String medication : prescribedMedications) {
             PrescribedMedication prescribedMedication = new PrescribedMedication(medication);
             prescribedMedicationsList.add(prescribedMedication);
         }
 
-        AppointmentOutcomeRecord record = AppointmentOutcomeController.createAppointmentOutcomeRecord(service, notes, prescribedMedicationsList,selectedAppointment);
+        AppointmentOutcomeRecord record = AppointmentOutcomeController.createAppointmentOutcomeRecord(service, notes, prescribedMedicationsList, selectedAppointment);
         selectedAppointment.setAppointmentOutcomeRecord(record);
-        if(selectedAppointment.getAppointmentOutcomeRecord().getPrescribedMedications().size() == 0) {
+
+        if (selectedAppointment.getAppointmentOutcomeRecord().getPrescribedMedications().isEmpty()) {
             selectedAppointment.setStatus(AppointmentStatus.COMPLETED);
-        }
-        else {
+        } else {
             selectedAppointment.setStatus(AppointmentStatus.MEDICINE_PENDING);
         }
 
@@ -139,7 +166,7 @@ public class AppointmentOutcomeUI {
                 Patient patient = selectedAppointment.getPatient();
 
                 MedicalHistory newMedicalHistory = new MedicalHistory(record.getTypeOfService(), record.getConsultationNotes());
-                for(PrescribedMedication i :record.getPrescribedMedications()){
+                for (PrescribedMedication i : record.getPrescribedMedications()) {
                     newMedicalHistory.addPrescribedMedications(i.getMedicineName());
                 }
 
@@ -152,10 +179,6 @@ public class AppointmentOutcomeUI {
             case 2:
                 System.out.println("Medical History has not been updated");
                 break;
-
         }
     }
-
-
 }
-
