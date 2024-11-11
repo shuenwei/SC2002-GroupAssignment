@@ -104,6 +104,7 @@ public class NurseUI {
             if (hospGender.isEmpty()) {
                 throw new IllegalArgumentException("Gender cannot be empty.");
             }
+            Enums.Gender gender = Enums.Gender.valueOf(hospGender.toUpperCase());
             System.out.println("Date Of Birth (DD/MM/YYYY): ");
             String hospDate = scanner.nextLine();
             if (hospDate.isEmpty()) {
@@ -137,7 +138,7 @@ public class NurseUI {
             }
 
             max_p++;
-            patient = new Patient("P" + String.format("%04d", max_p), "",hospName, hospGender, hospDate, hospBlood, hospEmailAddress,hospPhoneNumber );
+            patient = new Patient("P" + String.format("%04d", max_p), "",hospName, gender, hospDate, hospBlood, hospEmailAddress,hospPhoneNumber );
 
             nurseController.addPatient((Patient) patient);
 

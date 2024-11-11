@@ -28,7 +28,7 @@ public class Patient extends User {
      * @param emailAddress The email address of the patient.
      * @param phoneNumber  The phone number of the patient.
      */
-    public Patient(String hospitalId,String password, String name, String gender, String dateOfBirth, String bloodType,String emailAddress, String phoneNumber) {
+    public Patient(String hospitalId,String password, String name, Enums.Gender gender, String dateOfBirth, String bloodType,String emailAddress, String phoneNumber) {
         super(hospitalId,password,name,gender);
         this.medicalRecord = new MedicalRecord(hospitalId, name, gender, dateOfBirth, bloodType, phoneNumber, emailAddress);
         appointments = new ArrayList<>();

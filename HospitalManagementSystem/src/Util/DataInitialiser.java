@@ -13,7 +13,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * The {@code DataInitialiser} class is responsible for loading and initializing application data
@@ -50,7 +49,7 @@ public class DataInitialiser {
                 String password = patientCsv[1];
                 String name = patientCsv[2];
                 String dateOfBirth = patientCsv[3];
-                String gender = patientCsv[4];
+                Enums.Gender gender = Enums.Gender.valueOf(patientCsv[4]);
                 String bloodType = patientCsv[5];
                 String emailAddress = patientCsv[6];
                 String phoneNumber = patientCsv[7];
@@ -78,7 +77,7 @@ public class DataInitialiser {
                 String password = staffCsv[1];
                 String name = staffCsv[2];
                 String role = staffCsv[3];
-                String gender = staffCsv[4];
+                Enums.Gender gender = Enums.Gender.valueOf(staffCsv[4]);
                 int age = Integer.parseInt(staffCsv[5]);
 
                 if (role.equals("DOCTOR")) {
