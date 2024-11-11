@@ -1,5 +1,8 @@
 package src.Controller;
 
+import java.util.ArrayList;
+import java.util.InputMismatchException;
+import java.util.Scanner;
 import src.Entity.Administrator;
 import src.Entity.Appointment;
 import src.Entity.Doctor;
@@ -15,9 +18,6 @@ import src.Interface.IDisplayableView;
 import src.Repository.AppointmentRepository;
 import src.Repository.InventoryRepository;
 import src.Repository.UserRepository;
-import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.Scanner;
 
 /**
  * The AdministratorController class provides methods for managing staff, inventory, and appointments,
@@ -84,7 +84,7 @@ public class AdministratorController extends StaffController{
      * @param staff  The staff member whose gender is to be updated.
      * @param gender The new gender to set for the staff member.
      */
-    public void updateStaffGender(Staff staff, Enums.Gender gender){
+    public void updateStaffGender(Staff staff, Gender gender){
         staff.setGender(gender);
     }
 
@@ -355,7 +355,7 @@ public class AdministratorController extends StaffController{
             if (hospGender.isEmpty()) {
                 throw new IllegalArgumentException("Gender cannot be empty.");
             }
-            Enums.Gender gender = Enums.Gender.valueOf(hospGender.toUpperCase());
+            Gender gender = Gender.valueOf(hospGender.toUpperCase());
             System.out.println("Enter Role: ");
             String hospRole = scanner.nextLine().toUpperCase();
             if (hospRole.isEmpty()) {
@@ -379,7 +379,7 @@ public class AdministratorController extends StaffController{
                 }
                 max_d++;
 
-                staff = new Doctor("D" + String.format("%03d", max_d), "", hospName, hospGender, Role.DOCTOR, hospAge);
+                staff = new Doctor("D" + String.format("%03d", max_d), "", hospName, gender, Role.DOCTOR, hospAge);
     
             } else if(hospRole.equals("PHARMACIST")) {
                 ArrayList<Pharmacist> pharmacists = UserRepository.getAllPharmacists();
@@ -391,7 +391,7 @@ public class AdministratorController extends StaffController{
                 }
                 max_p++;
 
-                staff = new Pharmacist("P" + String.format("%03d", max_p), "", hospName, hospGender, Role.PHARMACIST, hospAge);
+                staff = new Pharmacist("P" + String.format("%03d", max_p), "", hospName, gender, Role.PHARMACIST, hospAge);
 
             } else if(hospRole.equals("ADMINISTRATOR")) {
                 ArrayList<Administrator> administrators = UserRepository.getAllAdministrators();
@@ -403,7 +403,7 @@ public class AdministratorController extends StaffController{
                 }
                 max_a++;
 
-                staff = new Administrator("A" + String.format("%03d", max_a), "", hospName, hospGender, Role.ADMINISTRATOR, hospAge);
+                staff = new Administrator("A" + String.format("%03d", max_a), "", hospName, gender, Role.ADMINISTRATOR, hospAge);
 
             } else if(hospRole.equals("NURSE")) {
                 ArrayList<Nurse> nurses = UserRepository.getAllNurses();
@@ -415,7 +415,7 @@ public class AdministratorController extends StaffController{
                 }
                 max_n++;
 
-                staff = new Nurse("N" + String.format("%03d", max_n), "", hospName, hospGender, Role.NURSE, hospAge);
+                staff = new Nurse("N" + String.format("%03d", max_n), "", hospName, gender, Role.NURSE, hospAge);
 
             } else {
                 throw new IllegalArgumentException("Error: Invalid Role. Must be either Doctor, Pharmacist, Administrator, or Nurse.");
@@ -497,7 +497,7 @@ public class AdministratorController extends StaffController{
                     System.out.println("Enter Gender: ");
                     scanner.nextLine();
                     String hospGender = scanner.nextLine();
-                    Enums.Gender gender = Enums.Gender.valueOf(hospGender.toUpperCase());
+                    Gender gender = Gender.valueOf(hospGender.toUpperCase());
                     if (hospGender.isEmpty()) {
                         throw new IllegalArgumentException("Gender cannot be empty.");
                     }
@@ -549,8 +549,8 @@ public class AdministratorController extends StaffController{
                 if(removedStaff instanceof Doctor){
                     for(Appointment a : ((Doctor) removedStaff).getAppointments()){
                         
-                        if(a.getStatus().equals(Enums.AppointmentStatus.PENDING) || a.getStatus().equals(Enums.AppointmentStatus.CONFIRMED)){
-                            a.setStatus(Enums.AppointmentStatus.CANCELLED);
+                        if(a.getStatus().equals(AppointmentStatus.PENDING) || a.getStatus().equals(AppointmentStatus.CONFIRMED)){
+                            a.setStatus(AppointmentStatus.CANCELLED);
                         }
                         
                     }

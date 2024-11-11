@@ -1,7 +1,7 @@
 package src.Entity;
 
-import src.UI.AdministratorUI;
 import src.Enums.*;
+import src.UI.AdministratorUI;
 
 /**
  * The Administrator class represents a specific type of staff member, inheriting from the Staff class.
@@ -20,7 +20,7 @@ public class Administrator extends Staff {
      * @param age        The age of the administrator.
      */
 
-    public Administrator(String hospitalId,String password, String name, String gender,Role role, int age) {
+    public Administrator(String hospitalId,String password, String name, Gender gender,Role role, int age) {
 
         super(hospitalId,password,name,gender,role,age);
     }

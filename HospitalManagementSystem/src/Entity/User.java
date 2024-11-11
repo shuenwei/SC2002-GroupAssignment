@@ -1,5 +1,6 @@
 package src.Entity;
 
+import src.Enums.*;
 /**
  * The User class represents a generic user in the hospital system.
  * It contains basic user information such as hospital ID, password, name, and gender.
@@ -26,7 +27,7 @@ public abstract class User {
     /**
      * The gender of the user.
      */
-	private Enums.Gender gender;
+	private Gender gender;
 
     /**
      * Constructs a User object with the specified hospital ID, password, name, and gender.
@@ -36,7 +37,7 @@ public abstract class User {
      * @param name The name of the user.
      * @param gender The gender of the user.
      */
-    public User(String hospitalId,String password, String name, Enums.Gender gender) {
+    public User(String hospitalId,String password, String name, Gender gender) {
 		this.hospitalId = hospitalId;
 		this.password = password;
 		this.name = name;
@@ -111,7 +112,7 @@ public abstract class User {
      *
      * @return The gender of the user.
      */
-	public Enums.Gender getGender() {
+	public Gender getGender() {
 		return this.gender;
 	}
 
@@ -120,7 +121,7 @@ public abstract class User {
      *
      * @param gender The new gender of the user.
      */
-	public void setGender(Enums.Gender gender) {
+	public void setGender(Gender gender) {
 		this.gender = gender;
 	}
 

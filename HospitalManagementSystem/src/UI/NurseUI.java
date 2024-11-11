@@ -1,16 +1,16 @@
 package src.UI;
 
+import java.util.ArrayList;
+import java.util.InputMismatchException;
+import java.util.Scanner;
 import src.Controller.NurseController;
 import src.Entity.Nurse;
 import src.Entity.Patient;
+import src.Enums.*;
 import src.Interface.IDisplayableView;
 import src.Repository.UserRepository;
 import src.View.CommonView;
 import src.View.PatientView;
-
-import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.Scanner;
 
 public class NurseUI {
 
@@ -102,7 +102,7 @@ public class NurseUI {
         String hospBlood;
         String hospPhoneNumber;
         String hospDate;
-        Enums.Gender gender = null;
+        Gender gender = null;
         try{
             boolean validName = false;
             scanner.nextLine();

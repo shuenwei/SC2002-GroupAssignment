@@ -1,6 +1,7 @@
 package src.Entity;
 
 import java.util.ArrayList;
+import src.Enums.*;
 
 /**
  * The MedicalRecord class represents the medical record of a patient, including personal details and a list of medical history entries.
@@ -26,7 +27,7 @@ public class MedicalRecord {
     /**
      * The gender of the patient.
      */
-    private Enums.Gender gender;
+    private Gender gender;
 
     /**
      * The blood type of the patient.
@@ -60,7 +61,7 @@ public class MedicalRecord {
      * @param phoneNumber  The phone number of the patient.
      * @param emailAddress The email address of the patient.
      */
-    public MedicalRecord(String PatientID, String name, Enums.Gender gender, String dateOfBirth, String bloodType, String phoneNumber, String emailAddress) {
+    public MedicalRecord(String PatientID, String name, Gender gender, String dateOfBirth, String bloodType, String phoneNumber, String emailAddress) {
         this.PatientID = PatientID;
         this.name = name;
         this.dateOfBirth = dateOfBirth;
@@ -103,7 +104,7 @@ public class MedicalRecord {
      *
      * @return The patient's gender.
      */
-    public Enums.Gender getGender(){
+    public Gender getGender(){
         return gender;
     }
 

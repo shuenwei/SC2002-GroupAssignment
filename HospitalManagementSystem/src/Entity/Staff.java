@@ -30,7 +30,7 @@ public abstract class Staff extends User {
      * @param age The age of the staff member.
      */
 
-	public Staff(String hospitalId,String password, String name, String gender,Role role, int age) {
+	public Staff(String hospitalId,String password, String name, Gender gender,Role role, int age) {
 
 		super(hospitalId,password,name,gender);
 		this.age = age;
