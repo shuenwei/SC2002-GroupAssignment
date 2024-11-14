@@ -97,15 +97,41 @@ public class PatientMedicalRecordUI {
 
         switch (choice) {
             case 1:
-                System.out.println("Enter new Email Address:");
-                String newEmail = input.nextLine();
-                medicalRecord.setEmailAddress(newEmail);
+                boolean validEmailAddress = false;
+                String hospEmailAddress = null;
+                do{
+                    System.out.println("Email Address: ");
+                    hospEmailAddress = scanner.nextLine();
+                    if (hospEmailAddress.isEmpty()) {
+                        System.out.println("Contact information cannot be empty.");
+                    }
+                    else if (!hospEmailAddress.contains("@")) {
+                        System.out.println("Email must contain '@' symbol.");
+                    }
+                    else if (!hospEmailAddress.contains(".")) {
+                        System.out.println("Email must contain '.' symbol.");
+                    }
+                    else{
+                        validEmailAddress = true;
+                    }
+                }while(!validEmailAddress);
+
+                medicalRecord.setEmailAddress(hospEmailAddress);
                 System.out.println("Updated Email Address: " + medicalRecord.getEmailAddress());
                 break;
             case 2:
-                System.out.println("Enter new Phone Number:");
-                String newPhone = input.nextLine();
-                medicalRecord.setPhoneNumber(newPhone);
+                boolean validPhoneNumber = false;
+                String hospPhoneNumber = null;
+                do{
+                    System.out.println("Phone Number: ");
+                    hospPhoneNumber = scanner.nextLine();
+                    if (hospPhoneNumber.length() != 8 || !hospPhoneNumber.matches("\\d{8}")) {
+                        System.out.println("Phone number must be exactly 8 digits long and contain only numbers.");
+                    } else {
+                        validPhoneNumber = true;
+                    }
+                }while(!validPhoneNumber);
+                medicalRecord.setPhoneNumber(hospPhoneNumber);
                 System.out.println("Updated Phone Number: " + medicalRecord.getPhoneNumber());
                 break;
         }
