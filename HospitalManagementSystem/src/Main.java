@@ -38,8 +38,8 @@ public class Main {
                         LoginUI.loginMenu();
                         break;
                     case 2:
-                        System.out.println("Exiting the system...");
                         DataStore.saveAll();
+                        System.out.println("Exiting the system...");
                         System.exit(0);
                         break;
                     default:

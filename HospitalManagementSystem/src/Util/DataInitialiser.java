@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import src.Entity.*;
 import src.Enums.*;
 import src.Repository.*;
+import src.View.CommonView;
 
 /**
  * The {@code DataInitialiser} class is responsible for loading and initializing application data
@@ -24,6 +25,8 @@ public class DataInitialiser {
      * for patients, staff, medicine inventory, appointments, availability, requests, and medical history.
      */
     public static void initialiseAll() {
+        CommonView.newPage();
+        System.out.println("Initialising data from CSV file...");
         DataInitialiser.initialisePatient();
         DataInitialiser.initialiseStaff();
         DataInitialiser.initialiseMedicine();

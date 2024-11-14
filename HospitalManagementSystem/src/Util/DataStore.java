@@ -2,6 +2,8 @@ package src.Util;
 
 import src.Entity.*;
 import src.Repository.*;
+import src.View.CommonView;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -21,6 +23,8 @@ public class DataStore {
      * doctor availability, medicine, request, and medical history data to their respective files.
      */
     public static void saveAll() {
+        CommonView.newPage();
+        System.out.println("Saving application data to CSV files...");
         DataStore.saveStaffData();
         DataStore.savePatientData();
         DataStore.saveAppointmentData();
@@ -28,6 +32,7 @@ public class DataStore {
         DataStore.saveMedicine();
         DataStore.saveRequest();
         DataStore.saveMedicalHistory();
+        CommonView.newPage();
     }
 
     /**

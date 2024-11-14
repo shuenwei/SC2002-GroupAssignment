@@ -1,5 +1,8 @@
 package src.UI;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -140,11 +143,14 @@ public class NurseUI {
             if (hospDate.isEmpty()) {
                 System.out.println("Date of Birth cannot be empty.");
             }
-            else if (!hospDate.matches("\\d{2}/\\d{2}/\\d{4}")) {
-                System.out.println("Date of Birth must be in the format DD/MM/YYYY.");
-            }
             else{
-                dateOfBirth = true;
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                try {
+                    LocalDate.parse(hospDate, formatter);
+                    dateOfBirth = true;
+                } catch (DateTimeParseException e) {
+                    System.out.println("Invalid Date of birth. Date of Birth must be in the format DD/MM/YYYY and be a valid date.");
+                }
             }
             }while(!dateOfBirth);
             boolean validBloodType = false;
