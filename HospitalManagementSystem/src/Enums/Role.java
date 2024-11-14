@@ -10,12 +10,7 @@ public enum Role {
      * Represents a doctor, a medical professional responsible for diagnosing and treating patients.
      */
     DOCTOR,
-
-    /**
-     * Represents a patient, an individual who receives healthcare services.
-     */
-    PATIENT,
-
+    
     /**
      * Represents an administrator, a user who manages the system and its operations.
      */
