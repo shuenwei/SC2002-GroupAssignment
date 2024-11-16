@@ -135,9 +135,6 @@ public class AdministratorUI {
                                     break;
                                 }
                             }
-                            System.out.println();
-                            System.out.println("Medicine does not exist");
-                            System.out.println();
                         } while (validMedicine);
                         administratorController.approveRequest(requestMedicine);
                         medicationView.display(InventoryRepository.get(requestMedicine));
