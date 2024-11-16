@@ -104,7 +104,7 @@ public class DoctorAppointmentUI extends AppointmentUI {
             try {
                 statusChoice = scanner.nextInt();
                 scanner.nextLine();
-                if (appointmentChoice >= 1 && appointmentChoice <= 2) {
+                if (statusChoice >= 1 && statusChoice <= 2) {
                     break;
                 } else {
                     statusChoice = -1;
