@@ -122,10 +122,16 @@ public class AdministratorController extends StaffController{
     public void removeStock(String medicineName, int quantity) {
         Medication medicine = InventoryRepository.get(medicineName);
         if (medicine != null) {
-            int newStock = medicine.getStock() - quantity;
-            medicine.setStock(newStock);
-            System.out.println();
-            System.out.printf("Successfully updated stock level for %s%n", medicineName);
+            if (quantity > medicine.getStock()) {
+                System.out.println();
+                System.out.println("The entered quantity is greater than available stock.");
+            }
+            else {
+                int newStock = medicine.getStock() - quantity;
+                medicine.setStock(newStock);
+                System.out.println();
+                System.out.printf("Successfully updated stock level for %s%n", medicineName);
+            }
         }
     }
 
@@ -181,11 +187,17 @@ public class AdministratorController extends StaffController{
         Request request = InventoryRepository.getRequest(requestedMedicine);
 
         if (request != null) {
-            replenishStock(requestedMedicine);
-            request.setStatus(RequestStatus.FULFILLED);
-
-            System.out.printf("%s has been successfully replenished.", requestedMedicine);
-            System.out.println();
+            if (request.getStatus() == RequestStatus.PENDING) {
+                replenishStock(requestedMedicine);
+                request.setStatus(RequestStatus.FULFILLED);
+    
+                System.out.printf("%s has been successfully replenished.", requestedMedicine);
+                System.out.println();
+            }
+            else {
+                System.out.println();
+                System.out.println("Request has already been fulfilled.");
+            }
         }
     }
 
