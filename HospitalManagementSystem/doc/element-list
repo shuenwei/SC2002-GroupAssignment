@@ -1,0 +1,9 @@
+src
+src.Controller
+src.Entity
+src.Enums
+src.Interface
+src.Repository
+src.UI
+src.Util
+src.View
