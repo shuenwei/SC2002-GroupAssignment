@@ -1,7 +1,7 @@
 # Hospital Management System (HMS)
 
-## Lab: SCS7  
-## Group: 5  
+### Lab: SCS7  
+### Group: 5  
 
 ### Group Members:
 | Number | Name                          |
@@ -15,5 +15,5 @@
 ---
 
 ## How to Run the Application:
-1. Set the working directory to `HospitalManagementSystem`.
+1. Set the working directory to `HospitalManagementSystem`. This is to ensure that the data CSV files will be be correctly initialised and stored.
 3. Run the `Main.java` file located at `HospitalManagementSystem/src/Main.java` to start the application.
