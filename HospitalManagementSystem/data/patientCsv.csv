@@ -1,4 +1,4 @@
 Patient ID,Password,Name,Date of Birth,Gender,Blood Type,Email Address,Phone Number
 P1003,,Charlie White,8/7/1990,MALE,O-,charlie.white@example.com, 91234567
-P1001,p,Alice Brown,14/5/1980,FEMALE,A+,email@email.com, 91234567
-P1002,,Bob Stone,22/11/1975,MALE,B+,bob.stone@example.com, 91234567
+P1001,,Alice Brown,14/5/1980,FEMALE,A+,email@email.com, 91234567
+P1002,p,Bob Stone,22/11/1975,MALE,B+,bob.stone@example.com, 91234567

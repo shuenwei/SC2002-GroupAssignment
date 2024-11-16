@@ -17,7 +17,7 @@ public class CommonView {
      * This is useful for improving readability and separating different sections of the UI.
      */
 	public static void newPage() {
-		System.out.println("\n**********************************************************************************************************************\n");
+		System.out.println("\n****************************************************************************\n");
 	}
 
 }

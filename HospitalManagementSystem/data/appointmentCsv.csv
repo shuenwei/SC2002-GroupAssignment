@@ -1,4 +1,3 @@
 Patient ID,Doctor ID,Date,Time,Status,Type of Service,Consultation Notes,Prescribed Medications
-P1001,D001,2024-11-11,08:00,MEDICINE_PENDING,dfghjkl,dfghjk,Paracetamol-DISPENSED;Ibuprofen-PENDING
-P1001,D001,2024-11-11,08:30,MEDICINE_PENDING,sdfghjk,dfghjkl,Paracetamol-PENDING
-P1001,D001,2024-11-11,09:00,COMPLETED,asdfghjk,asdfghj,Paracetamol-DISPENSED
+P1002,D001,2024-11-20,12:00,PENDING
+P1002,D001,2024-11-20,12:30,PENDING
