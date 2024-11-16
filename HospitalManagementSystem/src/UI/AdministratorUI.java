@@ -1,5 +1,7 @@
 package src.UI;
 
+import java.util.InputMismatchException;
+import java.util.Scanner;
 import src.Controller.AdministratorController;
 import src.Entity.Administrator;
 import src.Entity.Appointment;
@@ -14,8 +16,6 @@ import src.View.StaffListView;
 import src.View.StaffView;
 import src.View.ViewInventory;
 import src.View.ViewListInventory;
-import java.util.InputMismatchException;
-import java.util.Scanner;
 
 /**
  * The AdministratorUI class provides a user interface for administrators to manage
@@ -106,6 +106,7 @@ public class AdministratorUI {
     public void requestMenu(AdministratorController administratorController, IDisplayableView<Medication> medicationView){ 
         int choice = -1;
         String requestMedicine;
+        boolean validMedicine = true;
         
         do {
             try {
@@ -124,9 +125,20 @@ public class AdministratorUI {
                         break;
                     case 2:
                         System.out.println();
-                        System.out.println("Input medicine replenishment request to be approved:");
                         scanner.nextLine();
-                        requestMedicine = scanner.nextLine();
+                        do{
+                            System.out.println("Input medicine replenishment request to be approved:");
+                            requestMedicine = scanner.nextLine();
+                            for(Medication medicine : InventoryRepository.getAllMedicines()){
+                                if(medicine.getMedicineName().equals(requestMedicine)){
+                                    validMedicine = false;
+                                    break;
+                                }
+                            }
+                            System.out.println();
+                            System.out.println("Medicine does not exist");
+                            System.out.println();
+                        } while (validMedicine);
                         administratorController.approveRequest(requestMedicine);
                         medicationView.display(InventoryRepository.get(requestMedicine));
                         break;
