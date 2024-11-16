@@ -49,7 +49,6 @@ public class NurseController {
      */
     public boolean removePatient(String hospitalId){
         if(UserRepository.get(hospitalId) instanceof Patient){
-            UserRepository.remove(hospitalId);
             return true;
         } else {
             return false;

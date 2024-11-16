@@ -78,7 +78,7 @@ public class NurseUI {
                             break;
                     case 2: addPatient(nurseController, patientView);
                             break;
-                    case 3: removePatient(nurseController);
+                    case 3: removePatient(nurseController, patientView);
                             break;
                     case 4: System.out.println("You are now logged out.");
                             return;
@@ -229,7 +229,7 @@ public class NurseUI {
      *
      * @param nurseController The controller responsible for managing patient operations.
      */
-    public void removePatient(NurseController nurseController) {
+    public void removePatient(NurseController nurseController, IDisplayableView<Patient> patientView) {
 
         try{
             System.out.println("Enter Hospital ID: ");
@@ -242,8 +242,13 @@ public class NurseUI {
             boolean result = nurseController.removePatient(hospID);
 
             if (result) {
-                System.out.println("Patient removed successfully.");
+                System.out.println();
+                System.out.println("The following patient has been removed successfully.");
+                patientView.display((Patient) nurseController.getPatient(hospID));
+                UserRepository.remove(hospID);
+                
             } else {
+                System.out.println();
                 System.out.println("Patient not found.");
             }
 
